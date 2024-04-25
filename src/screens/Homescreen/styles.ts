@@ -1,9 +1,12 @@
-import { StyleSheet, Dimensions } from "react-native";
-const {height} = Dimensions.get('window')
+// Homescreen/styles.ts
+import { StyleSheet } from "react-native";
+
 const styles = StyleSheet.create({
-    headerMain:{
-        height:height*0.064,
-    }
-})
+  container: {
+    flex: 1,
+    backgroundColor: '#f2f2f2', // Color as per Figma's background
+  },
+  // ... add more styles for HeaderMain or other components if necessary
+});
 
 export default styles;

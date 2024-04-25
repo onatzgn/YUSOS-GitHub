@@ -1,7 +1,8 @@
+// HelpCenterScreen.js
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity,SafeAreaView } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView,SafeAreaView} from 'react-native';
 
-const CommunityScreen = ({ navigation }) => {
+const HelpCenterScreen = ({ navigation }) => {
     const onPressHelpCenter = () => {
         navigation.navigate('HelpCenterScreen');
     };
@@ -14,7 +15,7 @@ const CommunityScreen = ({ navigation }) => {
         <SafeAreaView>
         <View style={styles.container}>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
+                <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Yardım       Merkezi</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
@@ -26,10 +27,11 @@ const CommunityScreen = ({ navigation }) => {
     );
 };
 
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'top',
         alignItems: 'center',
     },
     buttonsContainer: {
@@ -51,5 +53,6 @@ const styles = StyleSheet.create({
         textAlign: 'center', // Center text horizontally within button
     },
 });
+export default HelpCenterScreen;
 
-export default CommunityScreen;
+

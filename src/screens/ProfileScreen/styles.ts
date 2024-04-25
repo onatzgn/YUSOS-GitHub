@@ -3,21 +3,18 @@ import { StyleSheet, Dimensions } from 'react-native';
 const { height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  headerMain: {
-    height: height * 0.064,
+  scrollView: {
+    flex: 1,
   },
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  heading: {
-    fontSize: 24,
-    marginBottom: 10,
+    minHeight: height, // Ensure the content is at least the height of the screen
   },
   profileContainer: {
     alignItems: 'center',
     marginBottom: 20,
+    position: 'relative', // Add relative positioning for containing absolute positioned button
   },
   profileImage: {
     width: 150,
@@ -28,14 +25,32 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
   },
-  editProfileButton: {
-    marginTop: 5,
+  changeProfileButton: {
+    position: 'absolute',
+    bottom: 35,
+    right: 110,
+    backgroundColor: 'blue',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  editProfileText: {
-    color: 'blue',
+  editInfoButton: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    backgroundColor: 'blue',
+    borderRadius: 20,
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  scrollView: {
-    flex: 1,
+  plusSign: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
   },
   infoContainer: {
     borderWidth: 1,
@@ -43,12 +58,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    height: 10 * 20, // 10 satırlık yükseklik
+    position: 'relative', // Adding position relative to contain absolute positioned button
+  },
+  infoHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 10,
   },
   infoHeading: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 10,
   },
   activitiesContainer: {
     borderWidth: 1,
@@ -56,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    height: 10 * 20, // 10 satırlık yükseklik
+    position: 'relative', // Adding position relative to contain absolute positioned button
   },
   activitiesHeading: {
     fontSize: 18,

@@ -1,14 +1,16 @@
-import React from 'react'
-import { ScrollView } from 'react-native'
-import HeaderMain from "../../components/HeaderMain/IndexHeader"
-//import Duyurular from "../../components/Duyurular"
+import React from 'react';
+import { View } from 'react-native';
+import HeaderMain from '../../components/HeaderMain/IndexHeader';
+import Duyurular from '../../components/Duyurular';
+import styles from './styles';
 
-function Homescreen(){
-    return(
-        <ScrollView>
-            <HeaderMain/>
-        </ScrollView>
-    )
+function Homescreen() {
+  return (
+    <View style={styles.container}>
+      <HeaderMain />
+      <Duyurular />
+    </View>
+  );
 }
 
 export default Homescreen;
