@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     subtitleText: {
         fontSize: 45,
         fontWeight: 'bold',
-        color: "black",
+        color: "#2e76e8",
     },
 });
 
