@@ -18,17 +18,17 @@ const HelpCenterScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
+                <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 1</Text>
+                    <Text style={styles.cardText}>Card of help Screen</Text>
                     <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
                         <Text style={styles.buttonText}>Katıl</Text>
                     </TouchableOpacity>
