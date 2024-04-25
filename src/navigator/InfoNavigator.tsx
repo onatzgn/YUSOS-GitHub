@@ -9,7 +9,7 @@ const InfoNavigator = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Info6362"
+                name="Info"
                 component={InfoScreen}
             />
         </Stack.Navigator>
