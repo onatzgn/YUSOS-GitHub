@@ -1,23 +1,50 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import styles from './styles'; // Importing styles from styles.ts
 
 const ProfileScreen = () => {
-    return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Profil</Text>
-        </View>
-    );
-};
+  const [userInfo, setUserInfo] = useState({
+    name: "John Doe",
+    profileImage: require('./profile.jpg'),
+    // Diğer kullanıcı bilgileri buraya eklenebilir
+  });
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 24,
-    },
-});
+  const changeProfileImage = () => {
+    // Profil fotoğrafını değiştirme fonksiyonu
+    // Şimdilik boş bırakıyoruz
+  };
+
+  const changeUserInfo = () => {
+    // Kullanıcı bilgilerini değiştirme fonksiyonu
+    // Şimdilik boş bırakıyoruz
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.heading}>Profile</Text>
+      <View style={styles.profileContainer}>
+        <TouchableOpacity onPress={changeProfileImage}>
+          <Image source={userInfo.profileImage} style={styles.profileImage} />
+          {/* Profil resminin sağ alt köşesine tıklama işlevi buraya eklenebilir */}
+        </TouchableOpacity>
+        <Text style={styles.name}>{userInfo.name}</Text>
+        <TouchableOpacity onPress={changeUserInfo} style={styles.editProfileButton}>
+          <Text style={styles.editProfileText}>Edit Profile</Text>
+        </TouchableOpacity>
+      </View>
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.infoContainer}>
+          <Text style={styles.infoHeading}>User Information</Text>
+          {/* Kullanıcı bilgilerinin gösterileceği kutu buraya eklenebilir */}
+        </View>
+        <View style={styles.activitiesContainer}>
+          <Text style={styles.activitiesHeading}>Past Activities</Text>
+          {/* Kullanıcının katıldığı geçmiş faaliyetlerin gösterileceği kutu buraya eklenebilir */}
+          <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
 
 export default ProfileScreen;
