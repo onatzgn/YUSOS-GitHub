@@ -9,6 +9,7 @@ const HomeNavigator= () =>{
             <Stack.Screen
                 name = "Home"
                 component = {Homescreen}
+                options = {{ headerShown: false}}
             />
 
         </Stack.Navigator>

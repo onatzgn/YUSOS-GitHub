@@ -29,7 +29,7 @@ const CommunityCenterScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button1}>
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
@@ -39,7 +39,7 @@ const CommunityCenterScreen = ({ navigation }) => {
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 1</Text>
+                    <Text style={styles.cardText}>Help Center</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined1 && styles.joinedButton]}
                         onPress={onPressJoin1}
@@ -66,6 +66,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                         style={[styles.addButton, isJoined3 && styles.joinedButton]}
                         onPress={onPressJoin3}
                         disabled={isJoined3}
+                
                     >
                         <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
@@ -90,6 +91,12 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'lightblue',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+    },
+    button1: {
+        backgroundColor: 'red',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 10,
