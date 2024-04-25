@@ -20,19 +20,19 @@ const ProfileScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.heading}>Profile</Text>
-      <View style={styles.profileContainer}>
-        <TouchableOpacity onPress={changeProfileImage}>
-          <Image source={userInfo.profileImage} style={styles.profileImage} />
-          {/* Profil resminin sağ alt köşesine tıklama işlevi buraya eklenebilir */}
-        </TouchableOpacity>
-        <Text style={styles.name}>{userInfo.name}</Text>
-        <TouchableOpacity onPress={changeUserInfo} style={styles.editProfileButton}>
-          <Text style={styles.editProfileText}>Edit Profile</Text>
-        </TouchableOpacity>
-      </View>
-      <ScrollView style={styles.scrollView}>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View>
+        <Text> </Text>
+        <View style={styles.profileContainer}>
+          <TouchableOpacity onPress={changeProfileImage}>
+            <Image source={userInfo.profileImage} style={styles.profileImage} />
+            {/* Profil resminin sağ alt köşesine tıklama işlevi buraya eklenebilir */}
+          </TouchableOpacity>
+          <Text style={styles.name}>{userInfo.name}</Text>
+          <TouchableOpacity onPress={changeUserInfo} style={styles.editProfileButton}>
+            <Text style={styles.editProfileText}>Edit Profile</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.infoContainer}>
           <Text style={styles.infoHeading}>User Information</Text>
           {/* Kullanıcı bilgilerinin gösterileceği kutu buraya eklenebilir */}
@@ -42,8 +42,8 @@ const ProfileScreen = () => {
           {/* Kullanıcının katıldığı geçmiş faaliyetlerin gösterileceği kutu buraya eklenebilir */}
           <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</Text>
         </View>
-      </ScrollView>
-    </View>
+      </View>
+    </ScrollView>
   );
 };
 

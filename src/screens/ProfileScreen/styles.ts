@@ -38,6 +38,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    height: 10 * 20, // 10 satırlık yükseklik
   },
   infoHeading: {
     fontSize: 18,
@@ -50,6 +51,7 @@ export default StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
+    height: 10 * 20, // 10 satırlık yükseklik
   },
   activitiesHeading: {
     fontSize: 18,
