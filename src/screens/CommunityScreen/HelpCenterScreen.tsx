@@ -1,7 +1,11 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 
-const HelpCenterScreen = ({ navigation }) => {
+const CommunityCenterScreen = ({ navigation }) => {
+    const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
+    const [isJoined2, setIsJoined2] = useState(false); // State to track if joined for card 2
+    const [isJoined3, setIsJoined3] = useState(false); // State to track if joined for card 3
+
     const onPressHelpCenter = () => {
         navigation.navigate('HelpCenterScreen');
     };
@@ -10,15 +14,22 @@ const HelpCenterScreen = ({ navigation }) => {
         navigation.navigate('CommunityCenterScreen');
     };
 
-    const onPressJoin = () => {
-        // Add your join action here
-        Alert.alert("Joined")
+    const onPressJoin1 = () => {
+        setIsJoined1(true);
+    };
+
+    const onPressJoin2 = () => {
+        setIsJoined2(true);
+    };
+
+    const onPressJoin3 = () => {
+        setIsJoined3(true);
     };
 
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} >
+                <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
@@ -28,23 +39,35 @@ const HelpCenterScreen = ({ navigation }) => {
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card of help Screen</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
-                        <Text style={styles.buttonText}>Katıl</Text>
+                    <Text style={styles.cardText}>Card 1</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined1 && styles.joinedButton]}
+                        onPress={onPressJoin1}
+                        disabled={isJoined1}
+                    >
+                        <Text style={[styles.buttonText, isJoined1 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Second Card */}
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Card 2</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
-                        <Text style={styles.buttonText}>Katıl</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined2 && styles.joinedButton]}
+                        onPress={onPressJoin2}
+                        disabled={isJoined2}
+                    >
+                        <Text style={[styles.buttonText, isJoined2 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Third Card */}
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Card 3</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
-                        <Text style={styles.buttonText}>Katıl</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined3 && styles.joinedButton]}
+                        onPress={onPressJoin3}
+                        disabled={isJoined3}
+                    >
+                        <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -101,6 +124,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderRadius: 10,
     },
+    joinedButton: {
+        backgroundColor: 'red',
+    },
+    joinedText: {
+        color: 'white',
+    },
 });
 
-export default HelpCenterScreen;
+export default CommunityCenterScreen;
