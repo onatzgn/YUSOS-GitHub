@@ -17,12 +17,13 @@ const CommunityNavigator = () => {
             <Stack.Screen
                 name="HelpCenterScreen"
                 component={HelpCenterScreen}
-                options={{ title: 'Yardım Merkezi' }}
+                options={{ headerShown: false }}
+
             />
             <Stack.Screen
                 name="CommunityCenterScreen"
                 component={CommunityCenterScreen}
-                options={{ title: 'Topluluk Merkezi' }}
+                options={{ headerShown: false }}
             />
         </Stack.Navigator>
     );

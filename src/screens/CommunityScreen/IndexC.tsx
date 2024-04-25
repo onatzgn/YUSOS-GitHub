@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity,SafeAreaView } from 'react-native';
 
 const CommunityScreen = ({ navigation }) => {
     const onPressHelpCenter = () => {
@@ -11,6 +11,7 @@ const CommunityScreen = ({ navigation }) => {
     };
 
     return (
+        <SafeAreaView>
         <View style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
@@ -21,13 +22,14 @@ const CommunityScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
         </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'top',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     buttonsContainer: {
