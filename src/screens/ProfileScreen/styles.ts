@@ -1,6 +1,11 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-export default StyleSheet.create({
+const { height } = Dimensions.get('window');
+
+const styles = StyleSheet.create({
+  headerMain: {
+    height: height * 0.064,
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -59,3 +64,5 @@ export default StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default styles;
