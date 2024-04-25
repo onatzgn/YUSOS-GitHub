@@ -7,6 +7,7 @@ const Stack = createStackNavigator();
 
 const InfoNavigator = () => {
     return (
+        
         <Stack.Navigator>
             <Stack.Screen
                 name="Info"

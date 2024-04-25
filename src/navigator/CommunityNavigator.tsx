@@ -9,7 +9,7 @@ const CommunityNavigator = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name="Community"
+                name="Help Center"
                 component={CommunityScreen}
             />
         </Stack.Navigator>
