@@ -1,4 +1,3 @@
-// CommunityScreen.js
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -13,12 +12,14 @@ const CommunityScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
-                <Text style={styles.buttonText}>Yardım Merkezi</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
-                <Text style={styles.buttonText}>Topluluk Merkezi</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonsContainer}>
+                <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
+                    <Text style={styles.buttonText}>Yardım       Merkezi</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
+                    <Text style={styles.buttonText}>Topluluk Merkezi</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -26,18 +27,26 @@ const CommunityScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'top',
         alignItems: 'center',
+    },
+    buttonsContainer: {
+        flexDirection: 'row', // Arrange buttons horizontally
+        justifyContent: 'space-around', // Evenly space buttons
+        width: '100%', // Take up full width
+        paddingHorizontal: 20, // Add horizontal padding to buttons
     },
     button: {
         backgroundColor: 'lightblue',
-        padding: 10,
-        margin: 10,
+        padding: 15,
         borderRadius: 10,
+        flex: 1, // Ensure buttons take up equal space
+        marginHorizontal: 5, // Add margin between buttons
     },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
+        textAlign: 'center', // Center text horizontally within button
     },
 });
 
