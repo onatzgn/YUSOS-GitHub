@@ -28,7 +28,7 @@ const CommunityCenterScreen = ({ navigation }) => {
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 1</Text>
+                    <Text style={styles.cardText}>Card of Community Screen</Text>
                     <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
                         <Text style={styles.buttonText}>Katıl</Text>
                     </TouchableOpacity>
