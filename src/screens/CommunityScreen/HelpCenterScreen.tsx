@@ -1,6 +1,5 @@
-// HelpCenterScreen.js
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Alert, ScrollView,SafeAreaView} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
 
 const HelpCenterScreen = ({ navigation }) => {
     const onPressHelpCenter = () => {
@@ -11,48 +10,97 @@ const HelpCenterScreen = ({ navigation }) => {
         navigation.navigate('CommunityCenterScreen');
     };
 
+    const onPressJoin = () => {
+        // Add your join action here
+        Alert.alert("Joined")
+    };
+
     return (
-        
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} >
-                    <Text style={styles.buttonText}>Yardım       Merkezi</Text>
+                <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
+                    <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
+                <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
                 </TouchableOpacity>
             </View>
+            <View style={styles.cardContainer}>
+                {/* First Card */}
+                <View style={styles.card}>
+                    <Text style={styles.cardText}>Card 1</Text>
+                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
+                        <Text style={styles.buttonText}>Katıl</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* Second Card */}
+                <View style={styles.card}>
+                    <Text style={styles.cardText}>Card 2</Text>
+                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
+                        <Text style={styles.buttonText}>Katıl</Text>
+                    </TouchableOpacity>
+                </View>
+                {/* Third Card */}
+                <View style={styles.card}>
+                    <Text style={styles.cardText}>Card 3</Text>
+                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
+                        <Text style={styles.buttonText}>Katıl</Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
         </SafeAreaView>
-        
     );
 };
-
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'top',
+        justifyContent: 'center',
         alignItems: 'center',
     },
     buttonsContainer: {
-        flexDirection: 'row', // Arrange buttons horizontally
-        justifyContent: 'space-around', // Evenly space buttons
-        width: '100%', // Take up full width
-        paddingHorizontal: 20, // Add horizontal padding to buttons
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        paddingHorizontal: 20,
+        marginBottom: 20,
     },
     button: {
         backgroundColor: 'lightblue',
-        padding: 15,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
         borderRadius: 10,
-        flex: 1, // Ensure buttons take up equal space
-        marginHorizontal: 5, // Add margin between buttons
     },
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'center', // Center text horizontally within button
+    },
+    cardContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
+        marginTop: 20,
+    },
+    card: {
+        width: '100%',
+        height: 100,
+        backgroundColor: 'lightgray',
+        marginBottom: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: 10,
+        paddingHorizontal: 10,
+    },
+    cardText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    addButton: {
+        backgroundColor: 'lightblue',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 10,
     },
 });
+
 export default HelpCenterScreen;
-
-
