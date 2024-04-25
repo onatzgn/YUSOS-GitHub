@@ -11,7 +11,7 @@ const CommunityScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style = {styles.container}>
         <View style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>

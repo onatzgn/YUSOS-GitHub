@@ -12,8 +12,8 @@ const HelpCenterScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
-        <View style={styles.container}>
+        
+        <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} >
                     <Text style={styles.buttonText}>Yardım       Merkezi</Text>
@@ -22,8 +22,8 @@ const HelpCenterScreen = ({ navigation }) => {
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
                 </TouchableOpacity>
             </View>
-        </View>
         </SafeAreaView>
+        
     );
 };
 

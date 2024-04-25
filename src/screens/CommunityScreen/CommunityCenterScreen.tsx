@@ -13,8 +13,8 @@ const CommunityCenterScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView>
-        <View style={styles.container}>
+        
+        <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
                     <Text style={styles.buttonText}>Yardım       Merkezi</Text>
@@ -24,8 +24,8 @@ const CommunityCenterScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <Text>Hello</Text>
             </View>
-        </View>
         </SafeAreaView>
+        
     );
 };
 

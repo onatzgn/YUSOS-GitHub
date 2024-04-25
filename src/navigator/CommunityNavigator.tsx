@@ -17,7 +17,7 @@ const CommunityNavigator = () => {
             <Stack.Screen
                 name="HelpCenterScreen"
                 component={HelpCenterScreen}
-                options={{ headerShown: false }}
+                options={{ headerShown: false  }}
 
             />
             <Stack.Screen
