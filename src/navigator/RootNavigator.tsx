@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 import React, { useState } from 'react';
@@ -12,16 +13,48 @@ import CommunityNavigator from "./CommunityNavigator"
 import InfoNavigator from "./InfoNavigator"
 import ProfileNavigator from "./ProfileNavigator"
 //import ActionNavigator from "./ActionNavigator"
+=======
+import React from 'react';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from '@react-navigation/stack';
+import { Foundation, Ionicons, FontAwesome6 } from '@expo/vector-icons';
+
+import HomeNavigator from "./HomeNavigator";
+import CommunityNavigator from "./CommunityNavigator";
+import InfoNavigator from "./InfoNavigator";
+import ProfileNavigator from "./ProfileNavigator";
+import LoginScreen from '../screens/LoginScreen/IndexL';
+import SignUpScreen from '../screens/SignUpScreen/IndexS';
+>>>>>>> 6ba2902 (login)
 import CustomTabBarButton from './CustomTabBarButton';
 
-import { TouchableOpacity, View, Text, StyleSheet, Modal } from "react-native"
+const RootStack = createStackNavigator();
+const AuthStack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
+<<<<<<< HEAD
 const Tab = createBottomTabNavigator ();
 
 function RootNavigator(){
 
     return(
         <Tab.Navigator
+=======
+// Authentication stack navigator
+function AuthStackScreens() {
+  return (
+    <AuthStack.Navigator screenOptions={{ headerShown: false }}>
+      <AuthStack.Screen name="Login" component={LoginScreen} />
+      <AuthStack.Screen name="SignUp" component={SignUpScreen} />
+    </AuthStack.Navigator>
+  );
+}
+
+// Main application tab navigator
+function MainTabNavigator() {
+  return (
+    <Tab.Navigator
+>>>>>>> 6ba2902 (login)
             initialRouteName="Ana Sayfa"
             screenOptions={{
                 tabBarHideOnKeyboard: true,
@@ -32,7 +65,7 @@ function RootNavigator(){
                 tabBarStyle: {
                     height: 80,
                     backgroundColor: "black",
-                    borderTopLeftRadius: 25, // Sol üst köşeyi yuvarlatma
+                    borderTopLeftRadius: 25,
                     borderTopRightRadius: 25,
                 },
             }}
@@ -83,7 +116,17 @@ function RootNavigator(){
                 }}
             />
         </Tab.Navigator>
-    );
+  );
+}
+
+// Root navigator combining auth and main app navigation
+function RootNavigator() {
+  return (
+    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+      <RootStack.Screen name="Auth" component={AuthStackScreens} />
+      <RootStack.Screen name="Main" component={MainTabNavigator} />
+    </RootStack.Navigator>
+  );
 }
 
 export default RootNavigator;
