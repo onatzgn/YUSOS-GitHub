@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
 
 const CommunityCenterScreen = ({ navigation }) => {
+    const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
+    const [isJoined2, setIsJoined2] = useState(false); // State to track if joined for card 2
+    const [isJoined3, setIsJoined3] = useState(false); // State to track if joined for card 3
+
     const onPressHelpCenter = () => {
         navigation.navigate('HelpCenterScreen');
     };
@@ -10,8 +14,18 @@ const CommunityCenterScreen = ({ navigation }) => {
         navigation.navigate('CommunityCenterScreen');
     };
 
-    const onPressJoin = () => {
-        // Add your join action here
+    const onPressJoin1 = () => {
+        setIsJoined1(true);
+        Alert.alert("Joined")
+    };
+
+    const onPressJoin2 = () => {
+        setIsJoined2(true);
+        Alert.alert("Joined")
+    };
+
+    const onPressJoin3 = () => {
+        setIsJoined3(true);
         Alert.alert("Joined")
     };
 
@@ -21,30 +35,44 @@ const CommunityCenterScreen = ({ navigation }) => {
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button}>
+                <TouchableOpacity style={styles.button1} >
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card of Community Screen</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
-                        <Text style={styles.buttonText}>Katıl</Text>
+                    <Text style={styles.cardText}>Community Center</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined1 && styles.joinedButton]}
+                        
+                        onPress={onPressJoin1}
+                        disabled={isJoined1}
+                    >
+                        <Text style={[styles.buttonText, isJoined1 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Second Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 2</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
-                        <Text style={styles.buttonText}>Katıl</Text>
+                    <Text style={styles.cardText}>Kiyafet Toplama</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined2 && styles.joinedButton]}
+                        onPress={onPressJoin2}
+                        disabled={isJoined2}
+                    >
+                        <Text style={[styles.buttonText, isJoined2 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
                 {/* Third Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 3</Text>
-                    <TouchableOpacity style={styles.addButton} onPress={onPressJoin}>
-                        <Text style={styles.buttonText}>Katıl</Text>
+                    <Text style={styles.cardText}>Erzak Toplama</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined3 && styles.joinedButton]}
+                        onPress={onPressJoin3}
+                        disabled={isJoined3}
+                
+                    >
+                        <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -69,7 +97,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 10,
+        borderRadius: 5,
+    },
+    button1: {
+        backgroundColor: 'red',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 30,
     },
     buttonText: {
         fontSize: 16,
@@ -100,6 +134,12 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 10,
+    },
+    joinedButton: {
+        backgroundColor: 'red',
+    },
+    joinedText: {
+        color: 'white',
     },
 });
 
