@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   editInfoButton: {
     position: 'absolute',
-    top: 0,
+    top: -7,
     right: 0,
     backgroundColor: 'blue',
     borderRadius: 20,
