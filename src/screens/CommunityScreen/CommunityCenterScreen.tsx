@@ -34,7 +34,7 @@ const CommunityCenterScreen = ({ navigation }) => {
             <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
-                    <Text style={styles.buttonText}>Yardım ONAAATMerkezi</Text>
+                    <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button1} onPress = {() => {}} >
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
