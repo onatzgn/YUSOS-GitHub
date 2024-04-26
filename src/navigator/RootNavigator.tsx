@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-
-
-import React, { useState } from 'react';
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Foundation } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-
-import HomeNavigator from "./HomeNavigator"
-import CommunityNavigator from "./CommunityNavigator"
-import InfoNavigator from "./InfoNavigator"
-import ProfileNavigator from "./ProfileNavigator"
-//import ActionNavigator from "./ActionNavigator"
-=======
 import React from 'react';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from '@react-navigation/stack';
@@ -25,21 +9,12 @@ import InfoNavigator from "./InfoNavigator";
 import ProfileNavigator from "./ProfileNavigator";
 import LoginScreen from '../screens/LoginScreen/IndexL';
 import SignUpScreen from '../screens/SignUpScreen/IndexS';
->>>>>>> 6ba2902 (login)
 import CustomTabBarButton from './CustomTabBarButton';
 
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-<<<<<<< HEAD
-const Tab = createBottomTabNavigator ();
-
-function RootNavigator(){
-
-    return(
-        <Tab.Navigator
-=======
 // Authentication stack navigator
 function AuthStackScreens() {
   return (
@@ -54,7 +29,6 @@ function AuthStackScreens() {
 function MainTabNavigator() {
   return (
     <Tab.Navigator
->>>>>>> 6ba2902 (login)
             initialRouteName="Ana Sayfa"
             screenOptions={{
                 tabBarHideOnKeyboard: true,
