@@ -1,6 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -9,12 +9,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: height, // Ensure the content is at least the height of the screen
+    minHeight: height,
   },
   profileContainer: {
     alignItems: 'center',
     marginBottom: 20,
-    position: 'relative', // Add relative positioning for containing absolute positioned button
+    position: 'relative',
   },
   profileImage: {
     width: 150,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   changeProfileButton: {
     position: 'absolute',
     bottom: 35,
-    right: 110,
+    right: 100,
     backgroundColor: 'blue',
     borderRadius: 20,
     width: 40,
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   },
   editInfoButton: {
     position: 'absolute',
-    top: 0,
+    top: -7,
     right: 0,
     backgroundColor: 'blue',
     borderRadius: 20,
@@ -55,10 +55,11 @@ const styles = StyleSheet.create({
   infoContainer: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 5,
+    borderRadius: 20,
     padding: 10,
     marginBottom: 10,
-    position: 'relative', // Adding position relative to contain absolute positioned button
+    position: 'relative',
+    width: width * 0.8,
   },
   infoHeaderContainer: {
     flexDirection: 'row',
@@ -70,13 +71,33 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
-  activitiesContainer: {
+  userInfoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  userInfoTitle: {
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  userInfoInput: {
+    flex: 1,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 5,
+    padding: 5,
+  },
+  userInfoText: {
+    flex: 1,
+  },
+  activitiesContainer: {
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 20,
     padding: 10,
     marginBottom: 10,
-    position: 'relative', // Adding position relative to contain absolute positioned button
+    position: 'relative',
+    width: width * 0.8,
   },
   activitiesHeading: {
     fontSize: 18,
