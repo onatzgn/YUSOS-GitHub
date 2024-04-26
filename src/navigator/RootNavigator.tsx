@@ -85,8 +85,10 @@ function MainTabNavigator() {
                 component={ProfileNavigator}
                 options={{
                     tabBarIcon: ({color}) => (
-                        <Ionicons name="person" size={24} color={color} />
+                        <Ionicons name="person" size={24} color={color} 
+                        />
                     )
+
                 }}
             />
         </Tab.Navigator>
@@ -97,8 +99,11 @@ function MainTabNavigator() {
 function RootNavigator() {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
-      <RootStack.Screen name="Auth" component={AuthStackScreens} />
-      <RootStack.Screen name="Main" component={MainTabNavigator} />
+      <RootStack.Screen name="Auth" component={AuthStackScreens}
+                options = {{headerShown: false}} />
+      <RootStack.Screen name="Main" 
+                component={MainTabNavigator}
+                options = {{headerShown: false}} />
     </RootStack.Navigator>
   );
 }

@@ -30,13 +30,13 @@ const CommunityCenterScreen = ({ navigation }) => {
     };
 
     return (
-        <ScrollView >
+        <ScrollView>
             <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button1} >
+                <TouchableOpacity style={styles.button1}  >
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
                 </TouchableOpacity>
             </View>

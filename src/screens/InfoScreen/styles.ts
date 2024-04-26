@@ -12,7 +12,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20, // Add spacing between rows
         marginLeft: 10,
-        marginTop: 10,
+        marginTop: 50,
     },
     container: {
         flex: 1, // Each container takes equal space within a row

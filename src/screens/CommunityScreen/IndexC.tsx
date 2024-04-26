@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity,SafeAreaView } from 'react-native';
 
+
 const CommunityScreen = ({ navigation }) => {
     const onPressHelpCenter = () => {
         navigation.navigate('HelpCenterScreen');
