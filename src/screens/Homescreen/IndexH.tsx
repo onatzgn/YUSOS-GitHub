@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View,Text } from 'react-native';
 import HeaderMain from '../../components/HeaderMain/IndexHeader';
 import Duyurular from '../../components/Duyurular';
 import styles from './styles';
@@ -9,6 +9,7 @@ function Homescreen() {
     <View style={styles.container}>
       <HeaderMain />
       <Duyurular />
+      
     </View>
   );
 }
