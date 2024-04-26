@@ -53,4 +53,6 @@ export default StyleSheet.create({
     paddingLeft: 5,
     color: 'blue',
   },
+
 });
+

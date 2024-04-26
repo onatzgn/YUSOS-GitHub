@@ -48,3 +48,4 @@ export default StyleSheet.create({
     color: '#2e76e8', // Link rengi
   },
 });
+

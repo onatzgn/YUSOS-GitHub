@@ -10,6 +10,8 @@ import ProfileNavigator from "./ProfileNavigator";
 import LoginScreen from '../screens/LoginScreen/IndexL';
 import SignUpScreen from '../screens/SignUpScreen/IndexS';
 import CustomTabBarButton from './CustomTabBarButton';
+import HealthReqScreen from '../screens/HealthReqScreen/IndexHR';
+import SOSScreen from '../screens/SOSScreen/IndexSOS';
 
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -72,6 +74,14 @@ function MainTabNavigator() {
                 }}
             />
             <Tab.Screen
+                name="Yardım Talep"
+                component={HealthReqScreen}
+            />
+            <Tab.Screen
+                name="SOS"
+                component={SOSScreen}
+            />
+            <Tab.Screen
                 name="Yardım Merkezi"
                 component={InfoNavigator}
                 options={{
@@ -85,10 +95,8 @@ function MainTabNavigator() {
                 component={ProfileNavigator}
                 options={{
                     tabBarIcon: ({color}) => (
-                        <Ionicons name="person" size={24} color={color} 
-                        />
+                        <Ionicons name="person" size={24} color={color} />
                     )
-
                 }}
             />
         </Tab.Navigator>
@@ -99,11 +107,8 @@ function MainTabNavigator() {
 function RootNavigator() {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
-      <RootStack.Screen name="Auth" component={AuthStackScreens}
-                options = {{headerShown: false}} />
-      <RootStack.Screen name="Main" 
-                component={MainTabNavigator}
-                options = {{headerShown: false}} />
+      <RootStack.Screen name="Auth" component={AuthStackScreens} />
+      <RootStack.Screen name="Main" component={MainTabNavigator} />
     </RootStack.Navigator>
   );
 }

@@ -18,7 +18,9 @@ function LoginScreen() {
       <Image source={require('../../../assets/logo.png')} style={styles.logo} />
       <Text style={styles.title}>Login</Text>
       <TextInput placeholder="Okul Numarası" style={styles.input} keyboardType="numeric" />
-      <TextInput placeholder="****" style={styles.input} secureTextEntry />
+
+      <TextInput placeholder="********" style={styles.input} secureTextEntry />
+
       <TouchableOpacity style={styles.button} onPress={handleSignIn}>
         <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
@@ -33,3 +35,4 @@ function LoginScreen() {
 }
 
 export default LoginScreen;
+
