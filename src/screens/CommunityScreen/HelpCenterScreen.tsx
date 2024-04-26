@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
 
-const CommunityCenterScreen = ({ navigation }) => {
+const HelpCenterScreen = ({ navigation }) => {
     const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
     const [isJoined2, setIsJoined2] = useState(false); // State to track if joined for card 2
     const [isJoined3, setIsJoined3] = useState(false); // State to track if joined for card 3
@@ -16,14 +16,17 @@ const CommunityCenterScreen = ({ navigation }) => {
 
     const onPressJoin1 = () => {
         setIsJoined1(true);
+        Alert.alert("Joined")
     };
 
     const onPressJoin2 = () => {
         setIsJoined2(true);
+        Alert.alert("Joined")
     };
 
     const onPressJoin3 = () => {
         setIsJoined3(true);
+        Alert.alert("Joined")
     };
 
     return (
@@ -42,6 +45,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                     <Text style={styles.cardText}>Help Center</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined1 && styles.joinedButton]}
+                        
                         onPress={onPressJoin1}
                         disabled={isJoined1}
                     >
@@ -50,7 +54,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                 </View>
                 {/* Second Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 2</Text>
+                    <Text style={styles.cardText}>Kizilay Cadiri</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined2 && styles.joinedButton]}
                         onPress={onPressJoin2}
@@ -61,7 +65,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                 </View>
                 {/* Third Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Card 3</Text>
+                    <Text style={styles.cardText}>Kan Toplama</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined3 && styles.joinedButton]}
                         onPress={onPressJoin3}
@@ -93,13 +97,13 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 10,
+        borderRadius: 5,
     },
     button1: {
         backgroundColor: 'red',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 10,
+        borderRadius: 30,
     },
     buttonText: {
         fontSize: 16,
@@ -139,4 +143,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CommunityCenterScreen;
+export default HelpCenterScreen;

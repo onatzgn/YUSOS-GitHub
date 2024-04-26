@@ -10,11 +10,11 @@ const Stack = createStackNavigator();
 const CommunityNavigator = () => {
     return (
         <Stack.Navigator>
-            <Stack.Screen
+            {/* <Stack.Screen
                 name="Community"
                 component={CommunityScreen}
                 options = {{ headerShown: false}}
-            />
+            /> */}
             <Stack.Screen
                 name="HelpCenterScreen"
                 component={HelpCenterScreen}
