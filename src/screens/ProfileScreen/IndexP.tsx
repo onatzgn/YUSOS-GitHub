@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
-import styles from './styles'; // Importing styles from styles.ts
+import styles from './styles'; // Importing styles from styles.js
 
 const ProfileScreen = () => {
   const [userInfo, setUserInfo] = useState({
     name: "John Doe",
     profileImage: require('./profile.jpg'),
-    // Diğer kullanıcı bilgileri buraya eklenebilir
+    // Add other user information here
+    kanGrubu: "",
+    aileIrtibatNo: "",
+    saglikSorunlari: "",
+    adres: "",
+    diger: ""
   });
 
+  const [isEditingInfo, setIsEditingInfo] = useState(false); // State to manage visibility of edit info modal
+
   const changeProfileImage = () => {
-    // Profil fotoğrafını değiştirme fonksiyonu
-    // burası deneme
+    // Logic to change profile image
   };
 
   const changeUserInfo = () => {
+    if (isEditingInfo) {
+      // Save user info
+      setIsEditingInfo(false); // Disable editing
+    } else {
+      setIsEditingInfo(true); // Enable editing
+    }
   };
+  
 
+  const saveUserInfo = () => {
+    setIsEditingInfo(false); // Hide edit info modal
+    // Logic to save user info
+  };
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
@@ -24,7 +41,6 @@ const ProfileScreen = () => {
         <Text> </Text>
         <View style={styles.profileContainer}>
           <Image source={userInfo.profileImage} style={styles.profileImage} />
-          {/* "Change Profile Picture" butonu */}
           <TouchableOpacity onPress={changeProfileImage} style={styles.changeProfileButton}>
             <Text style={styles.plusSign}>+</Text>
           </TouchableOpacity>
@@ -33,23 +49,74 @@ const ProfileScreen = () => {
         <View style={styles.infoContainer}>
           <View style={styles.infoHeaderContainer}>
             <Text style={styles.infoHeading}>Bilgiler</Text>
-            {/* "Edit Profile" butonu */}
             <TouchableOpacity onPress={changeUserInfo} style={styles.editInfoButton}>
               <Text style={styles.plusSign}>+</Text>
             </TouchableOpacity>
           </View>
-          {/* Kullanıcı bilgilerinin gösterileceği kutu buraya eklenebilir */}
-          <Text>
-            Kan Grubu: {"\n\n"}
-            Aile İrtibat No: {"\n\n"}
-            Sağlık Sorunları: {"\n\n"}
-            Adres: {"\n\n"}
-            Diğer:
-          </Text>
+          <View style={styles.userInfoItem}>
+            <Text style={styles.userInfoTitle}>Kan Grubu:</Text>
+            {isEditingInfo ? (
+              <TextInput
+                style={styles.userInfoInput}
+                value={userInfo.kanGrubu}
+                onChangeText={(text) => setUserInfo({ ...userInfo, kanGrubu: text })}
+              />
+            ) : (
+              <Text style={styles.userInfoText}>{userInfo.kanGrubu}</Text>
+            )}
+          </View>
+          <View style={styles.userInfoItem}>
+            <Text style={styles.userInfoTitle}>Aile İrtibat No:</Text>
+            {isEditingInfo ? (
+              <TextInput
+                style={styles.userInfoInput}
+                value={userInfo.aileIrtibatNo}
+                onChangeText={(text) => setUserInfo({ ...userInfo, aileIrtibatNo: text })}
+              />
+            ) : (
+              <Text style={styles.userInfoText}>{userInfo.aileIrtibatNo}</Text>
+            )}
+          </View>
+          <View style={styles.userInfoItem}>
+            <Text style={styles.userInfoTitle}>Sağlık Sorunları:</Text>
+            {isEditingInfo ? (
+              <TextInput
+                style={styles.userInfoInput}
+                value={userInfo.saglikSorunlari}
+                onChangeText={(text) => setUserInfo({ ...userInfo, saglikSorunlari: text })}
+              />
+            ) : (
+              <Text style={styles.userInfoText}>{userInfo.saglikSorunlari}</Text>
+            )}
+          </View>
+          <View style={styles.userInfoItem}>
+            <Text style={styles.userInfoTitle}>Adres:</Text>
+            {isEditingInfo ? (
+              <TextInput
+                style={styles.userInfoInput}
+                value={userInfo.adres}
+                onChangeText={(text) => setUserInfo({ ...userInfo, adres: text })}
+              />
+            ) : (
+              <Text style={styles.userInfoText}>{userInfo.adres}</Text>
+            )}
+          </View>
+          <View style={styles.userInfoItem}>
+            <Text style={styles.userInfoTitle}>Diğer:</Text>
+            {isEditingInfo ? (
+              <TextInput
+                style={styles.userInfoInput}
+                value={userInfo.diger}
+                onChangeText={(text) => setUserInfo({ ...userInfo, diger: text })}
+              />
+            ) : (
+              <Text style={styles.userInfoText}>{userInfo.diger}</Text>
+            )}
+          </View>
         </View>
         <View style={styles.activitiesContainer}>
           <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-          {/* Kullanıcının katıldığı geçmiş faaliyetlerin gösterileceği kutu buraya eklenebilir */}
+          {/* Placeholder text for activities */}
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. {"\n"}
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.{"\n\n"}
@@ -61,6 +128,8 @@ const ProfileScreen = () => {
         </View>
       </View>
 
+      {/* Edit Info Modal */}
+      {/* Modal content */}
     </ScrollView>
   );
 };
