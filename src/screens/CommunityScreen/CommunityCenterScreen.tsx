@@ -43,7 +43,7 @@ const CommunityCenterScreen = ({ navigation }) => {
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Community Center</Text>
+                    <Text style={styles.cardText}>Corba Dagitim</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined1 && styles.joinedButton]}
                         
