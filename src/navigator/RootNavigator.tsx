@@ -201,10 +201,12 @@ function MainTabNavigator() {
         <Tab.Screen
         name="SağlıkTalep"
         component={HealthReqScreen}
+        }}
       />
         <Tab.Screen
         name="SOS"
         component={SOSScreen}
+        }}
       />
       <Tab.Screen
         name="Yardım Merkezi"

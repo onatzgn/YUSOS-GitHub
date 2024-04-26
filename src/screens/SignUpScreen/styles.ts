@@ -47,4 +47,8 @@ export default StyleSheet.create({
     fontWeight: 'bold', // Kalın yazı
     color: '#2e76e8', // Link rengi
   },
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 8895ce215197d984f3a7cd13d0fabf3d5c154cd0

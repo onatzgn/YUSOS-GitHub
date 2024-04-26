@@ -53,4 +53,8 @@ export default StyleSheet.create({
     paddingLeft: 5,
     color: 'blue',
   },
+<<<<<<< HEAD
 });
+=======
+});
+>>>>>>> 8895ce215197d984f3a7cd13d0fabf3d5c154cd0

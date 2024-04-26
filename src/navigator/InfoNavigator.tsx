@@ -12,6 +12,7 @@ const InfoNavigator = () => {
             <Stack.Screen
                 name="Info"
                 component={InfoScreen}
+                options = {{headerShown: false}}
             />
         </Stack.Navigator>
     );

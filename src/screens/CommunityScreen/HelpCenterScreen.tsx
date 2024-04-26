@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert, ScrollView } from 'react-native';
 
 const HelpCenterScreen = ({ navigation }) => {
     const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
     const [isJoined2, setIsJoined2] = useState(false); // State to track if joined for card 2
-    const [isJoined3, setIsJoined3] = useState(false); // State to track if joined for card 3
+    const [isJoined3, setIsJoined3] = useState(false);
+    const [isJoined4, setIsJoined4] = useState(false); // State to track if joined for card 3
 
     const onPressHelpCenter = () => {
         navigation.navigate('HelpCenterScreen');
@@ -29,7 +30,13 @@ const HelpCenterScreen = ({ navigation }) => {
         Alert.alert("Joined")
     };
 
+    const onPressJoin4 = () => {
+        setIsJoined4(true);
+        Alert.alert("Joined")
+    };
+
     return (
+        <ScrollView>
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button1}>
@@ -42,7 +49,7 @@ const HelpCenterScreen = ({ navigation }) => {
             <View style={styles.cardContainer}>
                 {/* First Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Help Center</Text>
+                    <Text style={styles.cardText}>Mary Jane needs Help!</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined1 && styles.joinedButton]}
                         
@@ -54,7 +61,7 @@ const HelpCenterScreen = ({ navigation }) => {
                 </View>
                 {/* Second Card */}
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Kizilay Cadiri</Text>
+                    <Text style={styles.cardText}>Lois Lane needs Help!</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined2 && styles.joinedButton]}
                         onPress={onPressJoin2}
@@ -63,9 +70,9 @@ const HelpCenterScreen = ({ navigation }) => {
                         <Text style={[styles.buttonText, isJoined2 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
-                {/* Third Card */}
+                
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Kan Toplama</Text>
+                    <Text style={styles.cardText}>Gwen Stacy needs Help!</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined3 && styles.joinedButton]}
                         onPress={onPressJoin3}
@@ -75,8 +82,20 @@ const HelpCenterScreen = ({ navigation }) => {
                         <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
+                <View style={styles.card}>
+                    <Text style={styles.cardText}>Peggy Carter needs Help!</Text>
+                    <TouchableOpacity
+                        style={[styles.addButton, isJoined4 && styles.joinedButton]}
+                        onPress={onPressJoin4}
+                        disabled={isJoined4}
+                
+                    >
+                        <Text style={[styles.buttonText, isJoined4 && styles.joinedText]}>Katıl</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </SafeAreaView>
+        </ScrollView>
     );
 };
 
@@ -92,6 +111,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 20,
         marginBottom: 20,
+        marginTop: 70
     },
     button: {
         backgroundColor: 'lightblue',
@@ -140,6 +160,11 @@ const styles = StyleSheet.create({
     },
     joinedText: {
         color: 'white',
+    },
+    scrollViewContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 
