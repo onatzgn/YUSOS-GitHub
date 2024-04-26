@@ -72,7 +72,7 @@ const HelpCenterScreen = ({ navigation }) => {
                 </View>
                 
                 <View style={styles.card}>
-                    <Text style={styles.cardText}>Gewn Stacy needs Help!</Text>
+                    <Text style={styles.cardText}>Gwen Stacy needs Help!</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined3 && styles.joinedButton]}
                         onPress={onPressJoin3}
