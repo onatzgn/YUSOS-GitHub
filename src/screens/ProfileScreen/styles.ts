@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -9,12 +10,12 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    minHeight: height, // Ensure the content is at least the height of the screen
+    minHeight: height,
   },
   profileContainer: {
     alignItems: 'center',
     marginBottom: 20,
-    position: 'relative', // Add relative positioning for containing absolute positioned button
+    position: 'relative',
   },
   profileImage: {
     width: 150,
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   changeProfileButton: {
     position: 'absolute',
     bottom: 35,
-    right: 110,
+    right: 100,
     backgroundColor: 'blue',
     borderRadius: 20,
     width: 40,
@@ -55,10 +56,11 @@ const styles = StyleSheet.create({
   infoContainer: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 5,
+    borderRadius: 20, // Adjusting border radius for oval-ness
     padding: 10,
     marginBottom: 10,
-    position: 'relative', // Adding position relative to contain absolute positioned button
+    position: 'relative',
+    width: width * 0.8,
   },
   infoHeaderContainer: {
     flexDirection: 'row',
@@ -73,10 +75,11 @@ const styles = StyleSheet.create({
   activitiesContainer: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 5,
+    borderRadius: 20, // Adjusting border radius for oval-ness
     padding: 10,
     marginBottom: 10,
-    position: 'relative', // Adding position relative to contain absolute positioned button
+    position: 'relative',
+    width: width * 0.8,
   },
   activitiesHeading: {
     fontSize: 18,
