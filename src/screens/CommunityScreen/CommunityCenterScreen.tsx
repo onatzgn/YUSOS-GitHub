@@ -36,7 +36,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.button1}  >
+                <TouchableOpacity style={styles.button1} onPress = {() => {}} >
                     <Text style={styles.buttonText}>Topluluk Merkezi</Text>
                 </TouchableOpacity>
             </View>
