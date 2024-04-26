@@ -1,5 +1,4 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import { FontAwesome5 } from '@expo/vector-icons';
 
 const { height, width } = Dimensions.get('window');
 
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 20, // Adjusting border radius for oval-ness
+    borderRadius: 20,
     padding: 10,
     marginBottom: 10,
     position: 'relative',
@@ -72,10 +71,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  userInfoItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+  },
+  userInfoTitle: {
+    fontWeight: 'bold',
+    marginRight: 10,
+  },
+  userInfoInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'gray',
+    borderRadius: 5,
+    padding: 5,
+  },
+  userInfoText: {
+    flex: 1,
+  },
   activitiesContainer: {
     borderWidth: 1,
     borderColor: 'gray',
-    borderRadius: 20, // Adjusting border radius for oval-ness
+    borderRadius: 20,
     padding: 10,
     marginBottom: 10,
     position: 'relative',
