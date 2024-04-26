@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert, ScrollView } from 'react-native';
 
 const HelpCenterScreen = ({ navigation }) => {
     const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
@@ -30,6 +30,7 @@ const HelpCenterScreen = ({ navigation }) => {
     };
 
     return (
+        <ScrollView>
         <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button1}>
@@ -77,6 +78,7 @@ const HelpCenterScreen = ({ navigation }) => {
                 </View>
             </View>
         </SafeAreaView>
+        </ScrollView>
     );
 };
 
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 20,
         marginBottom: 20,
+        marginTop: 70
     },
     button: {
         backgroundColor: 'lightblue',
@@ -140,6 +143,11 @@ const styles = StyleSheet.create({
     },
     joinedText: {
         color: 'white',
+    },
+    scrollViewContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

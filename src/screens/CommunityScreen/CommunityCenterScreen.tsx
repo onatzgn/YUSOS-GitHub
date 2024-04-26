@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert ,ScrollView} from 'react-native';
 
 const CommunityCenterScreen = ({ navigation }) => {
     const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
@@ -30,7 +30,8 @@ const CommunityCenterScreen = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={styles.container}>
+        <ScrollView >
+            <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
                     <Text style={styles.buttonText}>Yardım Merkezi</Text>
@@ -77,6 +78,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                 </View>
             </View>
         </SafeAreaView>
+        </ScrollView>
     );
 };
 
@@ -92,6 +94,7 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 20,
         marginBottom: 20,
+        marginTop: 70
     },
     button: {
         backgroundColor: 'lightblue',
@@ -128,6 +131,11 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    scrollViewContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     addButton: {
         backgroundColor: 'lightblue',
