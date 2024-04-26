@@ -125,10 +125,14 @@ import InfoNavigator from "./InfoNavigator"
 import ProfileNavigator from "./ProfileNavigator"
 //import ActionNavigator from "./ActionNavigator"
 import CustomTabBarButton from './CustomTabBarButton';
+import HealthReqScreen from '../screens/HealthReqScreen/IndexHR';
+import SOSScreen from '../screens/SOSScreen/IndexSOS';
 
 import { TouchableOpacity, View, Text, StyleSheet, Modal } from "react-native"
-
+import ReqNavigator from './ReqNavigator';
+import { createStackNavigator } from '@react-navigation/stack';
 const Tab = createBottomTabNavigator ();
+const Stack = createStackNavigator();
 
 function RootNavigator(){
 
@@ -175,7 +179,9 @@ function RootNavigator(){
                         <CustomTabBarButton {...props} />
                     )
                 }}
+
             />
+
             <Tab.Screen
                 name="Yardım Merkezi"
                 component={InfoNavigator}

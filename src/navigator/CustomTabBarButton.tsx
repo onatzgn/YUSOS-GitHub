@@ -122,8 +122,30 @@ export default CustomTabBarButton;
 import React, { useState } from 'react';
 import { TouchableOpacity, View, Text, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native';
 import { AntDesign, FontAwesome6, FontAwesome5, Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import SOSScreen from "../screens/SOSScreen/IndexSOS"
+import HealthReqScreen from "../screens/HealthReqScreen/IndexHR"
+import ReqNavigator from './ReqNavigator';
 
-const CustomTabBarButton = ({ onPress }) => {
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+const SOSStackScreen = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="SOSScreen" component={SOSScreen} />
+  </Stack.Navigator>
+);
+
+const HealthReqStackScreen = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="HealthReqScreen" component={HealthReqScreen} />
+  </Stack.Navigator>
+);
+
+const CustomTabBarButton = () => {
+    const navigation = useNavigation();
+    //const navigation = useNavigation();
     const [modalVisible, setModalVisible] = useState(false);
 
     const toggleModal = () => {
@@ -132,6 +154,24 @@ const CustomTabBarButton = ({ onPress }) => {
 
     const closeModal = () => {
         setModalVisible(false);
+    };
+
+    const navigateToSOSScreen = () => {
+        if (navigation) {
+            navigation.navigate('SOSScreen');            
+            closeModal();
+        } else {
+            console.log("Navigation prop is not available.");
+        }
+    };
+
+    const navigateToHealthReqScreen = () => {
+        if (navigation) {
+            navigation.navigate('HealthReqScreen');
+            closeModal();
+        } else {
+            console.log("Navigation prop is not available.");
+        }
     };
 
     return (
@@ -155,19 +195,13 @@ const CustomTabBarButton = ({ onPress }) => {
                             <View style={styles.buttonContainer}>
                                 <TouchableOpacity
                                     style={[styles.modalButton, styles.redButton]}
-                                    onPress={() => {
-                                        // Perform action 2
-                                        closeModal();
-                                    }}
+                                    onPress={navigateToSOSScreen}
                                 >
                                     <FontAwesome5 name="exclamation" size={24} color="white" />
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[styles.modalButton, styles.greenButton]}
-                                    onPress={() => {
-                                        // Perform action 1
-                                        closeModal();
-                                    }}
+                                    onPress={navigateToHealthReqScreen}
                                 >
                                     <FontAwesome6 name="user-doctor" size={24} color="white" />
                                 </TouchableOpacity>
