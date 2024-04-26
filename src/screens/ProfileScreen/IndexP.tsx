@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
 import styles from './styles'; // Importing styles from styles.ts
 
 const ProfileScreen = () => {
@@ -11,13 +11,12 @@ const ProfileScreen = () => {
 
   const changeProfileImage = () => {
     // Profil fotoğrafını değiştirme fonksiyonu
-    // Şimdilik boş bırakıyoruz
+    // burası deneme
   };
 
   const changeUserInfo = () => {
-    // Kullanıcı bilgilerini değiştirme fonksiyonu
-    // Şimdilik boş bırakıyoruz
   };
+
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
@@ -61,6 +60,7 @@ const ProfileScreen = () => {
           </Text>
         </View>
       </View>
+
     </ScrollView>
   );
 };
