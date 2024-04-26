@@ -10,11 +10,7 @@ function SignUpScreen({ navigation }) {
       <TextInput placeholder="Okul Numarası" style={styles.input} keyboardType="numeric" />
       <TextInput placeholder="Mail" style={styles.input} keyboardType="email-address" />
       <TextInput placeholder="Telefon Numarası" style={styles.input} keyboardType="phone-pad" />
-<<<<<<< HEAD
-      <TextInput placeholder="********" style={styles.input} secureTextEntry />
-=======
       <TextInput placeholder="****" style={styles.input} secureTextEntry />
->>>>>>> 8895ce215197d984f3a7cd13d0fabf3d5c154cd0
       <TouchableOpacity style={styles.button} onPress={() => {/* Handle sign up */}}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
@@ -27,8 +23,4 @@ function SignUpScreen({ navigation }) {
   );
 }
 
-<<<<<<< HEAD
 export default SignUpScreen;
-=======
-export default SignUpScreen;
->>>>>>> 8895ce215197d984f3a7cd13d0fabf3d5c154cd0
