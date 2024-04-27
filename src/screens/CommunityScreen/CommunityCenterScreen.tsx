@@ -34,10 +34,10 @@ const CommunityCenterScreen = ({ navigation }) => {
             <SafeAreaView style={styles.container}>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
-                    <Text style={styles.buttonText}>Yardım Merkezi</Text>
+                    <Text style={styles.buttonText}>Acil Durum</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button1} onPress = {() => {}} >
-                    <Text style={styles.buttonText}>Topluluk Merkezi</Text>
+                    <Text style={styles.buttonText}>   Topluluk   </Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
@@ -77,6 +77,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
+            
         </SafeAreaView>
         </ScrollView>
     );
@@ -100,13 +101,15 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 55,
+        marginLeft: 25,
     },
     button1: {
-        backgroundColor: 'red',
+        backgroundColor: '#2e76e8',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
+        marginRight: 25,
     },
     buttonText: {
         fontSize: 16,
@@ -144,7 +147,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     joinedButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#2e76e8',
     },
     joinedText: {
         color: 'white',

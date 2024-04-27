@@ -1,3 +1,4 @@
+/*
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert, ScrollView } from 'react-native';
 
@@ -47,7 +48,7 @@ const HelpCenterScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
-                {/* First Card */}
+
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Mary Jane needs Help!</Text>
                     <TouchableOpacity
@@ -59,7 +60,7 @@ const HelpCenterScreen = ({ navigation }) => {
                         <Text style={[styles.buttonText, isJoined1 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
-                {/* Second Card */}
+
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Lois Lane needs Help!</Text>
                     <TouchableOpacity
@@ -117,10 +118,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 55,
     },
     button1: {
-        backgroundColor: 'red',
+        backgroundColor: '#2e76e8',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 30,
@@ -128,6 +129,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 16,
         fontWeight: 'bold',
+        color: 'black',
     },
     cardContainer: {
         width: '100%',
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     joinedButton: {
-        backgroundColor: 'red',
+        backgroundColor: '#2e76e8',
     },
     joinedText: {
         color: 'white',
@@ -165,6 +167,107 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+});
+
+export default HelpCenterScreen;
+
+
+*/
+// HelpCenterScreen.js
+// HelpCenterScreen.js
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, ScrollView } from 'react-native';
+import Card from './Card'; 
+
+const HelpCenterScreen = ({ navigation, route }) => {
+    
+    const [helpRequests, setHelpRequests] = useState([]);
+
+    useEffect(() => {
+        if (route.params && route.params.helpRequests) {
+            setHelpRequests(route.params.helpRequests);
+        }
+    }, [route.params]);
+
+    const [joinedRequests, setJoinedRequests] = useState([]); // Katılım yapılan isteklerin listesini tutan state
+
+    const onPressHelpCenter = () => {
+        navigation.navigate('HelpCenterScreen');
+    };
+
+    const onPressCommunityCenter = () => {
+        navigation.navigate('CommunityCenterScreen');
+    };
+
+    const onPressJoin = (id) => {
+        setJoinedRequests([...joinedRequests, id]);
+        //Alert.alert("Joined");
+    };
+
+    return (
+        <ScrollView>
+            <SafeAreaView style={styles.container}>
+                <View style={styles.buttonsContainer}>
+                    <TouchableOpacity style={styles.button1}>
+                        <Text style={styles.buttonText}>Acil Durum</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={onPressCommunityCenter}>
+                        <Text style={styles.buttonText}>   Topluluk   </Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.cardContainer}>
+                    {helpRequests.slice(0).reverse().map(request => (
+                        <Card
+                            key={request.id}
+                            title={request.title}
+                            onPressJoin={() => onPressJoin(request.id)}
+                            disabled={joinedRequests.includes(request.id)}
+                        />
+                    ))}
+                </View>
+            </SafeAreaView>
+        </ScrollView>
+    );
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
+        paddingHorizontal: 20,
+        marginBottom: 20,
+        marginTop: 70
+    },
+    button: {
+        backgroundColor: 'lightblue',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 55,
+        marginRight: 25,
+    },
+    button1: {
+        backgroundColor: '#2e76e8',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 30,
+        marginLeft: 25,
+    },
+    buttonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: 'black',
+    },
+    cardContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
+        marginTop: 20,
     },
 });
 
