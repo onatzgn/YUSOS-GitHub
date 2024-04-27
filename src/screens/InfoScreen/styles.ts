@@ -63,7 +63,8 @@ export default StyleSheet.create({
     titleText: {
         fontSize: 30,
         fontWeight: 'bold',
-        marginTop: 10,
-        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
+        marginTop: 40,
+        color: '#000',
+        marginRight: 230, // Metin rengini gerektiği gibi ayarlayın.
     },
 });

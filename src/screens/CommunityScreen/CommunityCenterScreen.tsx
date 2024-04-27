@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#000', // Metin rengini gerektiği gibi ayarlayın.
         marginTop: 20,
+        marginRight: 120,
     },
 });
 
