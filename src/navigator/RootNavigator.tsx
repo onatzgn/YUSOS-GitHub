@@ -16,7 +16,24 @@ import SOSScreen from '../screens/SOSScreen/IndexSOS';
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const SOSStack = createStackNavigator();
+const HealthReqStack = createStackNavigator();
 
+function SOSScreens(){
+    return(
+        <SOSStack.Navigator screenOptions={{ headerShown: false }}>
+            <SOSStack.Screen name="SOS" component={SOSScreen} />
+        </SOSStack.Navigator>
+    );
+}
+
+function HealthReqScreens(){
+    return(
+        <HealthReqStack.Navigator screenOptions={{ headerShown: false }}>
+            <HealthReqStack.Screen name="HealthReq" component={HealthReqScreen} />
+        </HealthReqStack.Navigator>
+    );
+}
 // Authentication stack navigator
 function AuthStackScreens() {
   return (
@@ -74,14 +91,6 @@ function MainTabNavigator() {
                 }}
             />
             <Tab.Screen
-                name="Yardım Talep"
-                component={HealthReqScreen}
-            />
-            <Tab.Screen
-                name="SOS"
-                component={SOSScreen}
-            />
-            <Tab.Screen
                 name="Yardım Merkezi"
                 component={InfoNavigator}
                 options={{
@@ -109,6 +118,8 @@ function RootNavigator() {
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
       <RootStack.Screen name="Auth" component={AuthStackScreens} />
       <RootStack.Screen name="Main" component={MainTabNavigator} />
+      <RootStack.Screen name="SOSScreen" component={SOSScreens} />
+      <RootStack.Screen name="HealthReqScreen" component={HealthReqScreens} />
     </RootStack.Navigator>
   );
 }
