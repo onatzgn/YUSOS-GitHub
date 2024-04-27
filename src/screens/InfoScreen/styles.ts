@@ -12,7 +12,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         //marginBottom: 20, // Add spacing between rows
         marginLeft: 10,
-        marginTop: 50,
+        marginTop: 30,
     },
     container: {
         flex: 1, // Each container takes equal space within a row
@@ -59,5 +59,11 @@ export default StyleSheet.create({
     iconContainer: {
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    titleText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        marginTop: 10,
+        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
     },
 });
