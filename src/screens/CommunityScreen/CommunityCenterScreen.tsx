@@ -36,13 +36,14 @@ const CommunityCenterScreen = ({ navigation }) => {
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
+            <Text style={styles.titleText}>Yardım Merkezi</Text>
             <View style={styles.buttonsContainer}>
                 <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
                     <Text style={styles.buttonText}>Acil Durum</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button1} onPress = {() => {}} >
                     <Text style={styles.buttonText}>   Topluluk   </Text>
-                    
+
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
@@ -51,7 +52,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                     <Text style={styles.cardText}>Corba Dagitim</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined1 && styles.joinedButton]}
-                        
+
                         onPress={onPressJoin1}
                         disabled={isJoined1}
                     >
@@ -80,7 +81,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                         style={[styles.addButton, isJoined3 && styles.joinedButton]}
                         onPress={onPressJoin3}
                         disabled={isJoined3}
-                
+
                     >
                         <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>
                         {getJoinButtonText(isJoined3)}
@@ -88,7 +89,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            
+
         </SafeAreaView>
         </ScrollView>
     );
@@ -143,11 +144,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 10,
         paddingHorizontal: 10,
-        elevation: 3, 
-        shadowColor: '#000', 
-        shadowOffset: { width: 0, height: 2 }, 
-        shadowOpacity: 0.2, 
-        shadowRadius: 2, 
+        elevation: 3,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
     },
     cardText: {
         fontSize: 18,
@@ -171,7 +172,12 @@ const styles = StyleSheet.create({
     joinedText: {
         color: 'white',
     },
-    
+    titleText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
+        marginTop: 20,
+    },
 });
 
 export default CommunityCenterScreen;
