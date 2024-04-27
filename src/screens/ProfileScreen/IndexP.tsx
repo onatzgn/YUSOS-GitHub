@@ -29,7 +29,7 @@ const ProfileScreen = () => {
       setIsEditingInfo(true); // Enable editing
     }
   };
-  
+
 
   const saveUserInfo = () => {
     setIsEditingInfo(false); // Hide edit info modal
@@ -39,7 +39,7 @@ const ProfileScreen = () => {
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
       <View>
-        <Text> </Text>
+      <Text style={styles.titleText}>Profil</Text>
         <View style={styles.profileContainer}>
           <Image source={userInfo.profileImage} style={styles.profileImage} />
           <TouchableOpacity onPress={changeProfileImage} style={styles.changeProfileButton}>
