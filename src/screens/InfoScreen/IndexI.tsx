@@ -1,25 +1,29 @@
 import React, { useState } from 'react';
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
-import styles from './styles'; // Import styles from styles.ts
+import { AntDesign } from '@expo/vector-icons'; // Import AntDesign icon
+import { FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+import styles from './styles';
 
 const InfoScreen = () => {
-    const [showInfo, setShowInfo] = useState(false); // State to track if info container is visible
-    const [selectedInfo, setSelectedInfo] = useState(''); // State to track which info container is selected
+    const [showInfo, setShowInfo] = useState(false);
+    const [selectedInfo, setSelectedInfo] = useState('');
 
-    const handleContainerPress = (info: string) => {
-        // If the selected info is already open, close it
+    const handleContainerPress = (info) => {
         if (showInfo && selectedInfo === info) {
             setShowInfo(false);
             setSelectedInfo('');
         } else {
-            setSelectedInfo(info); // Set the selected info
-            setShowInfo(true); // Show the info container
+            setSelectedInfo(info);
+            setShowInfo(true);
         }
     };
 
     const handleCloseInfo = () => {
-        setShowInfo(false); // Hide the info container
-        setSelectedInfo(''); // Reset selected info
+        setShowInfo(false);
+        setSelectedInfo('');
     };
 
     return (
@@ -28,31 +32,48 @@ const InfoScreen = () => {
                 <View style={styles.rowContainer}>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Acil Durum Toplanma Alanları')}>
                         <Text style={styles.heading}>Acil Durum Toplanma Alanları</Text>
+                        {/* Wrap the icon in a View to center it */}
+                        <View style={styles.iconContainer}>
+                            <FontAwesome6 name="person-shelter" size={120} color="#2e76e8" />
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Telefon Numaraları')}>
-                        <Text style={styles.heading}>Telefon Numaraları</Text>
+                        <Text style={[styles.heading, {paddingBottom:20}]}>Telefon Numaraları</Text>
+                        <View style={styles.iconContainer}>
+                            <FontAwesome name="phone" size={120} color="#2e76e8" />
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.rowContainer}>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Yardım Toplama Noktaları')}>
-                        <Text style={styles.heading}>Yardım Toplama Noktaları</Text>
+                        <Text style={[styles.heading, {paddingBottom:10}]}>Yardım Toplama Noktaları</Text>
+                        <View style={styles.iconContainer}>
+                            <Ionicons name="bag-add" size={120} color="#2e76e8" />
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('İlk Yardım')}>
-                        <Text style={styles.heading}>İlk Yardım</Text>
+                        <Text style={[styles.heading, {paddingBottom:20}]}>İlk Yardım</Text>
+                        <View style={styles.iconContainer}>
+                            <FontAwesome6 name="bandage" size={120} color="#2e76e8" />
+                        </View>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.rowContainer}>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('NULL1')}>
-                        <Text style={styles.heading}>NULL1</Text>
+                        <Text style={[styles.heading, { paddingBottom: 20 }]}>NULL1</Text>
+                        <View style={styles.iconContainer}>
+                            <AntDesign name="star" size={120} color="#2e76e8" />
+                        </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('NULL2')}>
-                        <Text style={styles.heading}>NULL2</Text>
+                        <Text style={[styles.heading, {paddingBottom: 20}]}>NULL2</Text>
+                        <View style={styles.iconContainer}>
+                            <AntDesign name="star" size={120} color="#2e76e8" />
+                        </View>
                     </TouchableOpacity>
                 </View>
-                {/* Add more row containers for additional sections as needed */}
             </ScrollView>
-            
-            {/* Info container */}
+
             {showInfo && (
                 <View style={styles.infoContainer}>
                     <TouchableOpacity
@@ -62,8 +83,8 @@ const InfoScreen = () => {
                         <Text style={styles.closeButtonText}>X</Text>
                     </TouchableOpacity>
 
+                    {/* Render selectedInfo within a Text component */}
                     <Text>{selectedInfo}</Text>
-                    {/* Add content for the selected info */}
                 </View>
             )}
         </View>
