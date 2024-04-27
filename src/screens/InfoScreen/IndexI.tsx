@@ -1,69 +1,95 @@
-import { StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
+import { AntDesign } from '@expo/vector-icons'; // Import AntDesign icon
+import { FontAwesome6 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons';
+import styles from './styles';
 
-const TAB_HEIGHT = 50; // Assuming each "tab" is 50 pixels in height
+const InfoScreen = () => {
+    const [showInfo, setShowInfo] = useState(false);
+    const [selectedInfo, setSelectedInfo] = useState('');
 
-export default StyleSheet.create({
-    scrollViewContainer: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    rowContainer: {
-        flexDirection: 'row',
-        //marginBottom: 20, // Add spacing between rows
-        marginLeft: 10,
-        marginTop: 30,
-    },
-    container: {
-        flex: 1, // Each container takes equal space within a row
-        height: TAB_HEIGHT * 6, // Each container is 6 tabs long
-        paddingHorizontal: 20, // Add horizontal padding
-        paddingVertical: 10, // Add vertical padding
-        backgroundColor: '#f0f0f0', // Background color for containers
-        borderRadius: 10, // Add border radius for containers
-        borderWidth: 1, // Add border width
-        borderColor: 'black', // Change border color to black
-        marginRight: 10, // Add spacing between containers within a row
-    },
-    heading: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 10, // Add spacing between heading and content
-    },
-    // New style for the info container
-    infoContainer: {
-        position: 'absolute',
-        top: 100, // Adjust the top position as needed
-        left: 10, // Adjust the left position as needed
-        width: '90%', // Adjust the width as needed
-        backgroundColor: 'lightblue', // Background color for the info container
-        borderRadius: 10, // Add border radius for the info container
-        padding: 20, // Add padding for the content inside the info container
-        marginLeft: 10,
-        height: TAB_HEIGHT * 8, // Each container is 8 tabs long
-    },
-    closeButtonContainer: {
-        position: 'absolute',
-        top: 10,
-        right: 10,
-        padding: 10,
-        borderRadius: 10,
-        backgroundColor: 'white', // Change background color to red
+    const handleContainerPress = (info) => {
+        if (showInfo && selectedInfo === info) {
+            setShowInfo(false);
+            setSelectedInfo('');
+        } else {
+            setSelectedInfo(info);
+            setShowInfo(true);
+        }
+    };
 
-    },
-    closeButtonText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    // New style for the icon container
-    iconContainer: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    titleText: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        marginTop: 10,
-        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
-    },
-});
+    const handleCloseInfo = () => {
+        setShowInfo(false);
+        setSelectedInfo('');
+    };
+
+    return (
+        <View style={{ flex: 1 }}>
+            <ScrollView contentContainerStyle={styles.scrollViewContainer}>
+            <Text style={styles.titleText}>Rehber</Text>
+                <View style={styles.rowContainer}>
+                    <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Acil Durum Toplanma Alanları')}>
+                        <Text style={styles.heading}>Acil Durum Toplanma Alanları</Text>
+                        {/* Wrap the icon in a View to center it */}
+                        <View style={styles.iconContainer}>
+                            <FontAwesome6 name="person-shelter" size={120} color="#2e76e8" />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Telefon Numaraları')}>
+                        <Text style={[styles.heading, {paddingBottom:20}]}>Telefon Numaraları</Text>
+                        <View style={styles.iconContainer}>
+                            <FontAwesome name="phone" size={120} color="#2e76e8" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.rowContainer}>
+                    <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Yardım Toplama Noktaları')}>
+                        <Text style={[styles.heading, {paddingBottom:10}]}>Yardım Toplama Noktaları</Text>
+                        <View style={styles.iconContainer}>
+                            <Ionicons name="bag-add" size={120} color="#2e76e8" />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('İlk Yardım')}>
+                        <Text style={[styles.heading, {paddingBottom:20}]}>İlk Yardım</Text>
+                        <View style={styles.iconContainer}>
+                            <FontAwesome6 name="bandage" size={120} color="#2e76e8" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.rowContainer}>
+                    <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('NULL1')}>
+                        <Text style={[styles.heading, { paddingBottom: 20 }]}>NULL1</Text>
+                        <View style={styles.iconContainer}>
+                            <AntDesign name="star" size={120} color="#2e76e8" />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('NULL2')}>
+                        <Text style={[styles.heading, {paddingBottom: 20}]}>NULL2</Text>
+                        <View style={styles.iconContainer}>
+                            <AntDesign name="star" size={120} color="#2e76e8" />
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            </ScrollView>
+
+            {showInfo && (
+                <View style={styles.infoContainer}>
+                    <TouchableOpacity
+                        style={styles.closeButtonContainer}
+                        onPress={handleCloseInfo}
+                    >
+                        <Text style={styles.closeButtonText}>X</Text>
+                    </TouchableOpacity>
+
+                    {/* Render selectedInfo within a Text component */}
+                    <Text>{selectedInfo}</Text>
+                </View>
+            )}
+        </View>
+    );
+};
+
+export default InfoScreen;
