@@ -29,6 +29,10 @@ const CommunityCenterScreen = ({ navigation }) => {
         Alert.alert("Joined")
     };
 
+    const getJoinButtonText = (isJoined) => {
+        return isJoined ? "Katıldın" : "Katıl";
+    };
+
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
@@ -38,6 +42,7 @@ const CommunityCenterScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.button1} onPress = {() => {}} >
                     <Text style={styles.buttonText}>   Topluluk   </Text>
+                    
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
@@ -50,7 +55,9 @@ const CommunityCenterScreen = ({ navigation }) => {
                         onPress={onPressJoin1}
                         disabled={isJoined1}
                     >
-                        <Text style={[styles.buttonText, isJoined1 && styles.joinedText]}>Katıl</Text>
+                        <Text style={[styles.buttonText, isJoined1 && styles.joinedText]}>
+                        {getJoinButtonText(isJoined1)}
+                            </Text>
                     </TouchableOpacity>
                 </View>
                 {/* Second Card */}
@@ -61,7 +68,9 @@ const CommunityCenterScreen = ({ navigation }) => {
                         onPress={onPressJoin2}
                         disabled={isJoined2}
                     >
-                        <Text style={[styles.buttonText, isJoined2 && styles.joinedText]}>Katıl</Text>
+                        <Text style={[styles.buttonText, isJoined2 && styles.joinedText]}>
+                        {getJoinButtonText(isJoined2)}
+                            </Text>
                     </TouchableOpacity>
                 </View>
                 {/* Third Card */}
@@ -73,7 +82,9 @@ const CommunityCenterScreen = ({ navigation }) => {
                         disabled={isJoined3}
                 
                     >
-                        <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>Katıl</Text>
+                        <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>
+                        {getJoinButtonText(isJoined3)}
+                            </Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -119,17 +130,24 @@ const styles = StyleSheet.create({
         width: '100%',
         paddingHorizontal: 20,
         marginTop: 20,
+
     },
     card: {
+        //borderWidth: 1,
         width: '100%',
-        height: 100,
-        backgroundColor: 'lightgray',
+        height: 70,
+        backgroundColor: 'white',
         marginBottom: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: 10,
         paddingHorizontal: 10,
+        elevation: 3, 
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.2, 
+        shadowRadius: 2, 
     },
     cardText: {
         fontSize: 18,
@@ -141,17 +159,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     addButton: {
-        backgroundColor: 'lightblue',
+        backgroundColor: '#2e76e8',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 10,
+        borderWidth: 1,
     },
     joinedButton: {
-        backgroundColor: '#2e76e8',
+        backgroundColor: 'black',
     },
     joinedText: {
         color: 'white',
     },
+    
 });
 
 export default CommunityCenterScreen;

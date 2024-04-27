@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/FontAwesome'; // Varsayılan profil resmi için FontAwesome ikonlarını kullanıyoruz
+
 
 const Card = ({ title, onPressJoin, disabled }) => {
     const [joined, setJoined] = useState(false);
@@ -34,6 +36,7 @@ const Card = ({ title, onPressJoin, disabled }) => {
 
     return (
         <View style={[styles.card, { height: 70 }]}>
+            <Icon name="user-circle-o" size={30} color="#888" />
             <Text style={styles.cardText}>{title}</Text>
             <TouchableOpacity
                 style={[styles.addButton, joined ? styles.joinedButton : null]}
@@ -69,6 +72,7 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: 16,
         fontWeight: 'bold',
+        marginRight: 60,
     },
     addButton: {
         backgroundColor: '#FF565E',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
 import styles from './styles'; // Importing styles from styles.js
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const ProfileScreen = () => {
   const [userInfo, setUserInfo] = useState({
@@ -50,7 +51,7 @@ const ProfileScreen = () => {
           <View style={styles.infoHeaderContainer}>
             <Text style={styles.infoHeading}>Bilgiler</Text>
             <TouchableOpacity onPress={changeUserInfo} style={styles.editInfoButton}>
-              <Text style={styles.plusSign}>+</Text>
+            <FontAwesome5 name="pen" size={16} color="black" />
             </TouchableOpacity>
           </View>
           <View style={styles.userInfoItem}>
