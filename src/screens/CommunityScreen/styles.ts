@@ -20,14 +20,14 @@ export default StyleSheet.create({
         marginLeft: 10,
         marginTop: 10,
     },
-    
+
     heading: {
         fontSize: 20,
         fontWeight: 'bold',
         marginBottom: 10, // Add spacing between heading and content
     },
     // New style for the info container
-    
+
     closeButtonContainer: {
         position: 'absolute',
         top: 10,
@@ -40,5 +40,11 @@ export default StyleSheet.create({
     closeButtonText: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    titleText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
+        marginTop: 20,
     },
 });
