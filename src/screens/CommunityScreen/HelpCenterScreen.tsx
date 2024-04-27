@@ -53,7 +53,7 @@ const HelpCenterScreen = ({ navigation }) => {
                     <Text style={styles.cardText}>Mary Jane needs Help!</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined1 && styles.joinedButton]}
-                        
+
                         onPress={onPressJoin1}
                         disabled={isJoined1}
                     >
@@ -71,14 +71,14 @@ const HelpCenterScreen = ({ navigation }) => {
                         <Text style={[styles.buttonText, isJoined2 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
                 </View>
-                
+
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Gwen Stacy needs Help!</Text>
                     <TouchableOpacity
                         style={[styles.addButton, isJoined3 && styles.joinedButton]}
                         onPress={onPressJoin3}
                         disabled={isJoined3}
-                
+
                     >
                         <Text style={[styles.buttonText, isJoined3 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
@@ -89,7 +89,7 @@ const HelpCenterScreen = ({ navigation }) => {
                         style={[styles.addButton, isJoined4 && styles.joinedButton]}
                         onPress={onPressJoin4}
                         disabled={isJoined4}
-                
+
                     >
                         <Text style={[styles.buttonText, isJoined4 && styles.joinedText]}>Katıl</Text>
                     </TouchableOpacity>
@@ -178,10 +178,10 @@ export default HelpCenterScreen;
 // HelpCenterScreen.js
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, ScrollView } from 'react-native';
-import Card from './Card'; 
+import Card from './Card';
 
 const HelpCenterScreen = ({ navigation, route }) => {
-    
+
     const [helpRequests, setHelpRequests] = useState([]);
 
     useEffect(() => {
@@ -208,6 +208,7 @@ const HelpCenterScreen = ({ navigation, route }) => {
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
+            <Text style={styles.titleText}>Yardım Merkezi</Text>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={styles.button1}>
                         <Text style={styles.buttonText}>Acil Durum</Text>
@@ -267,6 +268,12 @@ const styles = StyleSheet.create({
     cardContainer: {
         width: '100%',
         paddingHorizontal: 20,
+        marginTop: 20,
+    },
+    titleText: {
+        fontSize: 30,
+        fontWeight: 'bold',
+        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
         marginTop: 20,
     },
 });
