@@ -55,4 +55,9 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
     },
+    // New style for the icon container
+    iconContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
