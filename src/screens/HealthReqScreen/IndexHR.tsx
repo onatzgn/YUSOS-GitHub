@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native'; 
 
 const HealthReqScreen = () => {
+    const navigation = useNavigation(); 
+
     const [name, setName] = useState('');
     const [healthRequest, setHealthRequest] = useState('');
     const [requestSent, setRequestSent] = useState(false);
@@ -93,11 +96,18 @@ const HealthReqScreen = () => {
                     <Text style={styles.subtitle}>İsim: {name}</Text>
                     <Text style={styles.subtitle}>Sağlık Talebi: {healthRequest}</Text>
 
-                    <TouchableOpacity style={[styles.button, { backgroundColor: 'gray' }]} onPress={handleCancelRequest}>
+                    <TouchableOpacity style={[styles.button, { backgroundColor: '#FF565E' }]} onPress={handleCancelRequest}>
                         <Text style={styles.buttonText}>İptal Et</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.button, {backgroundColor: 'gray'}]} onPress={() => navigation.goBack()}>
+                        <Text style={styles.buttonText}>Kapat</Text>
                     </TouchableOpacity>
                 </>
             )}
+            
+            <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
+                <Ionicons name="arrow-back" size={24} color="black" />
+            </TouchableOpacity>
         </View>
     );
 };
@@ -157,6 +167,12 @@ const styles = StyleSheet.create({
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
+    },
+    goBackButton: {
+        position: 'absolute',
+        top: 70,
+        left: 10,
+        zIndex: 1,
     },
 });
 
