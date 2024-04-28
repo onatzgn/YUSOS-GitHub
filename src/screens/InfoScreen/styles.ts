@@ -1,6 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
-const TAB_HEIGHT = 50; // Assuming each "tab" is 50 pixels in height
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+const TAB_HEIGHT = 50; 
 
 export default StyleSheet.create({
     scrollViewContainer: {
@@ -10,61 +12,97 @@ export default StyleSheet.create({
     },
     rowContainer: {
         flexDirection: 'row',
-        //marginBottom: 20, // Add spacing between rows
-        marginLeft: 10,
-        marginTop: 30,
+        marginLeft: windowWidth * 0.027, 
+        marginTop: windowHeight * 0.04,
     },
     container: {
-        flex: 1, // Each container takes equal space within a row
-        height: TAB_HEIGHT * 6, // Each container is 6 tabs long
-        paddingHorizontal: 20, // Add horizontal padding
-        paddingVertical: 10, // Add vertical padding
-        backgroundColor: '#f0f0f0', // Background color for containers
-        borderRadius: 10, // Add border radius for containers
-        borderWidth: 1, // Add border width
-        borderColor: 'black', // Change border color to black
-        marginRight: 10, // Add spacing between containers within a row
+        flex: 1,
+        height: TAB_HEIGHT * 6, 
+        paddingHorizontal: windowWidth * 0.053, 
+        paddingVertical: windowHeight * 0.015, 
+        backgroundColor: '#f0f0f0', 
+        borderRadius: windowWidth * 0.027, 
+        borderWidth: 1, 
+        borderColor: 'black', 
+        marginRight: windowWidth * 0.027, 
     },
     heading: {
-        fontSize: 20,
+        fontSize: windowWidth * 0.054, 
         fontWeight: 'bold',
-        marginBottom: 10, // Add spacing between heading and content
+        marginBottom: windowHeight * 0.013,
     },
-    // New style for the info container
+   
     infoContainer: {
         position: 'absolute',
-        top: 100, // Adjust the top position as needed
-        left: 10, // Adjust the left position as needed
-        width: '90%', // Adjust the width as needed
-        backgroundColor: 'lightblue', // Background color for the info container
-        borderRadius: 10, // Add border radius for the info container
-        padding: 20, // Add padding for the content inside the info container
-        marginLeft: 10,
-        height: TAB_HEIGHT * 8, // Each container is 8 tabs long
+        top: windowHeight * 0.133, 
+        left: windowWidth * 0.027, 
+        width: '90%', 
+        backgroundColor: 'lightblue', 
+        borderRadius: windowWidth * 0.027,
+        padding: windowHeight * 0.03, 
+        height: TAB_HEIGHT * 8, 
     },
     closeButtonContainer: {
         position: 'absolute',
-        top: 10,
-        right: 10,
-        padding: 10,
-        borderRadius: 10,
-        backgroundColor: 'white', // Change background color to red
-
+        top: windowHeight * 0.02, 
+        right: windowWidth * 0.027, 
+        //padding: windowWidth * 0.027, 
+        borderRadius: windowWidth * 0.027, 
+        backgroundColor: 'white', 
+        zIndex: 1, 
     },
+    
     closeButtonText: {
-        fontSize: 16,
+        fontSize: windowWidth * 0.043, 
         fontWeight: 'bold',
     },
-    // New style for the icon container
+    
     iconContainer: {
         justifyContent: 'center',
         alignItems: 'center',
     },
     titleText: {
-        fontSize: 30,
+        fontSize: windowWidth * 0.08,
         fontWeight: 'bold',
-        marginTop: 40,
+        marginTop: windowHeight * 0.058, 
         color: '#000',
-        marginRight: 230, // Metin rengini gerektiği gibi ayarlayın.
+        marginRight: windowWidth * 0.58, 
+    },
+    iconContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    selectedInfoText: {
+        fontSize: windowWidth * 0.05, 
+        fontWeight: 'bold',
+        textAlign: 'left',
+    },
+
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)', 
+    },
+   
+    modalContent: {
+        backgroundColor: '#fff',
+        borderRadius: windowWidth * 0.027, 
+        padding: windowHeight * 0.03, 
+        width: '80%', 
+        height: '70%', 
+    },
+    
+    modalTitle: {
+        fontSize: windowWidth * 0.05, 
+        fontWeight: 'bold',
+        textAlign: 'left', 
+        marginBottom: windowHeight * 0.02, 
+    },
+    
+    modalText: {
+        fontSize: windowWidth * 0.04, 
+        textAlign: 'left', 
     },
 });

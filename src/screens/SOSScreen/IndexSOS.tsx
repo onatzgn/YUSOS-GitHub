@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
-import Card from './Card'; 
+
+const { height, width } = Dimensions.get('window');
 
 const SOSScreen = ({ navigation }) => {
     const [showText, setShowText] = useState(false);
@@ -9,8 +10,7 @@ const SOSScreen = ({ navigation }) => {
     const [helpRequests, setHelpRequests] = useState([]);
 
     useEffect(() => {
-        // AsyncStorage'den geçmiş yardım isteklerini yükleme
-        // Örnek: AsyncStorage.getItem('helpRequests').then((data) => setHelpRequests(JSON.parse(data)));
+
     }, []);
 
     const toggleText = () => {
@@ -109,23 +109,24 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        paddingTop: 50,
+        paddingTop: height * 0.05, 
     },
     title: {
-        fontSize: 32,
+        fontSize: width * 0.08, 
         color: '#333',
-        marginBottom: 20,
+        marginBottom: height * 0.02, 
         fontWeight: '600',
         fontFamily: 'System',
+        marginTop: height*0.1,
     },
     button: {
         backgroundColor: 'red',
-        width: 200,
-        height: 200,
+        width: width * 0.5, 
+        height: width * 0.5, 
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 100,
-        marginBottom: 25,
+        borderRadius: width * 0.25, 
+        marginBottom: height * 0.03, 
         shadowColor: 'black',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
@@ -134,69 +135,70 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         backgroundColor: '#999',
-        width: 200,
-        height: 50,
+        width: width * 0.5, 
+        height: height * 0.08, 
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 25,
-        marginBottom: 15,
+        borderRadius: width * 0.1,
+        marginBottom: height * 0.015, 
     },
     buttonText: {
         color: 'white',
-        fontSize: 48,
+        fontSize: width * 0.14, 
         fontWeight: 'bold',
         fontFamily: 'System',
     },
     cancelButtonText: {
         color: 'white',
-        fontSize: 16,
+        fontSize: width * 0.04, 
         fontWeight: 'bold',
         fontFamily: 'System',
     },
     warningText: {
-        fontSize: 16,
+        fontSize: width * 0.04, 
         color: '#d9534f',
         textAlign: 'center',
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: height * 0.01, 
         fontFamily: 'System',
         paddingVertical: 5,
         paddingHorizontal: 10,
         borderWidth: 1,
         borderColor: '#d9534f',
-        borderRadius: 5,
+        borderRadius: width * 0.025,
         backgroundColor: 'rgba(217, 83, 79, 0.1)',
     },
     detailsButton: {
-        padding: 5,
-        borderRadius: 5,
+        padding: width * 0.015, 
+        borderRadius: width * 0.025, 
         backgroundColor: 'transparent',
     },
     detailsButtonText: {
         color: 'red',
-        fontSize: 14,
+        fontSize: width * 0.035, 
         textDecorationLine: 'underline',
         fontFamily: 'System',
     },
     infoContainer: {
         backgroundColor: '#f9f9f9',
-        padding: 20,
-        borderRadius: 10,
-        marginHorizontal: 20,
+        padding: width * 0.05, 
+        borderRadius: width * 0.05, 
+        marginHorizontal: width * 0.05, 
     },
     infoText: {
-        fontSize: 16,
+        fontSize: width * 0.04, 
         color: '#555',
-        marginBottom: 10,
-        lineHeight: 24,
+        marginBottom: height * 0.01, 
+        lineHeight: width * 0.06, 
         fontFamily: 'System',
     },
     goBackButton: {
         position: 'absolute',
-        top: 30,
-        left: 10,
+        top: height * 0.06, 
+        left: width * 0.05, 
         zIndex: 1,
     },
 });
+
 
 export default SOSScreen;

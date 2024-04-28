@@ -6,10 +6,7 @@ import styles from './styles';
 function LoginScreen() {
   const navigation = useNavigation();
 
-  // Giriş yapma işlevi burada tanımlanıyor
   const handleSignIn = () => {
-    // Burada kimlik doğrulama işlemlerinizi yapabilirsiniz.
-    // Şimdilik doğrudan anasayfaya yönlendirme yapacağız.
     navigation.navigate('Main');
   };
 

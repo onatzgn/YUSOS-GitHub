@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, ScrollView, Dimensions } from 'react-native';
 import Card from './Card';
+
+const windowDimensions = Dimensions.get('window');
+const windowWidth = windowDimensions.width;
+const windowHeight = windowDimensions.height;
 
 const HelpCenterScreen = ({ navigation, route }) => {
 
@@ -82,48 +86,67 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
-        paddingHorizontal: 20,
-        marginBottom: 20,
-        marginTop: 70
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.055,
+        //marginBottom: 20,
+        marginBottom: windowHeight * 0.03,
+        //marginTop: 70,
+        marginTop: windowHeight * 0.05,
     },
     button: {
         backgroundColor: 'lightblue',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 55,
-        marginRight: 25,
+        //paddingVertical: 10,
+        paddingVertical: windowHeight * 0.015,
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //borderRadius: 55,
+        borderRadius: windowWidth * 0.08,
+        //marginRight: 25,
+        marginRight: windowWidth * 0.067,
     },
     button1: {
         backgroundColor: '#2e76e8',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 30,
-        marginLeft: 25,
+        //paddingVertical: 10,
+        paddingVertical: windowHeight * 0.015,
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //borderRadius: 30,
+        borderRadius: windowWidth * 0.08,
+        //marginLeft: 25,
+        marginLeft: windowWidth * 0.067,
     },
     buttonText: {
-        fontSize: 16,
+        //fontSize: 16,
+        fontSize: windowWidth * 0.043,
         fontWeight: 'bold',
         color: 'black',
     },
     cardContainer: {
         width: '100%',
-        paddingHorizontal: 20,
-        marginTop: 20,
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //marginTop: 20,
+        marginTop: windowHeight * 0.03,
     },
     titleText: {
-        fontSize: 30,
+        //fontSize: 30,
+        fontSize: windowWidth * 0.08,
         fontWeight: 'bold',
         color: '#000', 
-        marginTop: 20,
-        marginRight: 120,
+        //marginTop: 20,
+        marginTop: windowHeight * 0.03,
+        //marginRight: 120,
+        marginRight: windowWidth * 0.32,
     },
     noRequestsContainer: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 80,
+        //marginTop: 80,
+        marginTop: windowHeight * 0.12,
     },
     noRequestsText: {
-        fontSize: 15,
+        //fontSize: 15,
+        fontSize: windowWidth * 0.04,
         color: 'gray',
     },
 });

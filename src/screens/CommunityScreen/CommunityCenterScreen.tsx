@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert ,ScrollView} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView,Alert ,ScrollView, Dimensions} from 'react-native';
+
+const windowDimensions = Dimensions.get('window');
+const windowWidth = windowDimensions.width;
+const windowHeight = windowDimensions.height;
 
 const CommunityCenterScreen = ({ navigation }) => {
-    const [isJoined1, setIsJoined1] = useState(false); // State to track if joined for card 1
-    const [isJoined2, setIsJoined2] = useState(false); // State to track if joined for card 2
-    const [isJoined3, setIsJoined3] = useState(false); // State to track if joined for card 3
+    const [isJoined1, setIsJoined1] = useState(false); 
+    const [isJoined2, setIsJoined2] = useState(false); 
+    const [isJoined3, setIsJoined3] = useState(false); 
 
     const onPressHelpCenter = () => {
         navigation.navigate('HelpCenterScreen');
@@ -16,17 +20,17 @@ const CommunityCenterScreen = ({ navigation }) => {
 
     const onPressJoin1 = () => {
         setIsJoined1(true);
-        Alert.alert("Joined")
+        Alert.alert("Katıldın")
     };
 
     const onPressJoin2 = () => {
         setIsJoined2(true);
-        Alert.alert("Joined")
+        Alert.alert("Katıldın")
     };
 
     const onPressJoin3 = () => {
         setIsJoined3(true);
-        Alert.alert("Joined")
+        Alert.alert("Katıldın")
     };
 
     const getJoinButtonText = (isJoined) => {
@@ -47,7 +51,6 @@ const CommunityCenterScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.cardContainer}>
-                {/* First Card */}
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Corba Dagitim</Text>
                     <TouchableOpacity
@@ -61,7 +64,6 @@ const CommunityCenterScreen = ({ navigation }) => {
                             </Text>
                     </TouchableOpacity>
                 </View>
-                {/* Second Card */}
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Kiyafet Toplama</Text>
                     <TouchableOpacity
@@ -74,7 +76,6 @@ const CommunityCenterScreen = ({ navigation }) => {
                             </Text>
                     </TouchableOpacity>
                 </View>
-                {/* Third Card */}
                 <View style={styles.card}>
                     <Text style={styles.cardText}>Erzak Toplama</Text>
                     <TouchableOpacity
@@ -105,45 +106,62 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         width: '100%',
-        paddingHorizontal: 20,
-        marginBottom: 20,
-        marginTop: 70
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.055,
+        //marginBottom: 20,
+        marginBottom: windowHeight * 0.03,
+        //marginTop: 70,
+        marginTop: windowHeight * 0.05,
     },
     button: {
         backgroundColor: 'lightblue',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 55,
-        marginLeft: 25,
+        //paddingVertical: 10,
+        paddingVertical: windowHeight * 0.015,
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //borderRadius: 55,
+        borderRadius: windowWidth * 0.08,
+        //marginLeft: 25,
+        marginLeft: windowWidth * 0.067,
     },
     button1: {
         backgroundColor: '#2e76e8',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 30,
-        marginRight: 25,
+        //paddingVertical: 10,
+        paddingVertical: windowHeight * 0.015,
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //borderRadius: 30,
+        borderRadius: windowWidth * 0.08,
+        //marginRight: 25,
+        marginRight: windowWidth * 0.067,
     },
     buttonText: {
-        fontSize: 16,
+        //fontSize: 16,
+        fontSize: windowWidth * 0.043,
         fontWeight: 'bold',
     },
     cardContainer: {
         width: '100%',
-        paddingHorizontal: 20,
-        marginTop: 20,
-
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //marginTop: 20,
+        marginTop: windowHeight * 0.03,
     },
     card: {
         //borderWidth: 1,
         width: '100%',
-        height: 70,
+        //height: 70,
+        height: windowHeight * 0.105,
         backgroundColor: 'white',
-        marginBottom: 10,
+        //marginBottom: 10,
+        marginBottom: windowHeight * 0.015,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderRadius: 10,
-        paddingHorizontal: 10,
+        //borderRadius: 10,
+        borderRadius: windowWidth * 0.05,
+        //paddingHorizontal: 10,
+        paddingHorizontal: windowWidth * 0.027,
         elevation: 3,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
@@ -151,7 +169,8 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
     },
     cardText: {
-        fontSize: 18,
+        //fontSize: 18,
+        fontSize: windowWidth * 0.048,
         fontWeight: 'bold',
     },
     scrollViewContainer: {
@@ -161,9 +180,12 @@ const styles = StyleSheet.create({
     },
     addButton: {
         backgroundColor: '#2e76e8',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 10,
+        //paddingVertical: 10,
+        paddingVertical: windowHeight * 0.015,
+        //paddingHorizontal: 20,
+        paddingHorizontal: windowWidth * 0.053,
+        //borderRadius: 10,
+        borderRadius: windowWidth * 0.027,
         borderWidth: 1,
     },
     joinedButton: {
@@ -173,11 +195,14 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     titleText: {
-        fontSize: 30,
+        //fontSize: 30,
+        fontSize: windowWidth * 0.08,
         fontWeight: 'bold',
-        color: '#000', // Metin rengini gerektiği gibi ayarlayın.
-        marginTop: 20,
-        marginRight: 120,
+        color: '#000', 
+        //marginTop: 20,
+        marginTop: windowHeight * 0.03,
+        //marginRight: 120,
+        marginRight: windowWidth * 0.32,
     },
 });
 

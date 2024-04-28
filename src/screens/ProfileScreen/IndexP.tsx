@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, Modal, TextInput } from 'react-native';
-import styles from './styles'; // Importing styles from styles.js
+import styles from './styles'; 
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const ProfileScreen = () => {
   const [userInfo, setUserInfo] = useState({
     name: "John Doe",
     profileImage: require('./profile.jpg'),
-    // Add other user information here
     kanGrubu: "",
     aileIrtibatNo: "",
     saglikSorunlari: "",
@@ -15,25 +14,25 @@ const ProfileScreen = () => {
     diger: ""
   });
 
-  const [isEditingInfo, setIsEditingInfo] = useState(false); // State to manage visibility of edit info modal
+  const [isEditingInfo, setIsEditingInfo] = useState(false); 
 
   const changeProfileImage = () => {
-    // Logic to change profile image
+
   };
 
   const changeUserInfo = () => {
     if (isEditingInfo) {
-      // Save user info
-      setIsEditingInfo(false); // Disable editing
+
+      setIsEditingInfo(false); 
     } else {
-      setIsEditingInfo(true); // Enable editing
+      setIsEditingInfo(true); 
     }
   };
 
 
   const saveUserInfo = () => {
-    setIsEditingInfo(false); // Hide edit info modal
-    // Logic to save user info
+    setIsEditingInfo(false); 
+   
   };
 
   return (
@@ -117,7 +116,7 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.activitiesContainer}>
           <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-          {/* Placeholder text for activities */}
+          
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. {"\n"}
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.{"\n\n"}
@@ -129,8 +128,8 @@ const ProfileScreen = () => {
         </View>
       </View>
 
-      {/* Edit Info Modal */}
-      {/* Modal content */}
+      
+      
     </ScrollView>
   );
 };

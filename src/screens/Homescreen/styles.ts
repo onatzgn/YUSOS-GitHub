@@ -3,9 +3,9 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f2f2f2', // Color as per Figma's background
+    backgroundColor: '#f2f2f2', 
   },
-  // ... add more styles for HeaderMain or other components if necessary
+
 });
 
 export default styles;

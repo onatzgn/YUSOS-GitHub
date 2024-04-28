@@ -34,7 +34,7 @@ function HealthReqScreens(){
         </HealthReqStack.Navigator>
     );
 }
-// Authentication stack navigator
+
 function AuthStackScreens() {
   return (
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
@@ -44,7 +44,7 @@ function AuthStackScreens() {
   );
 }
 
-// Main application tab navigator
+
 function MainTabNavigator() {
   return (
     <Tab.Navigator
@@ -112,7 +112,7 @@ function MainTabNavigator() {
   );
 }
 
-// Root navigator combining auth and main app navigation
+
 function RootNavigator() {
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>

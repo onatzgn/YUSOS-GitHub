@@ -1,4 +1,3 @@
-// Duyurular/index.tsx
 import React from 'react';
 import { View, Text } from 'react-native';
 import styles from './styles';
@@ -10,7 +9,6 @@ const announcements = [
     body: "İstanbul'da şiddetli fırtına bekleniyor. Uyarı!",
     date: '19 Mart',
   },
-  // Add more announcements here
 ];
 
 const Duyurular = () => {
