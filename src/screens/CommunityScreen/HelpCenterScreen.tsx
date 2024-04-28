@@ -37,7 +37,7 @@ const HelpCenterScreen = ({ navigation, route }) => {
     return (
         <ScrollView>
             <SafeAreaView style={styles.container}>
-            <Text style={styles.titleText}>Yardım Merkezi</Text>
+                <Text style={styles.titleText}>Yardım Merkezi</Text>
                 <View style={styles.buttonsContainer}>
                     <TouchableOpacity style={styles.button1}>
                         <Text style={styles.buttonText}>Acil Durum</Text>
@@ -46,23 +46,30 @@ const HelpCenterScreen = ({ navigation, route }) => {
                         <Text style={styles.buttonText}>   Topluluk   </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={styles.cardContainer}>
-                    {helpRequests.slice(0).reverse().map(request => (
-                        <Card
-                            key={request.id}
-                            title={request.title}
-                            time={request.time}
-                            location={request.location}
-                            healthIssues={request.healthIssues}
-                            onPressJoin={() => onPressJoin(request.id)}
-                            onPressDelete={() => handleDelete(request.id)} 
-                            disabled={joinedRequests.includes(request.id)}
-                        />
-                    ))}
-                </View>
+                {helpRequests.length === 0 ? (
+                    <View style={styles.noRequestsContainer}>
+                        <Text style={styles.noRequestsText}>Herhangi bir acil durum çağrısı yok</Text>
+                    </View>
+                ) : (
+                    <View style={styles.cardContainer}>
+                        {helpRequests.slice(0).reverse().map(request => (
+                            <Card
+                                key={request.id}
+                                title={request.title}
+                                time={request.time}
+                                location={request.location}
+                                healthIssues={request.healthIssues}
+                                onPressJoin={() => onPressJoin(request.id)}
+                                onPressDelete={() => handleDelete(request.id)} 
+                                disabled={joinedRequests.includes(request.id)}
+                            />
+                        ))}
+                    </View>
+                )}
             </SafeAreaView>
         </ScrollView>
     );
+    
 };
 
 const styles = StyleSheet.create({
@@ -109,6 +116,15 @@ const styles = StyleSheet.create({
         color: '#000', 
         marginTop: 20,
         marginRight: 120,
+    },
+    noRequestsContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 80,
+    },
+    noRequestsText: {
+        fontSize: 15,
+        color: 'gray',
     },
 });
 
