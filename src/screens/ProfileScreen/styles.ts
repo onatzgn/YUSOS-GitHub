@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     titleText: {
         fontSize: width * 0.08,
         fontWeight: 'bold',
-        marginTop: width * 0.09,
+        marginTop: width * 0.06,
         color: '#000',
         marginLeft: -width * 0.027,
     },
