@@ -11,7 +11,7 @@ function SignUpScreen({ navigation }) {
       <TextInput placeholder="Mail" style={styles.input} keyboardType="email-address" />
       <TextInput placeholder="Telefon Numarası" style={styles.input} keyboardType="phone-pad" />
       <TextInput placeholder="****" style={styles.input} secureTextEntry />
-      <TouchableOpacity style={styles.button} onPress={() => {/* Handle sign up */}}>
+      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('GetStarted')}>
         <Text style={styles.buttonText}>Sign Up</Text>
       </TouchableOpacity>
       <Text style={styles.alreadyText}>Already have account?

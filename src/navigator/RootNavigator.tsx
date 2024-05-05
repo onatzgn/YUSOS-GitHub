@@ -12,6 +12,7 @@ import SignUpScreen from '../screens/SignUpScreen/IndexS';
 import CustomTabBarButton from './CustomTabBarButton';
 import HealthReqScreen from '../screens/HealthReqScreen/IndexHR';
 import SOSScreen from '../screens/SOSScreen/IndexSOS';
+import GetStartedScreen from '../screens/GetStartedScreen/IndexGS'
 
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -40,6 +41,7 @@ function AuthStackScreens() {
     <AuthStack.Navigator screenOptions={{ headerShown: false }}>
       <AuthStack.Screen name="Login" component={LoginScreen} />
       <AuthStack.Screen name="SignUp" component={SignUpScreen} />
+      <AuthStack.Screen name="GetStarted" component={GetStartedScreen} />
     </AuthStack.Navigator>
   );
 }
