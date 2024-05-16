@@ -101,7 +101,6 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.activitiesContainer}>
           <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-          
           <Text>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. {"\n"}
             Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.{"\n\n"}
