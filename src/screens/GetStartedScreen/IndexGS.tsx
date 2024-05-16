@@ -100,6 +100,16 @@ const GetStartedScreen = ({ navigation }) => {
     setShowUserInfo(false);
     Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla kaydedildi.');
     setStartButtonTitle('Başla');
+
+    // "Başlarken" sayfasına yönlendirme
+    const lastPageIndex = 6; // "Başlarken" sayfasının indeksini belirleyin
+    if (scrollViewRef.current) {
+      scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
+      setCurrentPage(lastPageIndex);
+    }
+  };
+
+  const handleStartButtonPress = () => {
     navigation.navigate('Main');
   };
 
@@ -254,7 +264,7 @@ const GetStartedScreen = ({ navigation }) => {
 
           {!showUserInfo && (
             <View style={{ marginTop: 20, alignItems: 'center', borderRadius: 25, overflow: 'hidden' }}>
-              <TouchableOpacity onPress={saveUserInfo} style={{ backgroundColor: '#2e76e8', borderWidth: 2, borderColor: '#2e76e8', paddingVertical: 10, paddingHorizontal: 30, borderRadius: 7 }}>
+              <TouchableOpacity onPress={handleStartButtonPress} style={{ backgroundColor: '#2e76e8', borderWidth: 2, borderColor: '#2e76e8', paddingVertical: 10, paddingHorizontal: 30, borderRadius: 7 }}>
                 <Text style={{ fontSize: 24, color: '#fff' }}>{startButtonTitle}</Text>
               </TouchableOpacity>
             </View>

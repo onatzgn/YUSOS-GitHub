@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons';
+import { UserContext } from '../../contexts/UserContext'; // UserContext'i içe aktarın
 
 const { height, width } = Dimensions.get('window');
 
 const SOSScreen = ({ navigation }) => {
+    const { userInfo } = useContext(UserContext); // UserContext'ten kullanıcı bilgilerini alın
     const [showText, setShowText] = useState(false);
     const [isSOSRequested, setIsSOSRequested] = useState(false);
     const [helpRequests, setHelpRequests] = useState([]);
@@ -22,9 +24,9 @@ const SOSScreen = ({ navigation }) => {
   
         const now = new Date();
         const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const username = 'John Doe';
-        const location = 'Yeditepe Üniversitesi'
-        const healthIssues = 'Epilepsi'
+        const username = 'John Doe'; // Kullanıcı adını buradan alabilirsiniz
+        const location = userInfo.adress; // Kullanıcının adres bilgilerini UserContext'ten alın
+        const healthIssues = userInfo.healthIssues; // Kullanıcının sağlık sorunlarını UserContext'ten alın
         
         const newRequest = { 
             id: helpRequests.length + 1, 
@@ -33,7 +35,7 @@ const SOSScreen = ({ navigation }) => {
             location: `${location}`, 
             healthIssues: `${healthIssues}`, 
         };
-        setHelpRequests([...helpRequests, newRequest])
+        setHelpRequests([...helpRequests, newRequest]);
        
         Alert.alert(
             'Acil Durum Çağrısı',
@@ -199,6 +201,5 @@ const styles = StyleSheet.create({
         zIndex: 1,
     },
 });
-
 
 export default SOSScreen;
