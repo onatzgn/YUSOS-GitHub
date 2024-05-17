@@ -10,6 +10,8 @@ import LoginScreen from './src/screens/LoginScreen/IndexL';
 import StartNavigator from './src/navigator/StartNavigator';
 import SignUpScreen from './src/screens/SignUpScreen/IndexS';
 import { AuthProvider } from './src/context/AuthContext'; // Adjust the path accordingly
+import { UserProvider } from './src/contexts/UserContext';
+
 const Stack = createStackNavigator(); // Create Stack navigator
 
 export default function App() {
@@ -27,7 +29,7 @@ export default function App() {
         <HomeScreen />
     </View>
     */
-    <AuthProvider>
+    <UserProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
       {user ? (
@@ -38,7 +40,7 @@ export default function App() {
         </Stack.Navigator>
 
     </NavigationContainer>
-    </AuthProvider>
+    </UserProvider>
   );
 }
 

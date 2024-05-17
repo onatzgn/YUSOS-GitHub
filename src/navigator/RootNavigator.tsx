@@ -13,7 +13,7 @@ import CustomTabBarButton from './CustomTabBarButton';
 import HealthReqScreen from '../screens/HealthReqScreen/IndexHR';
 import SOSScreen from '../screens/SOSScreen/IndexSOS';
 import GetStartedScreen from '../screens/GetStartedScreen/IndexGS'
-import { AuthContext } from '../context/AuthContext'; // Adjust the path accordingly
+//import { AuthContext } from '../context/AuthContext'; // Adjust the path accordingly
 
 const RootStack = createStackNavigator();
 const AuthStack = createStackNavigator();
@@ -116,14 +116,11 @@ function MainTabNavigator() {
 
 
 function RootNavigator() {
-    const { isJustSignedUp } = useContext(AuthContext);
+    //const { isJustSignedUp } = useContext(AuthContext);
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
-      {isJustSignedUp ? (
-        <RootStack.Screen name="Auth" component={AuthStackScreens} />
-      ) : (
-        <RootStack.Screen name="Main" component={MainTabNavigator} />
-      )}
+      <AuthStack.Screen name="GetStarted" component={GetStartedScreen} />
+      <RootStack.Screen name="Main" component={MainTabNavigator} />
       <RootStack.Screen name="SOSScreen" component={SOSScreens} />
       <RootStack.Screen name="HealthReqScreen" component={HealthReqScreens} />
     </RootStack.Navigator>
@@ -132,3 +129,9 @@ function RootNavigator() {
 
 export default RootNavigator;
 //      <RootStack.Screen name="Auth" component={AuthStackScreens} />
+//    <RootStack.Navigator screenOptions={{ headerShown: false }}>
+//{isJustSignedUp ? (
+ //   <RootStack.Screen name="Auth" component={AuthStackScreens} />
+ // ) : (
+//   <RootStack.Screen name="Main" component={MainTabNavigator} />
+ // )}
