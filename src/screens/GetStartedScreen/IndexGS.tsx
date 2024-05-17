@@ -136,7 +136,7 @@ const IntroductionScreen = ({ navigation }) => {
       >
             {/* SAYFA 1(duyurular kısmı,bildirim izinleri) */}
         <View style={{ flex: 1 ,alignItems: 'center', justifyContent: 'center', marginBottom: -10 }}>
-          <BigTitle title="Duyurular"/>
+          <BigTitle title="Bildirimler"/>
           <Image source={require('./duyuruGS.png')} style={{ width: 250, height: 200, aspectRatio: 8/5, marginBottom:10 }} resizeMode="contain" />
           <TextSection text="Hava durumu ve afet uyarıları gibi önemli durumlarda bilgilendirilmeniz için bildirimlere izin vermeniz gerekiyor. Güvenliğiniz için önemli olduğunu unutmayın." />
           <TouchableOpacity onPress={handleNotificationPermission} style={{ marginBottom: 20, alignItems: 'center' }}>
