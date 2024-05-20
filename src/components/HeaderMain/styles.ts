@@ -1,72 +1,54 @@
-import { StyleSheet, Dimensions } from 'react-native';
-
-const windowDimensions = Dimensions.get('window');
-const windowWidth = windowDimensions.width;
-const windowHeight = windowDimensions.height;
+import { StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f2f2f2', 
+  },
   headerMain: {
-    flexDirection: 'column',
-    marginTop: windowHeight * 0.044, 
-    paddingHorizontal: 20,
-    //backgroundColor: '#fff',
-    zIndex: 10,
+    paddingTop: 40,
+    paddingBottom: 20,
+    backgroundColor: '#fff',
   },
   headerTitle: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   titleText: {
-    fontSize: 30,
+    fontSize: 24,
     fontWeight: 'bold',
-    color: '#000',
   },
   settingsIcon: {
     padding: 10,
   },
   subtitleText: {
-    fontSize: 45,
-    fontWeight: 'bold',
-    color: "#2e76e8",
-    marginTop: windowHeight * 0.03, 
+    paddingHorizontal: 20,
+    fontSize: 18,
+    color: '#666',
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-end',
-    paddingTop: windowHeight * 0.075, 
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   languageDropdown: {
-    marginTop: windowHeight * 0.03, 
-    marginRight: 10, 
-    backgroundColor: 'white',
-    borderRadius: 6,
-    padding: 10,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 2 },
+    backgroundColor: '#fff',
+    padding: 20,
+    borderRadius: 10,
+    width: 200,
   },
   languageButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0', 
-    width: '100%', 
+    borderBottomColor: '#ccc',
   },
-  closeButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderTopWidth: 1,
-    borderTopColor: '#E0E0E0',
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 5, 
+  settingsButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
 });
 

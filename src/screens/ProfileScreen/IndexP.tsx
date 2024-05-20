@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
-import styles from './styles'; 
+import { View, Text, Image, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native';
+import styles from './styles';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { UserContext } from '../../contexts/UserContext';
+import { FIREBASE_DB } from '../../../FirebaseConfig';
+import { doc, updateDoc } from 'firebase/firestore';
 
 const ProfileScreen = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext);
+  const { user, userInfo, setUserInfo } = useContext(UserContext);
   const [isEditingInfo, setIsEditingInfo] = useState(false);
 
   const changeProfileImage = () => {
@@ -16,8 +18,16 @@ const ProfileScreen = () => {
     setIsEditingInfo(!isEditingInfo);
   };
 
-  const saveUserInfo = () => {
-    setIsEditingInfo(false);
+  const saveUserInfo = async () => {
+    try {
+      const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
+      await updateDoc(userDocRef, userInfo);
+      setIsEditingInfo(false);
+      Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla güncellendi.');
+    } catch (error) {
+      console.error('Error updating user info: ', error);
+      Alert.alert('Hata', 'Bilgiler güncellenirken bir hata oluştu.');
+    }
   };
 
   return (
@@ -29,7 +39,7 @@ const ProfileScreen = () => {
           <TouchableOpacity onPress={changeProfileImage} style={styles.changeProfileButton}>
             <Text style={styles.plusSign}>+</Text>
           </TouchableOpacity>
-          <Text style={styles.name}>John Doe</Text>
+          <Text style={styles.name}>{userInfo.name}</Text>
         </View>
         <View style={styles.infoContainer}>
           <View style={styles.infoHeaderContainer}>
@@ -38,66 +48,76 @@ const ProfileScreen = () => {
               <FontAwesome5 name="pen" size={16} color="black" />
             </TouchableOpacity>
           </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>Kan Grubu:</Text>
-            {isEditingInfo ? (
-              <TextInput
-                style={styles.userInfoInput}
-                value={userInfo.bloodType}
-                onChangeText={(text) => setUserInfo({ ...userInfo, bloodType: text })}
-              />
-            ) : (
-              <Text style={styles.userInfoText}>{userInfo.bloodType}</Text>
-            )}
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>Aile İrtibat No:</Text>
-            {isEditingInfo ? (
-              <TextInput
-                style={styles.userInfoInput}
-                value={userInfo.familyContact}
-                onChangeText={(text) => setUserInfo({ ...userInfo, familyContact: text })}
-              />
-            ) : (
-              <Text style={styles.userInfoText}>{userInfo.familyContact}</Text>
-            )}
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>Sağlık Sorunları:</Text>
-            {isEditingInfo ? (
-              <TextInput
-                style={styles.userInfoInput}
-                value={userInfo.healthIssues}
-                onChangeText={(text) => setUserInfo({ ...userInfo, healthIssues: text })}
-              />
-            ) : (
-              <Text style={styles.userInfoText}>{userInfo.healthIssues}</Text>
-            )}
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>Adres:</Text>
-            {isEditingInfo ? (
-              <TextInput
-                style={styles.userInfoInput}
-                value={userInfo.adress}
-                onChangeText={(text) => setUserInfo({ ...userInfo, adress: text })}
-              />
-            ) : (
-              <Text style={styles.userInfoText}>{userInfo.adress}</Text>
-            )}
-          </View>
-          <View style={styles.userInfoItem}>
-            <Text style={styles.userInfoTitle}>Alerjiler:</Text>
-            {isEditingInfo ? (
-              <TextInput
-                style={styles.userInfoInput}
-                value={userInfo.alergies}
-                onChangeText={(text) => setUserInfo({ ...userInfo, alergies: text })}
-              />
-            ) : (
-              <Text style={styles.userInfoText}>{userInfo.alergies}</Text>
-            )}
-          </View>
+          {isEditingInfo ? (
+            <View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Kan Grubu:</Text>
+                <TextInput
+                  style={styles.userInfoInput}
+                  value={userInfo.bloodType}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, bloodType: text })}
+                />
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Aile İrtibat No:</Text>
+                <TextInput
+                  style={styles.userInfoInput}
+                  value={userInfo.familyContact}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, familyContact: text })}
+                />
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Sağlık Sorunları:</Text>
+                <TextInput
+                  style={styles.userInfoInput}
+                  value={userInfo.healthIssues}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, healthIssues: text })}
+                />
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Adres:</Text>
+                <TextInput
+                  style={styles.userInfoInput}
+                  value={userInfo.adress}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, adress: text })}
+                />
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Alerjiler:</Text>
+                <TextInput
+                  style={styles.userInfoInput}
+                  value={userInfo.alergies}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, alergies: text })}
+                />
+              </View>
+              <TouchableOpacity onPress={saveUserInfo} style={styles.saveButton}>
+                <Text style={styles.saveButtonText}>Kaydet</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Kan Grubu:</Text>
+                <Text style={styles.userInfoText}>{userInfo.bloodType}</Text>
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Aile İrtibat No:</Text>
+                <Text style={styles.userInfoText}>{userInfo.familyContact}</Text>
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Sağlık Sorunları:</Text>
+                <Text style={styles.userInfoText}>{userInfo.healthIssues}</Text>
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Adres:</Text>
+                <Text style={styles.userInfoText}>{userInfo.adress}</Text>
+              </View>
+              <View style={styles.userInfoItem}>
+                <Text style={styles.userInfoTitle}>Alerjiler:</Text>
+                <Text style={styles.userInfoText}>{userInfo.alergies}</Text>
+              </View>
+            </View>
+          )}
         </View>
         <View style={styles.activitiesContainer}>
           <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>

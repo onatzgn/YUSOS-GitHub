@@ -5,6 +5,9 @@ import * as Notifications from 'expo-notifications';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
 import { UserContext } from '../../contexts/UserContext';
+import { FIREBASE_DB } from '../../../FirebaseConfig';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
 
 const { width } = Dimensions.get('window');
 
