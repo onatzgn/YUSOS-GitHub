@@ -7,7 +7,7 @@ import { FIREBASE_DB } from '../../../FirebaseConfig';
 import { doc, updateDoc } from 'firebase/firestore';
 
 const ProfileScreen = () => {
-  const { user, userInfo, setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext); // useContext burada doğru şekilde kullanılmalı
   const [isEditingInfo, setIsEditingInfo] = useState(false);
 
   const changeProfileImage = () => {
@@ -121,14 +121,15 @@ const ProfileScreen = () => {
         </View>
         <View style={styles.activitiesContainer}>
           <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-          <Text>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. {"\n"}
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.{"\n\n"}
-            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.{"\n"}
-            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.{"\n"}
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.{"\n"}
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </Text>
+          {userInfo.activityHistory.length > 0 ? (
+            userInfo.activityHistory.map((activity, index) => (
+              <Text key={index} style={styles.activityText}>
+                {activity.date} - {activity.type}
+              </Text>
+            ))
+          ) : (
+            <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
+          )}
         </View>
       </View>
     </ScrollView>
