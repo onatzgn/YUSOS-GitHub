@@ -9,6 +9,7 @@ export const UserProvider = ({ children }) => {
     healthIssues: '',
     alergies: '',
     adress: '',
+    activityHistory: [], // Yeni alan eklendi
   });
 
   return (

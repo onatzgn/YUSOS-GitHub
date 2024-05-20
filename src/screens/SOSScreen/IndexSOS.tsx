@@ -1,19 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Alert, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { UserContext } from '../../contexts/UserContext'; // UserContext'i içe aktarın
+import { UserContext } from '../../contexts/UserContext';
 
 const { height, width } = Dimensions.get('window');
 
 const SOSScreen = ({ navigation }) => {
-    const { userInfo } = useContext(UserContext); // UserContext'ten kullanıcı bilgilerini alın
+    const { userInfo, setUserInfo } = useContext(UserContext);
     const [showText, setShowText] = useState(false);
     const [isSOSRequested, setIsSOSRequested] = useState(false);
     const [helpRequests, setHelpRequests] = useState([]);
-
-    useEffect(() => {
-
-    }, []);
 
     const toggleText = () => {
         setShowText(!showText);
@@ -37,9 +33,15 @@ const SOSScreen = ({ navigation }) => {
         };
         setHelpRequests([...helpRequests, newRequest]);
        
+        const activity = { type: 'SOS Çağrısı', date: now.toLocaleString() };
+        setUserInfo(prevState => ({
+            ...prevState,
+            activityHistory: [...prevState.activityHistory, activity]
+        }));
+
         Alert.alert(
             'Acil Durum Çağrısı',
-            'Acil durum talebiniz yollanmıştır. Talebinizi Yardım Merkezinden iptal edebilirsiniz. ',
+            'Acil durum talebiniz yollanmıştır. Talebinizi Yardım Merkezinden iptal edebilirsiniz.',
             [
                 {
                     text: 'Kapat',
@@ -57,7 +59,6 @@ const SOSScreen = ({ navigation }) => {
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
-
             <TouchableOpacity style={styles.goBackButton} onPress={() => navigation.goBack()}>
                 <Ionicons name="arrow-back" size={24} color="black" />
             </TouchableOpacity>

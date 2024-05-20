@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         height: width * 0.15,
         justifyContent: 'center',
         alignItems: 'center',
-        marginRight:-width * 0.03,
+        marginRight: -width * 0.03,
     },
     plusSign: {
         color: 'white',
@@ -115,6 +115,16 @@ const styles = StyleSheet.create({
         fontSize: width * 0.06,
         fontWeight: 'bold',
         marginBottom: width * 0.04,
+    },
+    activityText: {
+        fontSize: width * 0.04,
+        color: 'black',
+        marginBottom: width * 0.02,
+    },
+    noActivityText: {
+        fontSize: width * 0.04,
+        color: 'gray',
+        marginBottom: width * 0.02,
     },
     titleText: {
         fontSize: width * 0.08,
