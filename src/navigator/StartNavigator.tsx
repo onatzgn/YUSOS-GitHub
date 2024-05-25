@@ -28,4 +28,3 @@ const StartNavigator = () => {
 
 export default StartNavigator;
 
-        <AuthStack.Screen name="GetStarted" component={GetStartedScreen} />
