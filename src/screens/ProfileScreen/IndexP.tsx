@@ -30,6 +30,8 @@ const ProfileScreen = () => {
     }
   };
 
+ 
+
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
       <View>

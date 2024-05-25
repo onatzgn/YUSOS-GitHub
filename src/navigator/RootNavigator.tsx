@@ -117,7 +117,7 @@ function RootNavigator() {
     //const { isJustSignedUp } = useContext(AuthContext);
   return (
     <RootStack.Navigator screenOptions={{ headerShown: false }}>
-
+      <AuthStack.Screen name="GetStarted" component={GetStartedScreen} />
       <RootStack.Screen name="Main" component={MainTabNavigator} />
       <RootStack.Screen name="SOSScreen" component={SOSScreens} />
       <RootStack.Screen name="HealthReqScreen" component={HealthReqScreens} />
