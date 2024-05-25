@@ -193,18 +193,20 @@ const styles = StyleSheet.create({
     addButton: {
         backgroundColor: '#2e76e8',
         width: windowWidth * 0.15,
-        height: windowWidth * 0.15,
+        height: windowWidth * 0.10,
         borderRadius: windowWidth * 0.075,
         justifyContent: 'center',
         alignItems: 'center',
         position: 'absolute',
         top: windowHeight * 0.03,
         right: windowWidth * 0.05,
+        marginTop : 20
     },
     addButtonText: {
         fontSize: windowWidth * 0.1,
         marginTop : -5,
         marginRight : -3,
+        
         color: 'white',
     },
     modalView: {
