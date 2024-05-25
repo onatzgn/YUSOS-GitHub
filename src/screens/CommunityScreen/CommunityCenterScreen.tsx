@@ -203,6 +203,8 @@ const styles = StyleSheet.create({
     },
     addButtonText: {
         fontSize: windowWidth * 0.1,
+        marginTop : -5,
+        marginRight : -3,
         color: 'white',
     },
     modalView: {
