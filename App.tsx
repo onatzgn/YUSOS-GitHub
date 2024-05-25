@@ -11,6 +11,7 @@ import { AuthProvider } from './src/context/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './src/screens/CustomDrawerContent/DrawerContent'; // Yolu güncelledik
+import CommunityNavigator from './src/navigator/CommunityNavigator';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

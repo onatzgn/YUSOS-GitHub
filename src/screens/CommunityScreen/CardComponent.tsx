@@ -5,7 +5,7 @@ const windowDimensions = Dimensions.get('window');
 const windowWidth = windowDimensions.width;
 const windowHeight = windowDimensions.height;
 
-const CardComponent = ({ title }) => {
+const CardComponent = ({ title, info }) => {
     const [isJoined, setIsJoined] = useState(false);
 
     const onPressJoin = () => {
@@ -19,7 +19,10 @@ const CardComponent = ({ title }) => {
 
     return (
         <View style={styles.card}>
-            <Text style={styles.cardText}>{title}</Text>
+            <View>
+                <Text style={styles.cardTitle}>{title}</Text>
+                <Text style={styles.cardInfo}>{info}</Text>
+            </View>
             <TouchableOpacity
                 style={[styles.addButton, isJoined && styles.joinedButton]}
                 onPress={onPressJoin}
@@ -36,7 +39,7 @@ const CardComponent = ({ title }) => {
 const styles = StyleSheet.create({
     card: {
         width: '100%',
-        height: windowHeight * 0.105,
+        height: windowHeight * 0.11,
         backgroundColor: 'white',
         marginBottom: windowHeight * 0.015,
         flexDirection: 'row',
@@ -50,9 +53,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 2,
     },
-    cardText: {
+    cardTitle: {
         fontSize: windowWidth * 0.048,
         fontWeight: 'bold',
+    },
+    cardInfo: {
+        fontSize: windowWidth * 0.038,
+        color: 'gray',
+        marginTop: windowHeight * 0.005,
     },
     addButton: {
         backgroundColor: '#2e76e8',
