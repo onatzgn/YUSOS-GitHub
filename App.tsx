@@ -21,6 +21,7 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
       setUser(user);
+      //DNM
     });
 
     return () => unsubscribe();
