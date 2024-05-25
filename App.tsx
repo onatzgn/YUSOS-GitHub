@@ -11,7 +11,6 @@ import { AuthProvider } from './src/context/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import CustomDrawerContent from './src/screens/CustomDrawerContent/DrawerContent'; // Yolu güncelledik
-import CommunityNavigator from './src/navigator/CommunityNavigator';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -22,6 +21,7 @@ export default function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
       setUser(user);
+      //DNM
     });
 
     return () => unsubscribe();
@@ -32,13 +32,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator initialRouteName="Login">
           {user ? (
-            <Stack.Screen name="Root" options={{ headerShown: false }}>
-              {() => (
-                <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-                  <Drawer.Screen name="Home" component={RootNavigator} />
-                </Drawer.Navigator>
-              )}
-            </Stack.Screen>
+            <Stack.Screen name="Root" component={RootNavigator} options={{ headerShown: false }}/>
           ) : (
             <Stack.Screen name="Login" component={StartNavigator} options={{ headerShown: false }} />
           )}
