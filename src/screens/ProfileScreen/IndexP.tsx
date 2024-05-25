@@ -21,7 +21,7 @@ const ProfileScreen = () => {
   const saveUserInfo = async () => {
     try {
       const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
-      await updateDoc(userDocRef, userInfo);
+      await updateDoc(userDocRef, userInfo); // Update the Firestore document with new user info
       setIsEditingInfo(false);
       Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla güncellendi.');
     } catch (error) {
@@ -120,17 +120,18 @@ const ProfileScreen = () => {
           )}
         </View>
         <View style={styles.activitiesContainer}>
-          <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-          {userInfo.activityHistory.length > 0 ? (
-            userInfo.activityHistory.map((activity, index) => (
-              <Text key={index} style={styles.activityText}>
-                {activity.date} - {activity.type}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
-          )}
-        </View>
+  <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
+  {userInfo.activityHistory?.length > 0 ? (
+    userInfo.activityHistory.map((activity, index) => (
+      <Text key={index} style={styles.activityText}>
+        {activity.date} - {activity.type}
+      </Text>
+    ))
+  ) : (
+    <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
+  )}
+</View>
+
       </View>
     </ScrollView>
   );

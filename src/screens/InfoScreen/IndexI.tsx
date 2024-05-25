@@ -11,7 +11,7 @@ const InfoScreen = () => {
     const [selectedInfo, setSelectedInfo] = useState('');
     const [selectedInfoText, setSelectedInfoText] = useState('');
     const [editedInfoText, setEditedInfoText] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false); // Default value is false for non-admin users
+    const [isAdmin, setIsAdmin] = useState(true); // Default value is false for non-admin users
 
     // Define separate state variables and functions for each container
     const [acilText, setAcilText] = useState('Yeditepe Üniversitesi Meydan');

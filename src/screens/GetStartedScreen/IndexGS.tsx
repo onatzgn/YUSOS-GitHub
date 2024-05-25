@@ -91,7 +91,20 @@ const GetStartedScreen = ({ navigation }) => {
     setSelectedRhFactor(rhFactor);
   };
 
-  const saveUserInfo = () => {
+const saveUserInfo = async () => {
+  try {
+    const db = getFirestore();
+
+    // Save user's medical information to Firestore
+    await addDoc(collection(db, 'medicalInfo'), {
+      familyContact,
+      bloodType: selectedBloodType + selectedRhFactor,
+      healthIssues,
+      alergies,
+      adress,
+    });
+
+    // Update user's information in the context or wherever necessary
     setUserInfo({
       familyContact,
       bloodType: selectedBloodType + selectedRhFactor,
@@ -110,7 +123,11 @@ const GetStartedScreen = ({ navigation }) => {
       scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
       setCurrentPage(lastPageIndex);
     }
-  };
+  } catch (error) {
+    console.error('Error saving user info:', error);
+    Alert.alert('Bilgi Kaydetme Hatası', 'Kullanıcı bilgileri kaydedilirken bir hata oluştu.');
+  }
+};
 
   const handleStartButtonPress = () => {
     navigation.navigate('Main');

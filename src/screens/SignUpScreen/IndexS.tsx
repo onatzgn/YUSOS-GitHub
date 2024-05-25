@@ -46,37 +46,51 @@ const SignUpScreen = ({ navigation }) => {
   const auth = FIREBASE_AUTH;
   //const { setIsJustSignedUp } = useContext(AuthContext);
 
-  const signUp = async () => {
-    setLoading(true);
-    try {
-      // Firebase Authentication ile kullanıcı oluşturma
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-  
-      // Kullanıcı başarıyla oluşturulduysa, ek kullanıcı bilgilerini Firestore'a kaydet
-      if (userCredential && userCredential.user) {
-        const userRef = collection(FIREBASE_DB, 'users');
-        await addDoc(userRef, {
-          name: name,
-          schoolNumber: schoolNumber,
-          email: email,
-          phoneNumber: phoneNumber,
-          // İhtiyaç duyarsanız ek alanları buraya ekleyebilirsiniz
-        });
-        //setIsJustSignedUp(true); // Set the flag
-        // Kullanıcıya başarılı bir şekilde kayıt olduğu bilgisini ver ve "GetStarted" ekranına yönlendir
-        console.log(userCredential);
-        alert('Check your emails!');
-        navigation.navigate('GetStarted');
-      } else {
-        throw new Error('User creation failed');
-      }
-    } catch (error: any) {
-      console.error(error);
-      alert('Sign Up failed: ' + error.message);
-    } finally {
-      setLoading(false);
+const signUp = async () => {
+  setLoading(true);
+  try {
+    // Firebase Authentication ile kullanıcı oluşturma
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+
+    // Kullanıcı başarıyla oluşturulduysa, ek kullanıcı bilgilerini Firestore'a kaydet
+    if (userCredential && userCredential.user) {
+      const userRef = collection(FIREBASE_DB, 'users');
+      const userInfo = {
+        name: name,
+        schoolNumber: schoolNumber,
+        email: email,
+        phoneNumber: phoneNumber,
+      };
+      // Kullanıcıyı Firestore'a ekleyin
+      const userDocRef = await addDoc(userRef, userInfo);
+
+      // Medical info için bir doküman oluşturun ve kullanıcı kimliği ile ilişkilendirin
+      const medicalInfoRef = collection(FIREBASE_DB, 'medicalInfo');
+      const medicalInfoData = {
+        userId: userDocRef.id, // Kullanıcıya ait olanı belirlemek için userDocRef'in id'sini kullanın
+        familyContact: '',
+        bloodType: '',
+        healthIssues: '',
+        alergies: '',
+        adress: '',
+      };
+      await addDoc(medicalInfoRef, medicalInfoData);
+
+      // Kullanıcıya başarılı bir şekilde kayıt olduğu bilgisini ver ve "GetStarted" ekranına yönlendir
+      console.log(userCredential);
+      alert('Check your emails!');
+      navigation.navigate('GetStarted');
+    } else {
+      throw new Error('User creation failed');
     }
-  };
+  } catch (error: any) {
+    console.error(error);
+    alert('Sign Up failed: ' + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
   
 
   return (

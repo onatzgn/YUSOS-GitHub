@@ -158,7 +158,7 @@ const LoginScreen = ({navigation}) => {
               <Text style={styles.buttonText}>Sign in</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.registerText} onPress={handleSignUpPress}>
-              <Text style={styles.registerLink}>Create new</Text>
+              <Text style={styles.registerLink}>Sign Up</Text>
             </TouchableOpacity>
           </>
         )}
