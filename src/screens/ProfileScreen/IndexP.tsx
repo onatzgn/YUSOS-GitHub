@@ -5,7 +5,6 @@ import { UserContext } from '../../contexts/UserContext';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'; 
 import { FIREBASE_DB } from '../../../FirebaseConfig';
 
-
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext); 
   const [loading, setLoading] = useState(true);
@@ -13,19 +12,29 @@ const ProfileScreen = () => {
   const changeProfileImage = () => {
     // Profil resmi değiştirme işlemleri burada yapılabilir
   };
+
   const fetchUserInfo = async () => {
     try {
       if (!userInfo || !userInfo.userId) {
         throw new Error('Kullanıcı bilgileri eksik');
       }
-  
-      
+
       const userId = userInfo.userId;
       const userRef = doc(FIREBASE_DB, 'users', userId);
       const userSnapshot = await getDoc(userRef);
-  
+
       if (userSnapshot.exists()) {
-        setUserInfo(userSnapshot.data());
+        const userData = userSnapshot.data();
+
+        // Medical Info'yu da alıp userInfo içine ekliyoruz
+        const medicalRef = doc(FIREBASE_DB, 'medicalInfo', userId);
+        const medicalSnapshot = await getDoc(medicalRef);
+
+        if (medicalSnapshot.exists()) {
+          userData.medicalInfo = medicalSnapshot.data();
+        }
+
+        setUserInfo(userData);
       } else {
         console.log('Kullanıcı bulunamadı');
       }
@@ -36,43 +45,12 @@ const ProfileScreen = () => {
     }
   };
   
-  const fetchMedicalInfo = async () => {
-    try {
-      if (!userInfo || !userInfo.userId) {
-        throw new Error('Kullanıcı bilgileri eksik');
-      }
-  
-      const db = getFirestore();
-      const userId = userInfo.userId;
-      const medicalRef = doc(FIREBASE_DB, 'medicalInfo', userId);
-      const medicalInfoSnapshot = await getDoc(medicalRef);
-  
-      if (medicalInfoSnapshot.exists()) {
-        // Kullanıcı tıbbi bilgilerini userInfo içine bir alt nesne olarak ekleyebiliriz
-        setUserInfo(prevUserInfo => ({
-          ...prevUserInfo,
-          medicalInfo: medicalInfoSnapshot.data()
-        }));
-      } else {
-        console.log('Kullanıcı tıbbi bilgileri bulunamadı');
-      }
-    } catch (error) {
-      console.error('Kullanıcı tıbbi bilgilerini alma işlemi başarısız oldu:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-  
-  
   // userInfo varsa kullanıcı bilgilerini ve tıbbi bilgileri al
   useEffect(() => {
     if (userInfo && userInfo.userId) {
       fetchUserInfo();
-      fetchMedicalInfo();
     }
   }, [userInfo]);
-  
-
 
   useEffect(() => {
     fetchUserInfo();
@@ -96,6 +74,18 @@ const ProfileScreen = () => {
             <Text style={styles.infoText}>Okul Numarası: {userInfo.schoolNumber}</Text>
             <Text style={styles.infoText}>E-posta: {userInfo.email}</Text>
             <Text style={styles.infoText}>Telefon: {userInfo.phoneNumber}</Text>
+            {/* Medical Info'yu gösteren bölüm */}
+            {userInfo.medicalInfo && (
+              <View style={styles.infoContainer}>
+                <Text style={styles.infoHeading}>Tıbbi Bilgiler</Text>
+                <Text style={styles.infoText}>Kan Grubu: {userInfo.medicalInfo.bloodType}</Text>
+                <Text style={styles.infoText}>Alerjiler: {userInfo.medicalInfo.allergies}</Text>
+                <Text style={styles.infoText}>Adres: {userInfo.medicalInfo.address}</Text>
+                <Text style={styles.infoText}>Aile İletişim: {userInfo.medicalInfo.familyContact}</Text>
+                <Text style={styles.infoText}>Sağlık Sorunları: {userInfo.medicalInfo.healthIssues}</Text>
+                {/* İhtiyaca göre diğer medical bilgileri de buraya eklenmeli */}
+              </View>
+            )}
           </View>
           <View style={styles.activitiesContainer}>
             <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
