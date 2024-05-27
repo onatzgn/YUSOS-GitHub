@@ -5,7 +5,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { UserContext } from '../../contexts/UserContext';
 
 const ProfileScreen = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext); // useContext burada doğru şekilde kullanılmalı
+  const { userInfo, setUserInfo } = useContext(UserContext); 
   const [isEditingInfo, setIsEditingInfo] = useState(false);
 
   const changeProfileImage = () => {
@@ -19,8 +19,6 @@ const ProfileScreen = () => {
   const saveUserInfo = () => {
     setIsEditingInfo(false);
   };
-
- 
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>

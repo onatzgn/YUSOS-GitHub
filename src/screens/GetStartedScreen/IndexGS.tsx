@@ -1,10 +1,11 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { View, ScrollView, Text, TouchableOpacity, TextInput, Dimensions, Alert } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, TextInput, Dimensions, Alert, Image } from 'react-native';
 import { FontAwesome5, FontAwesome6 } from '@expo/vector-icons';
 import * as Notifications from 'expo-notifications';
 import * as Location from 'expo-location';
-import { Image } from 'react-native';
 import { UserContext } from '../../contexts/UserContext';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../../FirebaseConfig';
 
 const { width } = Dimensions.get('window');
 
@@ -29,12 +30,12 @@ const GetStartedScreen = ({ navigation }) => {
   const [showUserInfo, setShowUserInfo] = useState(false);
   const [familyContact, setFamilyContact] = useState('');
   const [healthIssues, setHealthIssues] = useState('');
-  const [alergies, setAlergies] = useState('');
-  const [adress, setAdress] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [address, setAddress] = useState('');
   const [startButtonTitle, setStartButtonTitle] = useState('Şimdilik Geç ve Başla');
   const [selectedBloodType, setSelectedBloodType] = useState('');
   const [selectedRhFactor, setSelectedRhFactor] = useState('');
-  const { setUserInfo } = useContext(UserContext);
+  const { userInfo, setUserInfo } = useContext(UserContext);
 
   useEffect(() => {
     const checkNotificationPermission = async () => {
@@ -88,31 +89,49 @@ const GetStartedScreen = ({ navigation }) => {
     setSelectedRhFactor(rhFactor);
   };
 
-  const saveUserInfo = () => {
-    setUserInfo({
+  const saveUserInfo = async () => {
+    const medicalInfo = {
       familyContact,
       bloodType: selectedBloodType + selectedRhFactor,
       healthIssues,
-      alergies,
-      adress,
-    });
+      allergies,
+      address,
+    };
 
-    setShowUserInfo(false);
-    Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla kaydedildi.');
-    setStartButtonTitle('Başla');
+    // User context'i güncelle
+    setUserInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      ...medicalInfo
+    }));
 
-    // "Başlarken" sayfasına yönlendirme
-    const lastPageIndex = 6; // "Başlarken" sayfasının indeksini belirleyin
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
-      setCurrentPage(lastPageIndex);
+    // Firestore'a medicalInfo kaydet
+    try {
+      const userId = userInfo.userId; // Kullanıcı kimliği UserContext'ten alınıyor
+      if (!userId) {
+        throw new Error('User ID not available');
+      }
+      const medicalRef = doc(FIREBASE_DB, 'medicalInfo', userId);
+      await setDoc(medicalRef, medicalInfo);
+
+      Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla kaydedildi.');
+      setShowUserInfo(false);
+      setStartButtonTitle('Başla');
+
+      // "Başlarken" sayfasına yönlendirme
+      const lastPageIndex = 6; // "Başlarken" sayfasının indeksini belirleyin
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
+        setCurrentPage(lastPageIndex);
+      }
+    } catch (error) {
+      console.error('Medical info could not be saved:', error);
+      Alert.alert('Hata', 'Bilgiler kaydedilemedi. Lütfen tekrar deneyin.');
     }
   };
 
   const handleStartButtonPress = () => {
     navigation.navigate('Main');
   };
-
   return (
     <>
       <ScrollView
@@ -244,15 +263,15 @@ const GetStartedScreen = ({ navigation }) => {
 
               <TextInput
                 style={{ height: 40, width: 330, marginLeft: 20, borderColor: 'gray', borderWidth: 1, marginBottom: 10, borderRadius: 10, paddingLeft: 10, textAlign: "auto" }}
-                onChangeText={text => setAlergies(text)}
-                value={alergies}
+                onChangeText={text => setAllergies(text)}
+                value={allergies}
                 placeholder="Alerjiler"
               />
 
               <TextInput
                 style={{ height: 40, width: 330, marginLeft: 20, borderColor: 'gray', borderWidth: 1, marginBottom: 10, borderRadius: 10, paddingLeft: 10, textAlign: "auto" }}
-                onChangeText={text => setAdress(text)}
-                value={adress}
+                onChangeText={text => setAddress(text)}
+                value={address}
                 placeholder="Adres"
               />
 
