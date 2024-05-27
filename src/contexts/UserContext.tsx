@@ -1,23 +1,15 @@
-import React, { createContext, useState, useEffect } from 'react';
-import { getAuth } from 'firebase/auth';
+import React, { createContext, useState } from 'react';
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [userInfo, setUserInfo] = useState(null);
-
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUserInfo({ userId: user.uid, email: user.email });
-      } else {
-        setUserInfo(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const [userInfo, setUserInfo] = useState({
+    name: '',
+    schoolNumber: '',
+    email: '',
+    phoneNumber: '',
+    activityHistory: [],
+  });
 
   return (
     <UserContext.Provider value={{ userInfo, setUserInfo }}>
