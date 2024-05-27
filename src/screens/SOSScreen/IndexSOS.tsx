@@ -16,42 +16,42 @@ const SOSScreen = ({ navigation }) => {
     };
 
     const sendSOS = () => {
-        setIsSOSRequested(true);
+    setIsSOSRequested(true);
+
+    const now = new Date();
+    const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const username = 'John Doe'; // Kullanıcı adını buradan alabilirsiniz
+    const location = userInfo.medicalInfo ? userInfo.medicalInfo.address : 'Bilgi bulunamadı'; // Kullanıcının adres bilgilerini UserContext'ten alın
+    const healthIssues = userInfo.medicalInfo ? userInfo.medicalInfo.healthIssues : 'Bilgi bulunamadı'; // Kullanıcının sağlık sorunlarını UserContext'ten alın
     
-        const now = new Date();
-        const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const username = 'John Doe'; // Kullanıcı adını buradan alabilirsiniz
-        const location = userInfo.medicalInfo ? userInfo.medicalInfo.address : 'Bilgi bulunamadı'; // Kullanıcının adres bilgilerini UserContext'ten alın
-        const healthIssues = userInfo.medicalInfo ? userInfo.medicalInfo.healthIssues : 'Bilgi bulunamadı'; // Kullanıcının sağlık sorunlarını UserContext'ten alın
-        
-        const newRequest = { 
-            id: helpRequests.length + 1, 
-            title: `${username}`,
-            time: `${formattedTime}`, 
-            location: `${location}`, 
-            healthIssues: `${healthIssues}`, 
-        };
-        setHelpRequests([...helpRequests, newRequest]);
-       
-        const activity = { type: 'SOS Çağrısı', date: now.toLocaleString() };
-        setUserInfo(prevState => ({
-            ...prevState,
-            activityHistory: [...prevState.activityHistory, activity]
-        }));
-    
-        Alert.alert(
-            'Acil Durum Çağrısı',
-            'Acil durum talebiniz yollanmıştır. Talebinizi Yardım Merkezinden iptal edebilirsiniz.',
-            [
-                {
-                    text: 'Kapat',
-                },
-            ],
-            { cancelable: false }
-        );
-        navigation.navigate('HelpCenterScreen', { helpRequests: [...helpRequests, newRequest] });
+    const newRequest = { 
+        id: helpRequests.length + 1, 
+        title: `${username}`,
+        time: `${formattedTime}`, 
+        location: `${location}`, 
+        healthIssues: `${healthIssues}`, 
     };
-    
+    setHelpRequests([...helpRequests, newRequest]);
+   
+    const activity = { type: 'SOS Çağrısı', date: now.toLocaleString() };
+    setUserInfo(prevState => ({
+        ...prevState,
+        activityHistory: [...prevState.activityHistory, activity]
+    }));
+
+    Alert.alert(
+        'Acil Durum Çağrısı',
+        'Acil durum talebiniz yollanmıştır. Talebinizi Yardım Merkezinden iptal edebilirsiniz.',
+        [
+            {
+                text: 'Kapat',
+            },
+        ],
+        { cancelable: false }
+    );
+    navigation.navigate('HelpCenterScreen', { helpRequests: [...helpRequests, newRequest] });
+};
+
 
     const cancelSOS = () => {
         setIsSOSRequested(false);
