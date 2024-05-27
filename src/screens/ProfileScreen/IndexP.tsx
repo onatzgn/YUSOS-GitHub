@@ -3,11 +3,13 @@ import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } fr
 import styles from './styles'; 
 import { UserContext } from '../../contexts/UserContext';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'; 
+import { FIREBASE_DB } from '../../../FirebaseConfig';
+
 
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext); 
   const [loading, setLoading] = useState(true);
-  
+
   const changeProfileImage = () => {
     // Profil resmi değiştirme işlemleri burada yapılabilir
   };
@@ -17,9 +19,9 @@ const ProfileScreen = () => {
         throw new Error('Kullanıcı bilgileri eksik');
       }
   
-      const db = getFirestore();
+      
       const userId = userInfo.userId;
-      const userRef = doc(db, 'users', userId);
+      const userRef = doc(FIREBASE_DB, 'users', userId);
       const userSnapshot = await getDoc(userRef);
   
       if (userSnapshot.exists()) {
@@ -42,7 +44,7 @@ const ProfileScreen = () => {
   
       const db = getFirestore();
       const userId = userInfo.userId;
-      const medicalRef = doc(db, 'medicalinfo', userId);
+      const medicalRef = doc(FIREBASE_DB, 'medicalInfo', userId);
       const medicalInfoSnapshot = await getDoc(medicalRef);
   
       if (medicalInfoSnapshot.exists()) {
