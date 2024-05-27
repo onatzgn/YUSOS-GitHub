@@ -17,12 +17,12 @@ const SOSScreen = ({ navigation }) => {
 
     const sendSOS = () => {
         setIsSOSRequested(true);
-  
+    
         const now = new Date();
         const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
         const username = 'John Doe'; // Kullanıcı adını buradan alabilirsiniz
-        const location = userInfo.adress; // Kullanıcının adres bilgilerini UserContext'ten alın
-        const healthIssues = userInfo.healthIssues; // Kullanıcının sağlık sorunlarını UserContext'ten alın
+        const location = userInfo.medicalInfo ? userInfo.medicalInfo.address : 'Bilgi bulunamadı'; // Kullanıcının adres bilgilerini UserContext'ten alın
+        const healthIssues = userInfo.medicalInfo ? userInfo.medicalInfo.healthIssues : 'Bilgi bulunamadı'; // Kullanıcının sağlık sorunlarını UserContext'ten alın
         
         const newRequest = { 
             id: helpRequests.length + 1, 
@@ -38,7 +38,7 @@ const SOSScreen = ({ navigation }) => {
             ...prevState,
             activityHistory: [...prevState.activityHistory, activity]
         }));
-
+    
         Alert.alert(
             'Acil Durum Çağrısı',
             'Acil durum talebiniz yollanmıştır. Talebinizi Yardım Merkezinden iptal edebilirsiniz.',
@@ -51,6 +51,7 @@ const SOSScreen = ({ navigation }) => {
         );
         navigation.navigate('HelpCenterScreen', { helpRequests: [...helpRequests, newRequest] });
     };
+    
 
     const cancelSOS = () => {
         setIsSOSRequested(false);

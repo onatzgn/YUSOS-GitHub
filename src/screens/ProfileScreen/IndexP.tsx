@@ -71,18 +71,18 @@ const ProfileScreen = () => {
             <Text style={styles.name}>{userInfo.name}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.infoText}>Okul Numarası: {userInfo.schoolNumber}</Text>
-            <Text style={styles.infoText}>E-posta: {userInfo.email}</Text>
-            <Text style={styles.infoText}>Telefon: {userInfo.phoneNumber}</Text>
+            <Text style={styles.infoText}>Okul Numarası: {userInfo.schoolNumber || 'Bilgi bulunamadı'}</Text>
+            <Text style={styles.infoText}>E-posta: {userInfo.email || 'Bilgi bulunamadı'}</Text>
+            <Text style={styles.infoText}>Telefon: {userInfo.phoneNumber || 'Bilgi bulunamadı'}</Text>
             {/* Medical Info'yu gösteren bölüm */}
             {userInfo.medicalInfo && (
               <View style={styles.infoContainer}>
                 <Text style={styles.infoHeading}>Tıbbi Bilgiler</Text>
-                <Text style={styles.infoText}>Kan Grubu: {userInfo.medicalInfo.bloodType}</Text>
-                <Text style={styles.infoText}>Alerjiler: {userInfo.medicalInfo.allergies}</Text>
-                <Text style={styles.infoText}>Adres: {userInfo.medicalInfo.address}</Text>
-                <Text style={styles.infoText}>Aile İletişim: {userInfo.medicalInfo.familyContact}</Text>
-                <Text style={styles.infoText}>Sağlık Sorunları: {userInfo.medicalInfo.healthIssues}</Text>
+                <Text style={styles.infoText}>Kan Grubu: {userInfo.medicalInfo.bloodType || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Alerjiler: {userInfo.medicalInfo.allergies || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Adres: {userInfo.medicalInfo.address || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Aile İletişim: {userInfo.medicalInfo.familyContact || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Sağlık Sorunları: {userInfo.medicalInfo.healthIssues || 'Bilgi bulunamadı'}</Text>
                 {/* İhtiyaca göre diğer medical bilgileri de buraya eklenmeli */}
               </View>
             )}
