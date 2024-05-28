@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, setDoc, doc } from 'firebase/firestore'; // setDoc ve doc işlevlerini içe aktardık
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyASJvRTahIcO9Z3eCtoHY_McfF42_jzRrY",

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome6 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
+import { FontAwesome6, FontAwesome, Ionicons } from '@expo/vector-icons';
 import styles from './styles';
+import { FIREBASE_DB } from '../../../FirebaseConfig';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 
 const InfoScreen = () => {
     const [showInfo, setShowInfo] = useState(false);
@@ -14,12 +14,37 @@ const InfoScreen = () => {
     const [isAdmin, setIsAdmin] = useState(true); // Default value is false for non-admin users
 
     // Define separate state variables and functions for each container
-    const [acilText, setAcilText] = useState('Yeditepe Üniversitesi Meydan');
-    const [telefonText, setTelefonText] = useState('Ambulans:112\nPolis:155\nİtfaiye:110');
-    const [yardimText, setYardimText] = useState('Yeditepe Üniversitesi Sosyal Tesisler Binası - 1. Kat');
-    const [ilkYardimText, setIlkYardimText] = useState('İlk yardım bilgileri buraya yazılabilir');
-    const [null1Text, setNull1Text] = useState('NULL1 bilgileri');
-    const [null2Text, setNull2Text] = useState('NULL2 bilgileri');
+    const [acilText, setAcilText] = useState('');
+    const [telefonText, setTelefonText] = useState('');
+    const [yardimText, setYardimText] = useState('');
+    const [ilkYardimText, setIlkYardimText] = useState('');
+    const [null1Text, setNull1Text] = useState('');
+    const [null2Text, setNull2Text] = useState('');
+
+    useEffect(() => {
+        // Fetch data from Firestore when the component mounts
+        const fetchData = async () => {
+            try {
+                const docRef = doc(FIREBASE_DB, 'rehberInfo', 'infoData');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    setAcilText(data.acilText || '');
+                    setTelefonText(data.telefonText || '');
+                    setYardimText(data.yardimText || '');
+                    setIlkYardimText(data.ilkYardimText || '');
+                    setNull1Text(data.null1Text || '');
+                    setNull2Text(data.null2Text || '');
+                } else {
+                    console.log('No such document!');
+                }
+            } catch (error) {
+                console.error('Error fetching document: ', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     const handleContainerPress = (info, text, setTextFunction) => {
         setSelectedInfo(info);
@@ -35,11 +60,19 @@ const InfoScreen = () => {
         setEditedInfoText('');
     };
 
-    const handleSaveChanges = (setTextFunction) => {
-        setTextFunction(editedInfoText); // Update the appropriate state variable
-        setSelectedInfoText(editedInfoText);
-        handleCloseInfo();
-        setEditedInfoText(''); // Reset edited text after saving changes
+    const handleSaveChanges = async (setTextFunction, field) => {
+        try {
+            setTextFunction(editedInfoText); // Update the appropriate state variable
+            setSelectedInfoText(editedInfoText);
+            handleCloseInfo();
+            setEditedInfoText(''); // Reset edited text after saving changes
+
+            // Save changes to Firestore
+            const docRef = doc(FIREBASE_DB, 'rehberInfo', 'infoData');
+            await setDoc(docRef, { [field]: editedInfoText }, { merge: true });
+        } catch (error) {
+            console.error('Error saving changes: ', error);
+        }
     };
 
     return (
@@ -47,7 +80,7 @@ const InfoScreen = () => {
             <ScrollView contentContainerStyle={styles.scrollViewContainer}>
                 <Text style={styles.titleText}>Rehber</Text>
                 <View style={styles.rowContainer}>
-                    <TouchableOpacity  
+                    <TouchableOpacity
                         style={styles.container} onPress={() => handleContainerPress('Acil Durum Toplanma Alanları', acilText, setAcilText)}>
                         <Text style={styles.heading}>Acil Durum Toplanma Alanları</Text>
                         <View style={styles.iconContainer}>
@@ -55,7 +88,7 @@ const InfoScreen = () => {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Telefon Numaraları', telefonText, setTelefonText)}>
-                        <Text style={[styles.heading, {paddingBottom:20}]}>Telefon Numaraları</Text>
+                        <Text style={[styles.heading, { paddingBottom: 20 }]}>Telefon Numaraları</Text>
                         <View style={styles.iconContainer}>
                             <FontAwesome name="phone" size={120} color="#2e76e8" />
                         </View>
@@ -63,13 +96,13 @@ const InfoScreen = () => {
                 </View>
                 <View style={styles.rowContainer}>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('Yardım Toplama Noktaları', yardimText, setYardimText)}>
-                        <Text style={[styles.heading, {paddingBottom:10}]}>Yardım Toplama Noktaları</Text>
+                        <Text style={[styles.heading, { paddingBottom: 10 }]}>Yardım Toplama Noktaları</Text>
                         <View style={styles.iconContainer}>
                             <Ionicons name="bag-add" size={120} color="#2e76e8" />
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('İlk Yardım', ilkYardimText, setIlkYardimText)}>
-                        <Text style={[styles.heading, {paddingBottom:20}]}>İlk Yardım</Text>
+                        <Text style={[styles.heading, { paddingBottom: 20 }]}>İlk Yardım</Text>
                         <View style={styles.iconContainer}>
                             <FontAwesome6 name="bandage" size={120} color="#2e76e8" />
                         </View>
@@ -83,13 +116,12 @@ const InfoScreen = () => {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.container} onPress={() => handleContainerPress('NULL2', null2Text, setNull2Text)}>
-                        <Text style={[styles.heading, {paddingBottom: 20}]}>NULL2</Text>
+                        <Text style={[styles.heading, { paddingBottom: 20 }]}>NULL2</Text>
                         <View style={styles.iconContainer}>
                             <AntDesign name="star" size={120} color="#2e76e8" />
                         </View>
                     </TouchableOpacity>
                 </View>
-                {/* Add more TouchableOpacity components as needed */}
             </ScrollView>
 
             <Modal
@@ -118,11 +150,17 @@ const InfoScreen = () => {
                             <TouchableOpacity
                                 style={styles.saveButton}
                                 onPress={() => handleSaveChanges(selectedInfo === 'Acil Durum Toplanma Alanları' ? setAcilText :
-                                                                    selectedInfo === 'Telefon Numaraları' ? setTelefonText :
-                                                                    selectedInfo === 'Yardım Toplama Noktaları' ? setYardimText :
-                                                                    selectedInfo === 'İlk Yardım' ? setIlkYardimText :
-                                                                    selectedInfo === 'NULL1' ? setNull1Text :
-                                                                    setNull2Text)}>
+                                    selectedInfo === 'Telefon Numaraları' ? setTelefonText :
+                                        selectedInfo === 'Yardım Toplama Noktaları' ? setYardimText :
+                                            selectedInfo === 'İlk Yardım' ? setIlkYardimText :
+                                                selectedInfo === 'NULL1' ? setNull1Text :
+                                                    setNull2Text,
+                                    selectedInfo === 'Acil Durum Toplanma Alanları' ? 'acilText' :
+                                        selectedInfo === 'Telefon Numaraları' ? 'telefonText' :
+                                            selectedInfo === 'Yardım Toplama Noktaları' ? 'yardimText' :
+                                                selectedInfo === 'İlk Yardım' ? 'ilkYardimText' :
+                                                    selectedInfo === 'NULL1' ? 'null1Text' :
+                                                        'null2Text')}>
                                 <Text style={styles.saveButtonText}>Save Changes</Text>
                             </TouchableOpacity>
                         )}
