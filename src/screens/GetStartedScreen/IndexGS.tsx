@@ -218,7 +218,7 @@ const GetStartedScreen = ({ navigation }) => {
         <View style={{ flex: 1 }}>
           <BigTitle title="Başlarken" />
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} />
-          <Text style={{ alignSelf: 'center', marginTop: -50, fontWeight: 'bold', fontSize: 20 }}>Merhaba John,</Text>
+          <Text style={{ alignSelf: 'center', marginTop: -50, fontWeight: 'bold', fontSize: 20 }}>Merhaba,</Text>
           <TextSection text="Hizmetlerimizden en iyi şekilde faydalanabilmeniz için bazı kişisel bilgilerinizi toplamamız gerekiyor. Bu bilgiler, acil durumlarda size daha iyi yardımcı olabilmemiz için kullanılacak ve sağlık hizmetlerimizi kişiselleştirmemize olanak sağlayacak." />
           <TouchableOpacity onPress={toggleUserInfo} style={{ marginTop: 20, alignItems: 'center' }}>
             <Text style={{ fontSize: 20, color: '#2e76e8', textDecorationLine: 'underline' }}>Bilgileri Ekle</Text>

@@ -96,9 +96,6 @@ const SignUpScreen = ({ navigation }) => {
           <Text style={styles.buttonText}>Kayıt Ol</Text>
         )}
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-        <Text style={styles.loginText}>Zaten bir hesabın var mı? Giriş Yap</Text>
-      </TouchableOpacity>
       {loading && <ActivityIndicator size="large" />}
       <Text style={styles.alreadyText}>
         Already have an account?{' '}
