@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native';
-import styles from './styles';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { View, Text, Image, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import styles from './styles'; 
 import { UserContext } from '../../contexts/UserContext';
+import { getFirestore, doc, getDoc } from 'firebase/firestore'; 
 import { FIREBASE_DB } from '../../../FirebaseConfig';
-import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const ProfileScreen = () => {
-  const { user, userInfo, setUserInfo } = useContext(UserContext);
-  const [isEditingInfo, setIsEditingInfo] = useState(false);
+  const { user, userInfo, setUserInfo } = useContext(UserContext); 
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -40,126 +39,92 @@ const ProfileScreen = () => {
     // Profil resmi değiştirme işlemleri burada yapılabilir
   };
 
-  const changeUserInfo = () => {
-    setIsEditingInfo(!isEditingInfo);
-  };
-
-  const saveUserInfo = async () => {
+  const fetchUserInfo = async () => {
     try {
-      const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
-      await updateDoc(userDocRef, { ...userInfo }); // Tüm kullanıcı bilgilerini güncelleyin
-      setIsEditingInfo(false);
-      Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla güncellendi.');
+      if (!userInfo || !userInfo.userId) {
+        throw new Error('Kullanıcı bilgileri eksik');
+      }
+
+      const userId = userInfo.userId;
+      const userRef = doc(FIREBASE_DB, 'users', userId);
+      const userSnapshot = await getDoc(userRef);
+
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+
+        // Medical Info'yu da alıp userInfo içine ekliyoruz
+        const medicalRef = doc(FIREBASE_DB, 'medicalInfo', userId);
+        const medicalSnapshot = await getDoc(medicalRef);
+
+        if (medicalSnapshot.exists()) {
+          userData.medicalInfo = medicalSnapshot.data();
+        }
+
+        setUserInfo(userData);
+      } else {
+        console.log('Kullanıcı bulunamadı');
+      }
     } catch (error) {
-      console.error('Error updating user info: ', error);
-      Alert.alert('Hata', 'Bilgiler güncellenirken bir hata oluştu.');
+      console.error('Kullanıcı bilgilerini alma işlemi başarısız oldu:', error);
+    } finally {
+      setLoading(false);
     }
   };
   
-  
+  // userInfo varsa kullanıcı bilgilerini ve tıbbi bilgileri al
+  useEffect(() => {
+    if (userInfo && userInfo.userId) {
+      fetchUserInfo();
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
+    fetchUserInfo();
+  }, []);
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
-      <View>
-        <Text style={styles.titleText}>Profil</Text>
-        <View style={styles.profileContainer}>
-          <Image source={require('./profile.jpg')} style={styles.profileImage} />
-          <TouchableOpacity onPress={changeProfileImage} style={styles.changeProfileButton}>
-            <Text style={styles.plusSign}>+</Text>
-          </TouchableOpacity>
-          <Text style={styles.name}>{userInfo.name}</Text>
-        </View>
-        <View style={styles.infoContainer}>
-          <View style={styles.infoHeaderContainer}>
-            <Text style={styles.infoHeading}>Bilgiler</Text>
-            <TouchableOpacity onPress={changeUserInfo} style={styles.editInfoButton}>
-              <FontAwesome5 name="pen" size={16} color="black" />
-            </TouchableOpacity>
+      {loading ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <View>
+          <Text style={styles.titleText}>Profil</Text>
+          <View style={styles.profileContainer}>
+
+            <Text style={styles.name}>{userInfo.name}</Text>
           </View>
-          {isEditingInfo ? (
-            <View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Kan Grubu:</Text>
-                <TextInput
-                  style={styles.userInfoInput}
-                  value={userInfo.bloodType}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, bloodType: text })}
-                />
+          <View style={styles.infoContainer}>
+
+            {/* Medical Info'yu gösteren bölüm */}
+            {userInfo.medicalInfo && (
+              <View>
+                <Text style={styles.infoHeading}>Bilgiler</Text>
+                <Text style={styles.infoText}>Okul Numarası: {userInfo.schoolNumber || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>E-posta: {userInfo.email || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Telefon: {userInfo.phoneNumber || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Kan Grubu: {userInfo.medicalInfo.bloodType || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Alerjiler: {userInfo.medicalInfo.allergies || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Adres: {userInfo.medicalInfo.address || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Aile İletişim: {userInfo.medicalInfo.familyContact || 'Bilgi bulunamadı'}</Text>
+                <Text style={styles.infoText}>Sağlık Sorunları: {userInfo.medicalInfo.healthIssues || 'Bilgi bulunamadı'}</Text>
+                {/* İhtiyaca göre diğer medical bilgileri de buraya eklenmeli */}
               </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Aile İrtibat No:</Text>
-                <TextInput
-                  style={styles.userInfoInput}
-                  value={userInfo.familyContact}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, familyContact: text })}
-                />
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Sağlık Sorunları:</Text>
-                <TextInput
-                  style={styles.userInfoInput}
-                  value={userInfo.healthIssues}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, healthIssues: text })}
-                />
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Adres:</Text>
-                <TextInput
-                  style={styles.userInfoInput}
-                  value={userInfo.address}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, address: text })}
-                />
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Alerjiler:</Text>
-                <TextInput
-                  style={styles.userInfoInput}
-                  value={userInfo.allergies}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, allergies: text })}
-                />
-              </View>
-              <TouchableOpacity onPress={saveUserInfo} style={styles.saveButton}>
-                <Text style={styles.saveButtonText}>Kaydet</Text>
-              </TouchableOpacity>
-            </View>
-          ) : (
-            <View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Kan Grubu:</Text>
-                <Text style={styles.userInfoText}>{userInfo.bloodType}</Text>
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Aile İrtibat No:</Text>
-                <Text style={styles.userInfoText}>{userInfo.familyContact}</Text>
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Sağlık Sorunları:</Text>
-                <Text style={styles.userInfoText}>{userInfo.healthIssues}</Text>
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Adres:</Text>
-                <Text style={styles.userInfoText}>{userInfo.address}</Text>
-              </View>
-              <View style={styles.userInfoItem}>
-                <Text style={styles.userInfoTitle}>Alerjiler:</Text>
-                <Text style={styles.userInfoText}>{userInfo.allergies}</Text>
-              </View>
-            </View>
-          )}
+            )}
+          </View>
+          <View style={styles.activitiesContainer}>
+            <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
+            {userInfo.activityHistory && userInfo.activityHistory.length > 0 ? (
+              userInfo.activityHistory.map((activity, index) => (
+                <Text key={index} style={styles.activityText}>
+                  {activity.date} - {activity.type}
+                </Text>
+              ))
+            ) : (
+              <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
+            )}
+          </View>
         </View>
-        <View style={styles.activitiesContainer}>
-          <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-          {userInfo.activityHistory?.length > 0 ? (
-            userInfo.activityHistory.map((activity, index) => (
-              <Text key={index} style={styles.activityText}>
-                {activity.date} - {activity.type}
-              </Text>
-            ))
-          ) : (
-            <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
-          )}
-        </View>
-      </View>
+      )}
     </ScrollView>
   );
 };

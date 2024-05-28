@@ -1,21 +1,19 @@
-
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, setDoc, doc } from 'firebase/firestore';
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [schoolNumber, setSchoolNumber] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const navigation = useNavigation();
+  const auth = FIREBASE_AUTH;
 
   const signUp = async () => {
     if (!name || !schoolNumber || !email || !phoneNumber || !password) {
@@ -26,26 +24,30 @@ const SignUpScreen = () => {
     setLoading(true);
 
     try {
-      const userCredential = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
-      const userRef = collection(FIREBASE_DB, 'users');
-
-      const userInfo = {
-        name,
-        schoolNumber,
-        email,
-        phoneNumber,
-      };
-
-      const userDocRef = await addDoc(userRef, {
-        ...userInfo,
-        uid: userCredential.user.uid, // Kullanıcının UID'sini saklayın
-      });
-
-      Alert.alert('Kayıt Başarılı', 'Kullanıcı kaydı başarıyla tamamlandı!');
-      navigation.navigate('Login');
+      // Firebase Authentication ile kullanıcı oluşturma
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  
+      // Kullanıcı başarıyla oluşturulduysa, ek kullanıcı bilgilerini Firestore'a kaydet
+      if (userCredential && userCredential.user) {
+        const userId = userCredential.user.uid;
+        const userRef = doc(FIREBASE_DB, 'users', userId);
+        await setDoc(userRef, {
+          userId: userId,
+          name: name,
+          schoolNumber: schoolNumber,
+          email: email,
+          phoneNumber: phoneNumber,
+        });
+        // Kullanıcıya başarılı bir şekilde kayıt olduğu bilgisini ver ve "GetStarted" ekranına yönlendir
+        console.log('User created:', userCredential.user);
+        alert('Check your emails!');
+        navigation.navigate('GetStarted');
+      } else {
+        throw new Error('User creation failed');
+      }
     } catch (error) {
-      console.error('Error signing up:', error);
-      Alert.alert('Kayıt Hatası', 'Kayıt işlemi sırasında bir hata oluştu.');
+      console.error(error);
+      alert('Sign Up failed: ' + error.message);
     } finally {
       setLoading(false);
     }
@@ -97,6 +99,13 @@ const SignUpScreen = () => {
       <TouchableOpacity onPress={() => navigation.navigate('Login')}>
         <Text style={styles.loginText}>Zaten bir hesabın var mı? Giriş Yap</Text>
       </TouchableOpacity>
+      {loading && <ActivityIndicator size="large" />}
+      <Text style={styles.alreadyText}>
+        Already have an account?{' '}
+        <Text style={styles.signInLink} onPress={() => navigation.navigate('Login')}>
+          Go here
+        </Text>
+      </Text>
     </View>
   );
 };

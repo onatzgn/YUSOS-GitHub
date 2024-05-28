@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, Alert, ScrollView, Dimensions } from 'react-native';
 import Card from './Card';
+import { getFirestore, collection, onSnapshot, updateDoc, doc, query, orderBy } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../../FirebaseConfig';
 
 const windowDimensions = Dimensions.get('window');
 const windowWidth = windowDimensions.width;
@@ -10,10 +12,16 @@ const HelpCenterScreen = ({ navigation, route }) => {
     const [helpRequests, setHelpRequests] = useState([]);
 
     useEffect(() => {
-        if (route.params && route.params.helpRequests) {
-            setHelpRequests(route.params.helpRequests);
-        }
-    }, [route.params]);
+        const q = query(collection(FIREBASE_DB, "sosInfo"), orderBy("timestamp", "desc"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const fetchedHelpRequests = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setHelpRequests(fetchedHelpRequests);
+        });
+        return () => unsubscribe(); // Cleanup subscription
+    }, []);
 
     const [joinedRequests, setJoinedRequests] = useState([]); 
 
@@ -21,16 +29,26 @@ const HelpCenterScreen = ({ navigation, route }) => {
         navigation.navigate('CommunityCenterScreen');
     };
 
-    const onPressJoin = (id) => {
-        setJoinedRequests([...joinedRequests, id]);
+    const handleJoinHelp = async (id) => {
+        const docRef = doc(FIREBASE_DB, "sosInfo", id);
+        try {
+            await updateDoc(docRef, { isHelped: true });
+            Alert.alert("Başarılı", "Yardım çağrısı başarıyla güncellendi.");
+        } catch (error) {
+            console.error("Error updating document: ", error);
+            Alert.alert("Error", "Failed to update help status. Please try again.");
+        }
     };
 
-    const handleDelete = (id) => {
-        const updatedRequests = helpRequests.filter(request => request.id !== id);
-        setHelpRequests(updatedRequests);
-
-        const updatedJoinedRequests = joinedRequests.filter(joinedId => joinedId !== id);
-        setJoinedRequests(updatedJoinedRequests);
+    const handleDelete = async (id) => {
+        const docRef = doc(FIREBASE_DB, "sosInfo", id);
+        try {
+            await updateDoc(docRef, { isActive: false });
+            Alert.alert("Başarılı", "Yardım çağrısı başarıyla iptal edildi.");
+        } catch (error) {
+            console.error("Error updating document: ", error);
+            Alert.alert("Error", "Failed to cancel the request. Please try again.");
+        }
     };
 
     return (
@@ -51,16 +69,16 @@ const HelpCenterScreen = ({ navigation, route }) => {
                     </View>
                 ) : (
                     <View style={styles.cardContainer}>
-                        {helpRequests.slice(0).reverse().map(request => (
+                        {helpRequests.filter(req => req.isActive).map((request) => (
                             <Card
                                 key={request.id}
                                 title={request.title}
                                 time={request.time}
                                 location={request.location}
                                 healthIssues={request.healthIssues}
-                                onPressJoin={() => onPressJoin(request.id)}
+                                onPressJoin={() => handleJoinHelp(request.id)}
                                 onPressDelete={() => handleDelete(request.id)}
-                                disabled={joinedRequests.includes(request.id)}
+                                isHelped={request.isHelped}
                             />
                         ))}
                     </View>

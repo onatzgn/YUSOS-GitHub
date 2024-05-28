@@ -5,8 +5,15 @@ import * as Notifications from 'expo-notifications';
 import * as Location from 'expo-location';
 import { Image } from 'react-native';
 import { UserContext } from '../../contexts/UserContext';
+import { FIREBASE_AUTH } from '../../../FirebaseConfig';
+import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+
+
+
 import { FIREBASE_DB } from '../../../FirebaseConfig';
-import { getFirestore, collection, addDoc,doc,setDoc } from 'firebase/firestore';
+
+
 
 
 const { width } = Dimensions.get('window');
@@ -32,12 +39,13 @@ const GetStartedScreen = ({ navigation }) => {
   const [showUserInfo, setShowUserInfo] = useState(false);
   const [familyContact, setFamilyContact] = useState('');
   const [healthIssues, setHealthIssues] = useState('');
-  const [alergies, setAlergies] = useState('');
-  const [adress, setAdress] = useState('');
+  const [allergies, setAllergies] = useState('');
+  const [address, setAddress] = useState('');
   const [startButtonTitle, setStartButtonTitle] = useState('Şimdilik Geç ve Başla');
   const [selectedBloodType, setSelectedBloodType] = useState('');
   const [selectedRhFactor, setSelectedRhFactor] = useState('');
-  const { setUserInfo, user } = useContext(UserContext); // Access the current user
+  const { setUserInfo } = useContext(UserContext);
+  const auth = FIREBASE_AUTH;
 
   useEffect(() => {
     const checkNotificationPermission = async () => {
@@ -92,34 +100,45 @@ const GetStartedScreen = ({ navigation }) => {
   };
 
   const saveUserInfo = async () => {
-    if (!user) {
-      Alert.alert('Kullanıcı Hatası', 'Kullanıcı bilgileri alınamadı.');
-      return;
-    }
     try {
-      const bloodType = `${selectedBloodType}${selectedRhFactor}`;
-      const medicalInfoData = {
-        familyContact,
-        bloodType,
-        healthIssues,
-        alergies,
-        adress,
-      };
+      const auth = getAuth();
+      const user = auth.currentUser;
   
-      const medicalInfoRef = collection(FIREBASE_DB, 'medicalInfo'); // medicalInfo koleksiyon referansı
-      await addDoc(medicalInfoRef, { ...medicalInfoData, uid: user.uid }); // Kullanıcı UID'si ile tıbbi bilgiyi ekleyin
+      if (!user) {
+        throw new Error('Kullanıcı oturumu açık değil');
+      }
+  
+      const userId = user.uid;
+      await setDoc(doc(FIREBASE_DB, "medicalInfo", userId), {
+        familyContact: familyContact,
+        bloodType: selectedBloodType + selectedRhFactor,
+        healthIssues: healthIssues,
+        allergies: allergies,
+        address: address
+      });
+  
+      // Kullanıcı bilgilerini yerel olarak güncelle
+      setUserInfo({
+        userId,
+        familyContact,
+        bloodType: selectedBloodType + selectedRhFactor,
+        healthIssues,
+        allergies,
+        address,
+      });
   
       setShowUserInfo(false);
-      Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla kaydedildi.');
       setStartButtonTitle('Başla');
-      const lastPageIndex = 6;
+  
+      // Kullanıcıyı sonraki sayfaya yönlendir
+      const lastPageIndex = 6; // son sayfa indeksi
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
         setCurrentPage(lastPageIndex);
       }
     } catch (error) {
-      console.error('Error saving user info:', error);
-      Alert.alert('Bilgi Kaydetme Hatası', 'Kullanıcı bilgileri kaydedilirken bir hata oluştu.');
+      console.error('Kullanıcı bilgilerini kaydetme işlemi başarısız oldu:', error);
+      Alert.alert('Hata', 'Bilgiler kaydedilemedi. Lütfen tekrar deneyin.');
     }
   };
   
@@ -264,15 +283,15 @@ const GetStartedScreen = ({ navigation }) => {
 
               <TextInput
                 style={{ height: 40, width: 330, marginLeft: 20, borderColor: 'gray', borderWidth: 1, marginBottom: 10, borderRadius: 10, paddingLeft: 10, textAlign: "auto" }}
-                onChangeText={text => setAlergies(text)}
-                value={alergies}
+                onChangeText={text => setAllergies(text)}
+                value={allergies}
                 placeholder="Alerjiler"
               />
 
               <TextInput
                 style={{ height: 40, width: 330, marginLeft: 20, borderColor: 'gray', borderWidth: 1, marginBottom: 10, borderRadius: 10, paddingLeft: 10, textAlign: "auto" }}
-                onChangeText={text => setAdress(text)}
-                value={adress}
+                onChangeText={text => setAddress(text)}
+                value={address}
                 placeholder="Adres"
               />
 

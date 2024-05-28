@@ -7,8 +7,8 @@ const windowDimensions = Dimensions.get('window');
 const windowWidth = windowDimensions.width;
 const windowHeight = windowDimensions.height;
 
-const Card = ({ title, time, location, healthIssues, onPressJoin, onPressDelete, disabled }) => {
-    const [joined, setJoined] = useState(false);
+const Card = ({title, time, location, healthIssues, onPressJoin, onPressDelete, isHelped, disabled }) => {
+    const [joined, setJoined] = useState(isHelped);
     const [expanded, setExpanded] = useState(false);
 
     const handlePressJoin = () => {
@@ -75,7 +75,7 @@ const Card = ({ title, time, location, healthIssues, onPressJoin, onPressDelete,
                     <TouchableOpacity
                         style={[styles.actionButton, joined ? styles.joinedButton : null]}
                         onPress={handlePressJoin}
-                        disabled={disabled}
+                        disabled={isHelped}
                     >
                         {joined ? (
                             <FontAwesome name="check" size={windowWidth * 0.06} color="white" />
@@ -109,6 +109,9 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 }, 
         shadowOpacity: 0.2, 
         shadowRadius: 2, 
+    },
+    helpedCard: {
+        backgroundColor: '#d3ffd3', // Açık yeşil tonunda bir renk
     },
     cardContent: {
         flexDirection: 'row',
