@@ -11,15 +11,22 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
   },
   logo: {
-    width: 150,
-    height: 150,
+    width: 300, // Logo boyutunu artırdım
+    height: 200, // Logo boyutunu artırdım
     resizeMode: 'contain',
     marginBottom: 20,
   },
+  smallLogo: {
+    width: 50,
+    height: 50,
+    resizeMode: 'contain',
+    marginTop: 20,
+  },
   title: {
-    fontSize: 24,
+    fontSize: 35,
     fontWeight: 'bold',
     marginBottom: 20,
+  
   },
   input: {
     width: width - 40,
@@ -53,6 +60,4 @@ export default StyleSheet.create({
     paddingLeft: 5,
     color: 'blue',
   },
-
 });
-

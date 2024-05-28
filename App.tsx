@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import RootNavigator from "./src/navigator/RootNavigator";
 import 'react-native-gesture-handler';
+import { useState, useEffect } from 'react';
 import { FIREBASE_AUTH } from './FirebaseConfig';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import StartNavigator from './src/navigator/StartNavigator';
-import { AuthProvider } from './src/context/AuthContext'; // AuthProvider'ın kullanılıp kullanılmadığını kontrol edin
+import { AuthProvider } from './src/context/AuthContext';
 import { UserProvider } from './src/contexts/UserContext';
 import CustomDrawerContent from './src/screens/CustomDrawerContent/DrawerContent'; // Yolu güncelledik
 

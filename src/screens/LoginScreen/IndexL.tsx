@@ -1,18 +1,16 @@
-
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Button, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth';
 import SignUpScreen from '../SignUpScreen/IndexS';
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
-  //const navigation = useNavigation();
 
   const signIn = async () => {
     setLoading(true);
@@ -20,13 +18,13 @@ const LoginScreen = ({navigation}) => {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
       navigation.navigate('Root');
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       alert('Sign In failed: ' + error.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const signUp = async () => {
     setLoading(true);
@@ -34,13 +32,14 @@ const LoginScreen = ({navigation}) => {
       const response = await createUserWithEmailAndPassword(auth, email, password);
       console.log(response);
       alert('Check your emails!');
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       alert('Sign In failed: ' + error.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
+
   const handleSignUpPress = () => {
     navigation.navigate('SignUp'); // Navigate to SignUpScreen
   };
@@ -66,6 +65,7 @@ const LoginScreen = ({navigation}) => {
           </>
         )}
       </KeyboardAvoidingView>
+      <Image source={require('../../../assets/logo2.png')} style={styles.smallLogo} />
     </View>
   );
 };
