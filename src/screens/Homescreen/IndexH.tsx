@@ -25,7 +25,7 @@ const HomeContent = () => {
 const Homescreen = ({ navigation }: RouterProps) => {
   return (
     <Drawer.Navigator drawerContent={(props) => <CustomDrawerContent {...props} />}>
-      <Drawer.Screen name="Anasayfa" component={HomeContent} />
+      <Drawer.Screen name=" " component={HomeContent}  />
     </Drawer.Navigator>
   );
 };
