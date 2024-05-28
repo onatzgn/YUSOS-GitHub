@@ -1,144 +1,102 @@
-/*
-import React from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
-import styles from './styles';
 
-function SignUpScreen({ navigation }) {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput placeholder="Ad Soyad" style={styles.input} />
-      <TextInput placeholder="Okul Numarası" style={styles.input} keyboardType="numeric" />
-      <TextInput placeholder="Mail" style={styles.input} keyboardType="email-address" />
-      <TextInput placeholder="Telefon Numarası" style={styles.input} keyboardType="phone-pad" />
-      <TextInput placeholder="****" style={styles.input} secureTextEntry />
-      <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('GetStarted')}>
-        <Text style={styles.buttonText}>Sign Up</Text>
-      </TouchableOpacity>
-      <Text style={styles.alreadyText}>Already have account?
-        <Text style={styles.signInLink} onPress={() => navigation.navigate('Login')}>
-          Go here
-        </Text>
-      </Text>
-    </View>
-  );
-}
-
-export default SignUpScreen;
-*/
-import React, { useState, useContext} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image, Button, ActivityIndicator, KeyboardAvoidingView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from 'react-native';
 import styles from './styles';
-import { FIREBASE_AUTH } from '../../../FirebaseConfig';
+import { useNavigation } from '@react-navigation/native';
+import { FIREBASE_AUTH, FIREBASE_DB } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { FIREBASE_DB } from '../../../FirebaseConfig';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
-//import { AuthContext } from '../../context/AuthContext'; // Adjust the path accordingly
+import { collection, addDoc } from 'firebase/firestore';
 
-
-const SignUpScreen = ({ navigation }) => {
+const SignUpScreen = () => {
   const [name, setName] = useState('');
   const [schoolNumber, setSchoolNumber] = useState('');
   const [email, setEmail] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const auth = FIREBASE_AUTH;
-  //const { setIsJustSignedUp } = useContext(AuthContext);
 
-const signUp = async () => {
-  setLoading(true);
-  try {
-    // Firebase Authentication ile kullanıcı oluşturma
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  const navigation = useNavigation();
 
-    // Kullanıcı başarıyla oluşturulduysa, ek kullanıcı bilgilerini Firestore'a kaydet
-    if (userCredential && userCredential.user) {
-      const userRef = collection(FIREBASE_DB, 'users');
-      const userInfo = {
-        name: name,
-        schoolNumber: schoolNumber,
-        email: email,
-        phoneNumber: phoneNumber,
-      };
-      // Kullanıcıyı Firestore'a ekleyin
-      const userDocRef = await addDoc(userRef, userInfo);
-
-      // Medical info için bir doküman oluşturun ve kullanıcı kimliği ile ilişkilendirin
-      const medicalInfoRef = collection(FIREBASE_DB, 'medicalInfo');
-      const medicalInfoData = {
-        userId: userDocRef.id, // Kullanıcıya ait olanı belirlemek için userDocRef'in id'sini kullanın
-        familyContact: '',
-        bloodType: '',
-        healthIssues: '',
-        alergies: '',
-        adress: '',
-      };
-      await addDoc(medicalInfoRef, medicalInfoData);
-
-      // Kullanıcıya başarılı bir şekilde kayıt olduğu bilgisini ver ve "GetStarted" ekranına yönlendir
-      console.log(userCredential);
-      alert('Check your emails!');
-      navigation.navigate('GetStarted');
-    } else {
-      throw new Error('User creation failed');
+  const signUp = async () => {
+    if (!name || !schoolNumber || !email || !phoneNumber || !password) {
+      Alert.alert('Eksik Bilgi', 'Lütfen tüm alanları doldurun.');
+      return;
     }
-  } catch (error: any) {
-    console.error(error);
-    alert('Sign Up failed: ' + error.message);
-  } finally {
-    setLoading(false);
-  }
-};
 
-  
+    setLoading(true);
+
+    try {
+      const userCredential = await createUserWithEmailAndPassword(FIREBASE_AUTH, email, password);
+      const userRef = collection(FIREBASE_DB, 'users');
+
+      const userInfo = {
+        name,
+        schoolNumber,
+        email,
+        phoneNumber,
+      };
+
+      const userDocRef = await addDoc(userRef, {
+        ...userInfo,
+        uid: userCredential.user.uid, // Kullanıcının UID'sini saklayın
+      });
+
+      Alert.alert('Kayıt Başarılı', 'Kullanıcı kaydı başarıyla tamamlandı!');
+      navigation.navigate('Login');
+    } catch (error) {
+      console.error('Error signing up:', error);
+      Alert.alert('Kayıt Hatası', 'Kayıt işlemi sırasında bir hata oluştu.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign Up</Text>
+      <Text style={styles.title}>Kayıt Ol</Text>
       <TextInput
-        placeholder="Ad Soyad"
         style={styles.input}
+        placeholder="İsim"
         value={name}
-        onChangeText={setName}
+        onChangeText={(text) => setName(text)}
       />
       <TextInput
+        style={styles.input}
         placeholder="Okul Numarası"
-        style={styles.input}
-        keyboardType="numeric"
         value={schoolNumber}
-        onChangeText={setSchoolNumber}
+        onChangeText={(text) => setSchoolNumber(text)}
       />
       <TextInput
-        placeholder="Mail"
         style={styles.input}
-        keyboardType="email-address"
+        placeholder="Email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text)}
+        keyboardType="email-address"
       />
       <TextInput
+        style={styles.input}
         placeholder="Telefon Numarası"
-        style={styles.input}
-        keyboardType="phone-pad"
         value={phoneNumber}
-        onChangeText={setPhoneNumber}
+        onChangeText={(text) => setPhoneNumber(text)}
+        keyboardType="phone-pad"
       />
       <TextInput
-        placeholder="****"
         style={styles.input}
-        secureTextEntry
+        placeholder="Şifre"
         value={password}
-        onChangeText={setPassword}
+        onChangeText={(text) => setPassword(text)}
+        secureTextEntry
       />
-      <TouchableOpacity style={styles.button} onPress={signUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <TouchableOpacity style={styles.button} onPress={signUp} disabled={loading}>
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Kayıt Ol</Text>
+        )}
       </TouchableOpacity>
-      <Text style={styles.alreadyText}>
-        Already have an account?{' '}
-        <Text style={styles.signInLink} onPress={() => navigation.navigate('Login')}>
-          Go here
-        </Text>
-      </Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.loginText}>Zaten bir hesabın var mı? Giriş Yap</Text>
+      </TouchableOpacity>
     </View>
   );
 };

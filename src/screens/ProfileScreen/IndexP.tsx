@@ -1,14 +1,40 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native';
 import styles from './styles';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { UserContext } from '../../contexts/UserContext';
 import { FIREBASE_DB } from '../../../FirebaseConfig';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 const ProfileScreen = () => {
-  const { userInfo, setUserInfo } = useContext(UserContext); // useContext burada doğru şekilde kullanılmalı
+  const { user, userInfo, setUserInfo } = useContext(UserContext);
   const [isEditingInfo, setIsEditingInfo] = useState(false);
+
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        if (user && user.uid) {
+          const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
+          const userDoc = await getDoc(userDocRef);
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            // Tıbbi bilgileri ayrıca güncelleyin
+            setUserInfo({ ...userData, ...userData.medicalInfo, medicalInfo: userData.medicalInfo });
+          } else {
+            console.log('No such document!');
+          }
+        } else {
+          console.log('User info is empty or uid is missing.');
+        }
+      } catch (error) {
+        console.error('Error fetching user info: ', error);
+      }
+    };
+  
+    fetchUserInfo();
+  }, [user]);
+  
+  
 
   const changeProfileImage = () => {
     // Profil resmi değiştirme işlemleri burada yapılabilir
@@ -21,7 +47,7 @@ const ProfileScreen = () => {
   const saveUserInfo = async () => {
     try {
       const userDocRef = doc(FIREBASE_DB, 'users', user.uid);
-      await updateDoc(userDocRef, userInfo); // Update the Firestore document with new user info
+      await updateDoc(userDocRef, { ...userInfo }); // Tüm kullanıcı bilgilerini güncelleyin
       setIsEditingInfo(false);
       Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla güncellendi.');
     } catch (error) {
@@ -29,8 +55,8 @@ const ProfileScreen = () => {
       Alert.alert('Hata', 'Bilgiler güncellenirken bir hata oluştu.');
     }
   };
-
- 
+  
+  
 
   return (
     <ScrollView style={styles.scrollView} contentContainerStyle={styles.container}>
@@ -80,16 +106,16 @@ const ProfileScreen = () => {
                 <Text style={styles.userInfoTitle}>Adres:</Text>
                 <TextInput
                   style={styles.userInfoInput}
-                  value={userInfo.adress}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, adress: text })}
+                  value={userInfo.address}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, address: text })}
                 />
               </View>
               <View style={styles.userInfoItem}>
                 <Text style={styles.userInfoTitle}>Alerjiler:</Text>
                 <TextInput
                   style={styles.userInfoInput}
-                  value={userInfo.alergies}
-                  onChangeText={(text) => setUserInfo({ ...userInfo, alergies: text })}
+                  value={userInfo.allergies}
+                  onChangeText={(text) => setUserInfo({ ...userInfo, allergies: text })}
                 />
               </View>
               <TouchableOpacity onPress={saveUserInfo} style={styles.saveButton}>
@@ -112,28 +138,27 @@ const ProfileScreen = () => {
               </View>
               <View style={styles.userInfoItem}>
                 <Text style={styles.userInfoTitle}>Adres:</Text>
-                <Text style={styles.userInfoText}>{userInfo.adress}</Text>
+                <Text style={styles.userInfoText}>{userInfo.address}</Text>
               </View>
               <View style={styles.userInfoItem}>
                 <Text style={styles.userInfoTitle}>Alerjiler:</Text>
-                <Text style={styles.userInfoText}>{userInfo.alergies}</Text>
+                <Text style={styles.userInfoText}>{userInfo.allergies}</Text>
               </View>
             </View>
           )}
         </View>
         <View style={styles.activitiesContainer}>
-  <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
-  {userInfo.activityHistory?.length > 0 ? (
-    userInfo.activityHistory.map((activity, index) => (
-      <Text key={index} style={styles.activityText}>
-        {activity.date} - {activity.type}
-      </Text>
-    ))
-  ) : (
-    <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
-  )}
-</View>
-
+          <Text style={styles.activitiesHeading}>Geçmiş Faaliyetler</Text>
+          {userInfo.activityHistory?.length > 0 ? (
+            userInfo.activityHistory.map((activity, index) => (
+              <Text key={index} style={styles.activityText}>
+                {activity.date} - {activity.type}
+              </Text>
+            ))
+          ) : (
+            <Text style={styles.noActivityText}>Henüz bir faaliyet yok</Text>
+          )}
+        </View>
       </View>
     </ScrollView>
   );

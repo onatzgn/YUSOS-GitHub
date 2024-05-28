@@ -6,7 +6,7 @@ import * as Location from 'expo-location';
 import { Image } from 'react-native';
 import { UserContext } from '../../contexts/UserContext';
 import { FIREBASE_DB } from '../../../FirebaseConfig';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc,doc,setDoc } from 'firebase/firestore';
 
 
 const { width } = Dimensions.get('window');
@@ -37,7 +37,7 @@ const GetStartedScreen = ({ navigation }) => {
   const [startButtonTitle, setStartButtonTitle] = useState('Şimdilik Geç ve Başla');
   const [selectedBloodType, setSelectedBloodType] = useState('');
   const [selectedRhFactor, setSelectedRhFactor] = useState('');
-  const { setUserInfo } = useContext(UserContext);
+  const { setUserInfo, user } = useContext(UserContext); // Access the current user
 
   useEffect(() => {
     const checkNotificationPermission = async () => {
@@ -91,43 +91,43 @@ const GetStartedScreen = ({ navigation }) => {
     setSelectedRhFactor(rhFactor);
   };
 
-const saveUserInfo = async () => {
-  try {
-    const db = getFirestore();
-
-    // Save user's medical information to Firestore
-    await addDoc(collection(db, 'medicalInfo'), {
-      familyContact,
-      bloodType: selectedBloodType + selectedRhFactor,
-      healthIssues,
-      alergies,
-      adress,
-    });
-
-    // Update user's information in the context or wherever necessary
-    setUserInfo({
-      familyContact,
-      bloodType: selectedBloodType + selectedRhFactor,
-      healthIssues,
-      alergies,
-      adress,
-    });
-
-    setShowUserInfo(false);
-    Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla kaydedildi.');
-    setStartButtonTitle('Başla');
-
-    // "Başlarken" sayfasına yönlendirme
-    const lastPageIndex = 6; // "Başlarken" sayfasının indeksini belirleyin
-    if (scrollViewRef.current) {
-      scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
-      setCurrentPage(lastPageIndex);
+  const saveUserInfo = async () => {
+    if (!user) {
+      Alert.alert('Kullanıcı Hatası', 'Kullanıcı bilgileri alınamadı.');
+      return;
     }
-  } catch (error) {
-    console.error('Error saving user info:', error);
-    Alert.alert('Bilgi Kaydetme Hatası', 'Kullanıcı bilgileri kaydedilirken bir hata oluştu.');
-  }
-};
+    try {
+      const bloodType = `${selectedBloodType}${selectedRhFactor}`;
+      const medicalInfoData = {
+        familyContact,
+        bloodType,
+        healthIssues,
+        alergies,
+        adress,
+      };
+  
+      const medicalInfoRef = collection(FIREBASE_DB, 'medicalInfo'); // medicalInfo koleksiyon referansı
+      await addDoc(medicalInfoRef, { ...medicalInfoData, uid: user.uid }); // Kullanıcı UID'si ile tıbbi bilgiyi ekleyin
+  
+      setShowUserInfo(false);
+      Alert.alert('Bilgiler Kaydedildi', 'Bilgileriniz başarıyla kaydedildi.');
+      setStartButtonTitle('Başla');
+      const lastPageIndex = 6;
+      if (scrollViewRef.current) {
+        scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
+        setCurrentPage(lastPageIndex);
+      }
+    } catch (error) {
+      console.error('Error saving user info:', error);
+      Alert.alert('Bilgi Kaydetme Hatası', 'Kullanıcı bilgileri kaydedilirken bir hata oluştu.');
+    }
+  };
+  
+  
+  
+
+
+
 
   const handleStartButtonPress = () => {
     navigation.navigate('Main');
