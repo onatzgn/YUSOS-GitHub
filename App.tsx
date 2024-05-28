@@ -45,7 +45,7 @@ export default function App() {
             <Drawer.Screen 
               name="Home" 
               component={HomeScreen} 
-              options={{ title: 'YUSOS', headerShown: true }} // Burada başlığı YUSOS olarak ayarladık
+              options={{ title: 'YUSOS', headerShown: false }} // Burada başlığı YUSOS olarak ayarladık
             />
             {/* Gerekirse diğer ekranları da buraya ekleyebilirsiniz */}
           </Drawer.Navigator>
