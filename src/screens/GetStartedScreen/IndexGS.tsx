@@ -7,6 +7,14 @@ import { Image } from 'react-native';
 import { UserContext } from '../../contexts/UserContext';
 import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { getAuth } from 'firebase/auth';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
+
+
+
+import { FIREBASE_DB } from '../../../FirebaseConfig';
+
+
+
 
 const { width } = Dimensions.get('window');
 
@@ -101,7 +109,15 @@ const GetStartedScreen = ({ navigation }) => {
       }
   
       const userId = user.uid;
+      await setDoc(doc(FIREBASE_DB, "medicalInfo", userId), {
+        familyContact: familyContact,
+        bloodType: selectedBloodType + selectedRhFactor,
+        healthIssues: healthIssues,
+        allergies: allergies,
+        address: address
+      });
   
+      // Kullanıcı bilgilerini yerel olarak güncelle
       setUserInfo({
         userId,
         familyContact,
@@ -114,8 +130,8 @@ const GetStartedScreen = ({ navigation }) => {
       setShowUserInfo(false);
       setStartButtonTitle('Başla');
   
-      // "Başlarken" sayfasına yönlendirme
-      const lastPageIndex = 6; // "Başlarken" sayfasının indeksini belirleyin
+      // Kullanıcıyı sonraki sayfaya yönlendir
+      const lastPageIndex = 6; // son sayfa indeksi
       if (scrollViewRef.current) {
         scrollViewRef.current.scrollTo({ x: width * lastPageIndex, animated: true });
         setCurrentPage(lastPageIndex);

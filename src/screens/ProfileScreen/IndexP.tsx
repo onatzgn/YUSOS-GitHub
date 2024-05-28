@@ -7,7 +7,7 @@ import { FIREBASE_DB } from '../../../FirebaseConfig';
 
 const ProfileScreen = () => {
   const { userInfo, setUserInfo } = useContext(UserContext); 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const changeProfileImage = () => {
     // Profil resmi değiştirme işlemleri burada yapılabilir
