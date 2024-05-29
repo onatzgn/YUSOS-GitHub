@@ -204,12 +204,13 @@ const HelpCenterScreen = ({ navigation, route }) => {
                         <View style={styles.container}>
                             <Text style={styles.titleText}>Yardım Merkezi</Text>
                             <View style={styles.buttonsContainer}>
-                                <TouchableOpacity style={styles.button1}>
-                                    <Text style={styles.buttonText}>Acil Durum</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('CommunityCenterScreen')}>
-                                    <Text style={styles.buttonText}>Topluluk</Text>
-                                </TouchableOpacity>
+                            <View style={styles.button1}>
+                            <Text style={styles.buttonText}>Acil Durum</Text>
+                            </View>
+                            <View style={styles.button}>
+                             <Text style={styles.buttonText}>Topluluk</Text>
+                            </View>
+
                             </View>
                             {helpRequests.length === 0 ? (
                                 <View style={styles.noRequestsContainer}>

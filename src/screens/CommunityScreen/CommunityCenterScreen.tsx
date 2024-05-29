@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -13,17 +12,15 @@ import {
     Alert
 } from 'react-native';
 import CardComponent from './CardComponent';
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { FIREBASE_DB } from '../../../FirebaseConfig';
 
 const windowDimensions = Dimensions.get('window');
 const windowWidth = windowDimensions.width;
 const windowHeight = windowDimensions.height;
 
 const CommunityCenterScreen = ({ navigation }) => {
-    const [cards, setCards] = useState([
-        { title: 'Çorba Dağıtım', info: 'Her gün saat 12:00' },
-        { title: 'Kıyafet Toplama', info: 'Hafta içi her gün' },
-        { title: 'Erzak Toplama', info: 'Her ayın ilk pazarı' },
-    ]);
+    const [cards, setCards] = useState([]);
 
     const [modalVisible, setModalVisible] = useState(false);
     const [newCardTitle, setNewCardTitle] = useState('');
@@ -37,33 +34,74 @@ const CommunityCenterScreen = ({ navigation }) => {
         navigation.navigate('HelpCenterScreen');
     };
 
-    const addNewCard = () => {
-        setCards([...cards, { title: newCardTitle, info: newCardInfo }]);
-        setNewCardTitle('');
-        setNewCardInfo('');
-        setModalVisible(false);
+    useEffect(() => {
+        const q = query(collection(FIREBASE_DB, "communityEvent"), orderBy("eventID", "asc"));
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const fetchedCards = snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+            setCards(fetchedCards);
+        });
+        return () => unsubscribe(); // Cleanup subscription
+    }, []);
+
+    const addNewCard = async () => {
+        try {
+            const docRef = await addDoc(collection(FIREBASE_DB, "communityEvent"), {
+                eventID: cards.length + 1, // Otomatik artan bir ID oluşturabilirsiniz
+                eventName: newCardTitle,
+                extraInfo: newCardInfo,
+                participantCount: 0,
+                isActive: true
+            });
+            console.log("Document written with ID: ", docRef.id);
+            setModalVisible(false);
+        } catch (error) {
+            console.error("Error adding document: ", error);
+            Alert.alert("Error", "Failed to add new event. Please try again.");
+        }
     };
 
     const openEditModal = (index) => {
         setSelectedCardIndex(index);
-        setEditedCardTitle(cards[index].title);
-        setEditedCardInfo(cards[index].info);
+        setEditedCardTitle(cards[index].eventName); // eventName olarak güncellendi
+        setEditedCardInfo(cards[index].extraInfo); // extraInfo olarak güncellendi
         setEditModalVisible(true);
     };
+    
 
-    const editCard = () => {
-        const updatedCards = [...cards];
-        updatedCards[selectedCardIndex].title = editedCardTitle;
-        updatedCards[selectedCardIndex].info = editedCardInfo;
-        setCards(updatedCards);
-        setEditModalVisible(false);
+    const editCard = async () => {
+        try {
+            const cardRef = doc(collection(FIREBASE_DB, "communityEvent"), cards[selectedCardIndex].id);
+            await updateDoc(cardRef, {
+                eventName: editedCardTitle,
+                extraInfo: editedCardInfo
+            });
+            const updatedCards = [...cards];
+            updatedCards[selectedCardIndex].eventName = editedCardTitle;
+            updatedCards[selectedCardIndex].extraInfo = editedCardInfo;
+            setCards(updatedCards);
+            setEditModalVisible(false);
+        } catch (error) {
+            console.error("Error updating document: ", error);
+            Alert.alert("Error", "Failed to update the event. Please try again.");
+        }
     };
-
-    const deleteCard = () => {
-        const updatedCards = cards.filter((_, index) => index !== selectedCardIndex);
-        setCards(updatedCards);
-        setEditModalVisible(false);
+    
+    const deleteCard = async () => {
+        try {
+            const cardRef = doc(collection(FIREBASE_DB, "communityEvent"), cards[selectedCardIndex].id);
+            await deleteDoc(cardRef);
+            const updatedCards = cards.filter((_, index) => index !== selectedCardIndex);
+            setCards(updatedCards);
+            setEditModalVisible(false);
+        } catch (error) {
+            console.error("Error deleting document: ", error);
+            Alert.alert("Error", "Failed to delete the event. Please try again.");
+        }
     };
+    
 
     return (
         <ScrollView>
@@ -73,17 +111,18 @@ const CommunityCenterScreen = ({ navigation }) => {
                     <Text style={styles.addButtonText}>+</Text>
                 </TouchableOpacity>
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.button} onPress={onPressHelpCenter}>
-                        <Text style={styles.buttonText}>Acil Durum</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.button1} onPress={() => { }}>
-                        <Text style={styles.buttonText}>Topluluk</Text>
-                    </TouchableOpacity>
+                <View style={styles.button}>
+                            <Text style={styles.buttonText}>Acil Durum</Text>
+                        </View>
+                    <View style={styles.button1}>
+                          <Text style={styles.buttonText}>Topluluk</Text>
+                    </View>
+
                 </View>
                 <View style={styles.cardContainer}>
                     {cards.map((card, index) => (
                         <TouchableOpacity key={index} onPress={() => openEditModal(index)}>
-                            <CardComponent title={card.title} info={card.info} />
+                            <CardComponent title={card.eventName} info={card.extraInfo} />
                         </TouchableOpacity>
                     ))}
                 </View>
