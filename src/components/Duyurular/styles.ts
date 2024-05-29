@@ -1,35 +1,28 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-const windowDimensions = Dimensions.get('window');
-const windowWidth = windowDimensions.width;
-const windowHeight = windowDimensions.height;
-
-const styles = StyleSheet.create({
+export default StyleSheet.create({
   announcementContainer: {
-    backgroundColor: '#ffffff',
-    padding: 20,
-    marginHorizontal: windowWidth * 0.04, 
-    marginVertical: windowHeight * 0.04, 
-    borderRadius: 8,
-    elevation: 1,
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 6,
-    shadowOpacity: 0.1,
+    backgroundColor: '#f9f9f9',
+    padding: 15,
+    borderRadius: 5,
+    marginBottom: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 2,
   },
   announcementTitle: {
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 4,
-    fontSize: 16,
+    marginBottom: 5,
   },
   announcementBody: {
-    fontSize: 14,
+    fontSize: 16,
+    marginBottom: 5,
   },
   date: {
-    fontSize: 12,
-    marginTop: windowHeight * 0.02, // Ekran yüksekliğine göre ayarlandı.
-    color: '#888888',
+    fontSize: 14,
+    color: '#888',
   },
 });
-
-export default styles;
